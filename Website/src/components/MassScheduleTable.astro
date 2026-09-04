@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import { useTranslations, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Show only the entries flagged `highlight: true` — used on the home page. */
+  highlightOnly?: boolean;
+  /** Filter to one kind of celebration. */
+  kind?: 'mass' | 'confession' | 'adoration' | 'devotion';
+}
+
+const { lang, highlightOnly = false, kind } = Astro.props;
+const t = useTranslations(lang);
+
+const dayNames: Record<string, { en: string; ms: string }> = {
+  monday: { en: 'Monday', ms: 'Isnin' },
+  tuesday: { en: 'Tuesday', ms: 'Selasa' },
+  wednesday: { en: 'Wednesday', ms: 'Rabu' },
+  thursday: { en: 'Thursday', ms: 'Khamis' },
+  friday: { en: 'Friday', ms: 'Jumaat' },
+  saturday: { en: 'Saturday', ms: 'Sabtu' },
+  sunday: { en: 'Sunday', ms: 'Ahad' },
+  'first-friday': { en: 'First Friday', ms: 'Jumaat Pertama' },
+  weekday: { en: 'Weekdays', ms: 'Hari biasa' },
+};
+
+const all = await getCollection('massTimes');
+const rows = all
+  .filter((entry) => (highlightOnly ? entry.data.highlight : true))
+  .filter((entry) => (kind ? entry.data.kind === kind : true))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+{
+  rows.length === 0 ? (
+    <p class="text-content-muted">{t('schedule.empty')}</p>
+  ) : (
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-0 border-collapse text-start">
+        <caption class="sr-only">{t('schedule.title')}</caption>
+        <thead>
+          <tr class="border-b border-line-strong text-start text-[0.7rem] uppercase tracking-[0.12em] text-content-muted">
+            <th scope="col" class="py-2.5 pe-4 text-start font-semibold">
+              {t('schedule.day')}
+            </th>
+            <th scope="col" class="py-2.5 pe-4 text-start font-semibold">
+              {t('schedule.time')}
+            </th>
+            <th scope="col" class="py-2.5 pe-4 text-start font-semibold">
+              {t('schedule.language')}
+            </th>
+            <th scope="col" class="hidden py-2.5 text-start font-semibold sm:table-cell">
+              {t('schedule.note')}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr class="border-b border-line align-top last:border-0">
+              <th scope="row" class="py-3 pe-4 text-start font-display text-base font-semibold">
+                {dayNames[row.data.day]?.[lang] ?? row.data.day}
+              </th>
+              <td class="py-3 pe-4 tabular-nums">{row.data.time}</td>
+              <td class="py-3 pe-4 text-content-muted">{row.data.language}</td>
+              <td class="hidden py-3 text-sm text-content-muted sm:table-cell">
+                {row.data.note?.[lang] ?? ''}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* On phones the notes column is dropped from the table and listed below,
+          so nothing is lost and nothing scrolls sideways. */}
+      <ul class="mt-4 space-y-1 text-sm text-content-muted sm:hidden">
+        {rows
+          .filter((row) => row.data.note)
+          .map((row) => (
+            <li>
+              <span class="font-medium text-content">
+                {dayNames[row.data.day]?.[lang] ?? row.data.day} {row.data.time}
+              </span>{' '}
+              — {row.data.note?.[lang]}
+            </li>
+          ))}
+      </ul>
+    </div>
+  )
+}

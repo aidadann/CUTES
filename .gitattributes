@@ -1,0 +1,15 @@
+# Store everything with LF in the repository. Committee members will edit these
+# files from Windows, macOS and the GitHub web editor; without this the diffs
+# fill up with line-ending churn and reviews become unreadable.
+* text=auto eol=lf
+
+# Binary — never touch these.
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.ico binary
+
+# Keep the lockfile out of pull request diffs.
+Website/package-lock.json linguist-generated=true -diff

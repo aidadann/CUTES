@@ -1,0 +1,94 @@
+---
+import PageHeader from '../components/PageHeader.astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+import { formatDate } from '../i18n/utils';
+import BaseLayout from './BaseLayout.astro';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  lang: Lang;
+  title: string;
+  /** Meta description and page lead. */
+  summary: string;
+  path: string;
+  kicker?: string;
+  crumbs?: Crumb[];
+  updated?: Date;
+  accent?: 'purple' | 'magenta';
+  /** Prayer pages get a narrower measure and a print button. */
+  variant?: 'page' | 'prayer';
+  image?: string;
+}
+
+const {
+  lang,
+  title,
+  summary,
+  path,
+  kicker,
+  crumbs = [],
+  updated,
+  accent = 'purple',
+  variant = 'page',
+  image,
+} = Astro.props;
+
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={title} description={summary} path={path} type="article" image={image}>
+  <PageHeader lang={lang} title={title} lead={summary} kicker={kicker} crumbs={crumbs} accent={accent} />
+
+  <div class="mx-auto max-w-6xl px-gutter py-12">
+    <div class:list={['mx-auto', variant === 'prayer' ? 'prose-page prose-prayer' : 'prose-page']}>
+      <slot />
+    </div>
+
+    <div
+      class:list={[
+        'mx-auto mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5 text-xs text-content-muted',
+        variant === 'prayer' ? 'max-w-[46ch]' : 'max-w-[68ch]',
+      ]}
+    >
+      {
+        updated ? (
+          <p>
+            {t('common.updated')} <time datetime={updated.toISOString()}>{formatDate(updated, lang)}</time>
+          </p>
+        ) : (
+          <span />
+        )
+      }
+
+      {
+        variant === 'prayer' && (
+          <button
+            type="button"
+            data-print-button
+            data-print="hide"
+            hidden
+            class="rounded-md border border-line-strong px-3 py-1.5 font-medium text-content transition-colors hover:border-accent hover:text-accent"
+          >
+            {t('resources.print')}
+          </button>
+        )
+      }
+    </div>
+
+    <slot name="after" />
+  </div>
+</BaseLayout>
+
+<script>
+  // The print stylesheet does the work; this is just the affordance. Hidden
+  // entirely when JavaScript is off, which is correct — a dead button is worse
+  // than no button, and the browser's own print command still works.
+  document.querySelectorAll<HTMLButtonElement>('[data-print-button]').forEach((button) => {
+    button.hidden = false;
+    button.addEventListener('click', () => window.print());
+  });
+</script>

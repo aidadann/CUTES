@@ -1,0 +1,31 @@
+---
+import { render } from 'astro:content';
+
+import { languages, useTranslations, type Lang, type UiKey } from '../../../i18n/ui';
+import { localePath } from '../../../i18n/utils';
+import { localizedPaths } from '../../../lib/content';
+import ProseLayout from '../../../layouts/ProseLayout.astro';
+
+export async function getStaticPaths() {
+  return localizedPaths('resources', Object.keys(languages) as Lang[]);
+}
+
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const slug = Astro.params.slug as string;
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+---
+
+<ProseLayout
+  lang={lang}
+  title={entry.data.title}
+  summary={entry.data.summary}
+  path={`resources/${slug}`}
+  kicker={t(`resources.category.${entry.data.category}` as UiKey)}
+  crumbs={[{ label: t('resources.title'), href: localePath(lang, 'resources') }]}
+  updated={entry.data.updated}
+  variant="prayer"
+>
+  <Content />
+</ProseLayout>

@@ -1,0 +1,179 @@
+# CUTES Committee roster
+# =============================================================================
+# TODO (committee): every name below is a PLACEHOLDER. Replace them with the
+# real committee before launch, then delete this notice.
+#
+# HOW TO EDIT THIS FILE
+#
+#   - The academic year is set in src/data/site.ts, not here.
+#   - `id` must match a `ministry.<id>` key in src/i18n/ui.ts.
+#   - `role` must be one of: coordinator, vice-coordinator-1,
+#     vice-coordinator-2, treasurer, vice-treasurer, secretary,
+#     vice-secretary, leader, assistant, member.
+#   - `detail` is optional — course, faculty or year of study.
+#   - Add or remove `- name:` lines freely. There is no limit.
+#
+# If you mistype something the site will refuse to build and the error message
+# will name this file and the line. That is on purpose: a broken build is
+# better than a blank page in front of the parish.
+# =============================================================================
+
+- id: leaders
+  order: 1
+  isLeadership: true
+  description:
+    en: The executive committee elected each academic year to lead CUTES.
+    ms: Jawatankuasa eksekutif yang dipilih setiap sesi akademik untuk memimpin CUTES.
+  members:
+    - name: Bernard Anak Jelani
+      role: coordinator
+      detail: Bachelor of Education (TESL)
+    - name: Maria Dayang Sulaiman
+      role: vice-coordinator-1
+      detail: Bachelor of Science (Biology)
+    - name: Jerome Lim Wei Xiang
+      role: vice-coordinator-2
+      detail: Bachelor of Music Education
+    - name: Angeline Sipin
+      role: treasurer
+      detail: Bachelor of Accounting
+    - name: Clarence Joseph
+      role: vice-treasurer
+      detail: Bachelor of Business Management
+    - name: Priscilla Anak Nyaring
+      role: secretary
+      detail: Bachelor of Education (Primary)
+    - name: Ignatius Raj Kumar
+      role: vice-secretary
+      detail: Bachelor of Sports Science
+
+- id: liturgy
+  order: 2
+  description:
+    en: Prepares the altar, readings and servers for every Mass the community celebrates.
+    ms: Menyediakan altar, bacaan dan pelayan untuk setiap Misa yang dirayakan komuniti.
+  members:
+    - name: Francis Xavier Anak Nyipa
+      role: leader
+    - name: Theresa Anak Mawar
+      role: assistant
+    - name: Dominic Anak Empaling
+      role: member
+    - name: Cecilia Wong Mei Ling
+      role: member
+    - name: Alphonsus Gan
+      role: member
+    - name: Regina Anak Belulok
+      role: member
+    - name: Michael Anak Undau
+      role: member
+
+- id: choir
+  order: 3
+  description:
+    en: Leads the assembly in song at Sunday Mass and at community celebrations.
+    ms: Memimpin umat dalam nyanyian pada Misa Ahad dan perayaan komuniti.
+  members:
+    - name: Agnes Anak Rentap
+      role: leader
+    - name: Peter Anak Chundang
+      role: assistant
+    - name: Veronica Tan Sze Ying
+      role: member
+    - name: Sylvester Anak Jugah
+      role: member
+    - name: Elizabeth Anak Sumbang
+      role: member
+    - name: Gerard Anthony
+      role: member
+    - name: Monica Anak Ngalambai
+      role: member
+    - name: Stephanie Chin Yee Wen
+      role: member
+
+- id: music
+  order: 4
+  description:
+    en: Plays for the liturgy and looks after the community's instruments and sound.
+    ms: Bermain untuk liturgi dan menjaga alat muzik serta sistem bunyi komuniti.
+  members:
+    - name: Benedict Anak Ampan
+      role: leader
+    - name: Josephine Anak Bujang
+      role: assistant
+    - name: Aloysius Toh Kok Wei
+      role: member
+    - name: Rita Anak Manggah
+      role: member
+    - name: Emmanuel Sagang
+      role: member
+
+- id: multimedia
+  order: 5
+  description:
+    en: Runs the projection at Mass, the social media pages and this website.
+    ms: Mengendalikan paparan semasa Misa, media sosial dan laman web ini.
+  members:
+    - name: Gabriel Anak Sengalang
+      role: leader
+    - name: Anastasia Lau Hui Xin
+      role: assistant
+    - name: Raphael Anak Tuah
+      role: member
+    - name: Jacinta Anak Gerinang
+      role: member
+    - name: Norbert Anak Balang
+      role: member
+
+- id: transportation
+  order: 6
+  description:
+    en: Arranges lifts to Mass and to events for students without transport.
+    ms: Menguruskan tumpangan ke Misa dan acara untuk pelajar tanpa pengangkutan.
+  members:
+    - name: Anthony Anak Lasung
+      role: leader
+    - name: Bernadette Anak Sawing
+      role: assistant
+    - name: Lawrence Anak Gani
+      role: member
+    - name: Felicia Anak Ranggau
+      role: member
+    - name: Christopher Anak Meringai
+      role: member
+
+- id: recreation
+  order: 7
+  description:
+    en: Plans the retreats, Taize evenings, sport and the fellowship after Mass.
+    ms: Merancang retret, malam Taize, sukan dan perhimpunan selepas Misa.
+  members:
+    - name: Lucia Anak Sengayan
+      role: leader
+    - name: Martin Anak Rumpang
+      role: assistant
+    - name: Genevieve Anak Ngumbang
+      role: member
+    - name: Sebastian Anak Jampong
+      role: member
+    - name: Patricia Anak Ligong
+      role: member
+    - name: Vincent Anak Sagan
+      role: member
+
+- id: entrepreneurship
+  order: 8
+  description:
+    en: Raises the funds that pay for retreats, transport and community events.
+    ms: Mengumpul dana untuk membiayai retret, pengangkutan dan acara komuniti.
+  members:
+    - name: Helena Anak Bayang
+      role: leader
+    - name: Simon Anak Ranggong
+      role: assistant
+    - name: Carmen Yap Li Ping
+      role: member
+    - name: Augustine Anak Empeni
+      role: member
+    - name: Rosalind Anak Nyulang
+      role: member

@@ -1,0 +1,40 @@
+name: Something is broken
+description: A page does not load, looks wrong, or shows the wrong information.
+title: 'Bug: '
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+
+  - type: input
+    id: url
+    attributes:
+      label: Page address
+      placeholder: https://.../en/cutes/committee/
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: What were you using?
+      options:
+        - Phone
+        - Laptop or desktop
+        - Tablet
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Drag an image in here if you have one. It usually explains it faster than words.

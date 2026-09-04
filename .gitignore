@@ -1,0 +1,25 @@
+# Node
+Website/node_modules/
+node_modules/
+
+# Astro build output and caches
+Website/dist/
+Website/.astro/
+Website/.vercel/
+Website/.netlify/
+
+# Environment
+.env
+.env.production
+.env.local
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

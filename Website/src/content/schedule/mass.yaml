@@ -1,0 +1,97 @@
+# Mass and devotion schedule
+# =============================================================================
+# TODO (parish office): every time below is a PLACEHOLDER. Confirm the real
+# schedule with the parish priest before launch, then delete this notice.
+#
+# HOW TO EDIT THIS FILE
+#
+#   - `day` must be one of: monday, tuesday, wednesday, thursday, friday,
+#     saturday, sunday, first-friday, weekday.
+#   - `time` is free text and is printed exactly as written. Keep one format.
+#   - `language` is a proper noun and is NOT translated.
+#   - `kind` is mass, confession, adoration or devotion.
+#   - `highlight: true` puts the row on the home page. Keep that list short —
+#     three or four rows, the ones a visitor actually needs.
+#   - `order` controls the order of the table. Lower comes first.
+# =============================================================================
+
+- id: sunday-morning-en
+  order: 1
+  day: sunday
+  time: 8:30 am
+  language: English
+  kind: mass
+  highlight: true
+
+- id: sunday-morning-bm
+  order: 2
+  day: sunday
+  time: 10:30 am
+  language: Bahasa Malaysia
+  kind: mass
+  highlight: true
+  note:
+    en: Children's liturgy during term time.
+    ms: Liturgi kanak-kanak semasa penggal persekolahan.
+
+- id: sunday-evening-cutes
+  order: 3
+  day: sunday
+  time: 6:00 pm
+  language: English
+  kind: mass
+  highlight: true
+  note:
+    en: Student Mass, followed by fellowship in the parish hall.
+    ms: Misa pelajar, diikuti perhimpunan di dewan paroki.
+
+- id: saturday-vigil
+  order: 4
+  day: saturday
+  time: 6:00 pm
+  language: English
+  kind: mass
+  highlight: true
+  note:
+    en: Sunday obligation is fulfilled at this Mass.
+    ms: Kewajipan Misa Ahad dipenuhi pada Misa ini.
+
+- id: weekday-mass
+  order: 5
+  day: weekday
+  time: 6:30 am
+  language: English
+  kind: mass
+  note:
+    en: Tuesday to Friday. No weekday Mass on Mondays.
+    ms: Selasa hingga Jumaat. Tiada Misa harian pada hari Isnin.
+
+- id: first-friday
+  order: 6
+  day: first-friday
+  time: 8:00 pm
+  language: English
+  kind: mass
+  note:
+    en: Sacred Heart devotion follows the Mass.
+    ms: Devosi Hati Kudus diadakan selepas Misa.
+
+- id: confession
+  order: 7
+  day: saturday
+  time: 5:00 pm – 5:45 pm
+  language: English / Bahasa Malaysia
+  kind: confession
+  note:
+    en: Also by appointment with the parish priest.
+    ms: Juga melalui temu janji dengan paderi paroki.
+
+- id: adoration
+  order: 8
+  day: thursday
+  time: 8:00 pm – 9:00 pm
+  language: English
+  kind: adoration
+  note:
+    en: Exposition of the Blessed Sacrament, led by CUTES on the last Thursday.
+    ms: Pentakhtaan Sakramen Mahakudus, dipimpin CUTES pada Khamis terakhir.

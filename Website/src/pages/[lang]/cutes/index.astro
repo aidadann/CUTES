@@ -1,0 +1,66 @@
+---
+import { render } from 'astro:content';
+
+import PageHeader from '../../../components/PageHeader.astro';
+import { site } from '../../../data/site';
+import { useTranslations, type Lang } from '../../../i18n/ui';
+import { localeParams, localePath } from '../../../i18n/utils';
+import { localizedEntry } from '../../../lib/content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = localeParams;
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const about = await localizedEntry('pages', lang, 'about-cutes');
+const { Content } = about ? await render(about) : { Content: null };
+
+const links = [
+  { title: t('nav.lifeAtCutes'), href: localePath(lang, 'cutes/life') },
+  { title: t('nav.committee'), href: localePath(lang, 'cutes/committee') },
+  { title: t('nav.bec'), href: localePath(lang, 'cutes/bec') },
+  { title: t('nav.gallery'), href: localePath(lang, 'gallery') },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('nav.aboutCutes')}
+  description={about?.data.summary ?? t('home.cutesLead')}
+  path="cutes"
+>
+  <PageHeader
+    lang={lang}
+    title={site.communityName}
+    kicker={site.communityFullName}
+    lead={about?.data.summary ?? t('home.cutesLead')}
+    accent="magenta"
+  />
+
+  <div class="mx-auto max-w-6xl px-gutter py-12">
+    <div class="prose-page">
+      {Content ? <Content /> : <p class="text-content-muted">{t('common.todo')}</p>}
+    </div>
+
+    <nav class="mt-14 border-t border-line pt-8" aria-label={t('common.moreIn')}>
+      <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-accent-cutes">
+        {t('common.moreIn')} {site.communityName}
+      </h2>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="link-quiet inline-block rounded-md border border-line px-4 py-2 text-sm transition-colors hover:border-accent-cutes hover:text-accent-cutes"
+              >
+                {link.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</BaseLayout>

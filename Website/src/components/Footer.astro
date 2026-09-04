@@ -1,0 +1,99 @@
+---
+import { site } from '../data/site';
+import { useTranslations, type Lang } from '../i18n/ui';
+import { localePath } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    heading: t('footer.parish'),
+    links: [
+      { label: t('nav.bulletin'), href: localePath(lang, 'bulletin') },
+      { label: t('nav.massSchedule'), href: localePath(lang, 'mass-schedule') },
+      { label: t('nav.parishHistory'), href: localePath(lang, 'parish/parish-history') },
+      { label: t('nav.services'), href: localePath(lang, 'services') },
+    ],
+  },
+  {
+    heading: t('footer.community'),
+    links: [
+      { label: t('nav.aboutCutes'), href: localePath(lang, 'cutes') },
+      { label: t('nav.committee'), href: localePath(lang, 'cutes/committee') },
+      { label: t('nav.events'), href: localePath(lang, 'events') },
+      { label: t('nav.gallery'), href: localePath(lang, 'gallery') },
+    ],
+  },
+];
+
+const socials = Object.entries(site.social).filter(([, url]) => url !== '');
+---
+
+<footer class="mt-24 border-t border-line bg-surface-sunken" data-print="hide">
+  <div class="mx-auto max-w-6xl px-gutter py-14">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="lg:col-span-2">
+        <p class="font-display text-xl font-semibold">{site.parishName}</p>
+        <p class="mt-1 text-sm text-content-muted">{t('site.tagline')}</p>
+
+        <address class="mt-5 not-italic text-sm leading-relaxed text-content-muted">
+          {site.address.line2}<br />
+          {site.address.postcode}
+          {site.address.city}<br />
+          {site.address.state}
+        </address>
+
+        <p class="mt-4 text-sm">
+          <a href={`mailto:${site.email}`} class="hover:underline">{site.email}</a><br />
+          <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="hover:underline">
+            {site.phoneDisplay}
+          </a>
+        </p>
+
+        {
+          socials.length > 0 && (
+            <p class="mt-4 flex gap-4 text-sm">
+              {socials.map(([name, url]) => (
+                <a href={url} rel="noopener noreferrer" target="_blank" class="capitalize hover:underline">
+                  {name}
+                </a>
+              ))}
+            </p>
+          )
+        }
+      </div>
+
+      {
+        columns.map((column) => (
+          <div>
+            <h2 class="font-display text-sm font-semibold uppercase tracking-[0.12em] text-brand-gold-ink">
+              {column.heading}
+            </h2>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {column.links.map((link) => (
+                <li>
+                  <a href={link.href} class="link-quiet text-content-muted hover:text-accent">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-2 border-t border-line pt-6 text-xs text-content-muted sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {year} {site.parishName}, {site.town}. {t('footer.rights')}</p>
+      <p>{site.diocese} &middot; {t('footer.builtBy')}</p>
+    </div>
+  </div>
+</footer>

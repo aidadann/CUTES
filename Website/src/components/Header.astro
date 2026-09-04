@@ -1,0 +1,278 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.jpg';
+import { site } from '../data/site';
+import { nav, type NavItem } from '../i18n/nav';
+import { languageShort, useTranslations, type Lang, type UiKey } from '../i18n/ui';
+import { localePath, otherLang, switchLangPath } from '../i18n/utils';
+import { localized, slugOf } from '../lib/content';
+
+interface Props {
+  lang: Lang;
+  /** Current path below the language segment, used to mark the active item. */
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+const other = otherLang(lang);
+
+// Sacrament and prayer menus come from the content collections so a new
+// Markdown file appears in the navigation without a second edit.
+const [services, resources] = await Promise.all([
+  localized('services', lang),
+  localized('resources', lang),
+]);
+
+const dynamicChildren = {
+  services: services.map((entry) => ({
+    label: entry.data.title,
+    href: localePath(lang, `services/${slugOf(entry.id)}`),
+    path: `services/${slugOf(entry.id)}`,
+  })),
+  resources: resources.map((entry) => ({
+    label: entry.data.title,
+    href: localePath(lang, `resources/${slugOf(entry.id)}`),
+    path: `resources/${slugOf(entry.id)}`,
+  })),
+};
+
+type Resolved = {
+  key: UiKey;
+  label: string;
+  href: string;
+  path: string;
+  children: { label: string; href: string; path: string }[];
+};
+
+const items: Resolved[] = nav.map((item: NavItem) => {
+  const children = item.dynamic
+    ? [
+        { label: t(`${item.dynamic}.all` as UiKey), href: localePath(lang, item.path), path: item.path },
+        ...dynamicChildren[item.dynamic],
+      ]
+    : (item.children ?? []).map((child) => ({
+        label: t(child.key),
+        href: localePath(lang, child.path),
+        path: child.path,
+      }));
+
+  return {
+    key: item.key,
+    label: t(item.key),
+    href: localePath(lang, item.path),
+    path: item.path,
+    children,
+  };
+});
+
+const isActive = (item: Resolved) => {
+  if (item.path === '') return path === '';
+  const root = item.path.split('/')[0]!;
+  if (path === item.path || path === root || path.startsWith(`${root}/`)) return true;
+  // The bulletin and the mass schedule sit at the top level but belong under
+  // "Parish" in the menu, so match on the children too.
+  return item.children.some((child) => path === child.path || path.startsWith(`${child.path}/`));
+};
+
+const switchHref = switchLangPath(Astro.url.pathname, other);
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-line bg-surface/85 backdrop-blur supports-[backdrop-filter]:bg-surface/75"
+  data-print="hide"
+>
+  <div class="mx-auto flex max-w-6xl items-center gap-3 px-gutter py-3">
+    <a
+      href={localePath(lang, '')}
+      class="link-quiet flex shrink-0 items-center gap-3"
+      aria-label={`${site.parishName} — ${t('site.home')}`}
+    >
+      <Image
+        src={logo}
+        alt=""
+        width={44}
+        height={44}
+        loading="eager"
+        class="h-11 w-11 rounded-md object-cover ring-1 ring-line-strong"
+      />
+      <span class="leading-tight">
+        <span class="block font-display text-[0.95rem] font-semibold tracking-tight sm:text-base">
+          {site.parishShortName}
+        </span>
+        <span class="block text-[0.7rem] uppercase tracking-[0.14em] text-content-muted">
+          {site.town}
+        </span>
+      </span>
+    </a>
+
+    <div class="grow"></div>
+
+    <!-- Desktop navigation -->
+    <nav class="hidden lg:block" aria-label={t('site.menu')}>
+      <ul class="flex items-center gap-1">
+        {
+          items.map((item) => (
+            <li class="relative">
+              {item.children.length === 0 ? (
+                <a
+                  href={item.href}
+                  class:list={[
+                    'block rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                    isActive(item)
+                      ? 'text-accent'
+                      : 'text-content hover:bg-accent-soft hover:text-accent',
+                  ]}
+                  aria-current={isActive(item) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <details class="group" data-nav-dropdown>
+                  <summary
+                    class:list={[
+                      'flex cursor-pointer list-none items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                      isActive(item)
+                        ? 'text-accent'
+                        : 'text-content hover:bg-accent-soft hover:text-accent',
+                    ]}
+                  >
+                    {item.label}
+                    <svg
+                      class="h-3 w-3 transition-transform group-open:rotate-180"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path d="M2 4.5 6 8.5 10 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                  </summary>
+                  <ul
+                    class="absolute start-0 z-50 mt-1 min-w-56 rounded-lg border border-line bg-surface-raised p-1.5 shadow-lg shadow-black/5"
+                  >
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class:list={[
+                            'block rounded-md px-3 py-2 text-sm transition-colors',
+                            path === child.path
+                              ? 'bg-accent-soft text-accent'
+                              : 'text-content hover:bg-accent-soft hover:text-accent',
+                          ]}
+                          aria-current={path === child.path ? 'page' : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      href={switchHref}
+      hreflang={other}
+      lang={other}
+      rel="alternate"
+      class="ms-1 shrink-0 rounded-md border border-line-strong px-2.5 py-1.5 text-xs font-semibold tracking-wide text-content transition-colors hover:border-accent hover:text-accent"
+      title={t('site.switchTo')}
+    >
+      {languageShort[other]}
+    </a>
+
+    <!-- Mobile menu: a <details> element, so it works with JavaScript off -->
+    <details class="lg:hidden" data-mobile-menu>
+      <summary
+        class="flex cursor-pointer list-none items-center gap-1.5 rounded-md border border-line-strong px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wide"
+        aria-label={t('site.menu')}
+      >
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        </svg>
+        {t('site.menu')}
+      </summary>
+
+      <nav
+        class="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-line bg-surface-raised px-gutter pb-8 pt-2 shadow-lg"
+        aria-label={t('site.menu')}
+      >
+        <ul class="mx-auto max-w-6xl divide-y divide-line">
+          {
+            items.map((item) => (
+              <li class="py-1">
+                <a
+                  href={item.href}
+                  class:list={[
+                    'block rounded-md px-2 py-2.5 font-display text-lg font-semibold',
+                    isActive(item) ? 'text-accent' : 'text-content',
+                  ]}
+                  aria-current={isActive(item) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+                {item.children.length > 0 && (
+                  <ul class="mb-1 ms-2 border-s border-line ps-3">
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class="block rounded px-2 py-1.5 text-sm text-content-muted hover:text-accent"
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* Hide the default disclosure triangle across engines. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::marker {
+    content: '';
+  }
+</style>
+
+<script>
+  // Progressive enhancement only. Without this the menus still open and close
+  // by click, they just do not close when you look away.
+  const closeAll = (except?: Element) => {
+    document
+      .querySelectorAll<HTMLDetailsElement>('[data-nav-dropdown][open], [data-mobile-menu][open]')
+      .forEach((el) => {
+        if (el !== except) el.open = false;
+      });
+  };
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    const inside = target?.closest('[data-nav-dropdown], [data-mobile-menu]');
+    closeAll(inside ?? undefined);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const open = document.querySelector<HTMLDetailsElement>(
+      '[data-nav-dropdown][open], [data-mobile-menu][open]',
+    );
+    if (!open) return;
+    open.open = false;
+    open.querySelector('summary')?.focus();
+  });
+</script>

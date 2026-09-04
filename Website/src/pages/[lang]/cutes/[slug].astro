@@ -1,0 +1,36 @@
+---
+import { render } from 'astro:content';
+
+import { languages, useTranslations, type Lang } from '../../../i18n/ui';
+import { localePath } from '../../../i18n/utils';
+import { localizedPaths } from '../../../lib/content';
+import ProseLayout from '../../../layouts/ProseLayout.astro';
+
+export async function getStaticPaths() {
+  const paths = await localizedPaths('pages', Object.keys(languages) as Lang[]);
+  return paths.filter(
+    // "about-cutes" is rendered by cutes/index.astro; routing it here as well
+    // would publish the same text at two URLs.
+    ({ props, params }) => props.entry.data.section === 'cutes' && params.slug !== 'about-cutes',
+  );
+}
+
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const slug = Astro.params.slug as string;
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+---
+
+<ProseLayout
+  lang={lang}
+  title={entry.data.title}
+  summary={entry.data.summary}
+  path={`cutes/${slug}`}
+  kicker={t('cutes.title')}
+  crumbs={[{ label: t('nav.cutes'), href: localePath(lang, 'cutes') }]}
+  updated={entry.data.updated}
+  accent="magenta"
+>
+  <Content />
+</ProseLayout>

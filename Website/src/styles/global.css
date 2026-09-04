@@ -1,0 +1,347 @@
+@import 'tailwindcss';
+
+/* -------------------------------------------------------------------------
+   Design tokens
+   -------------------------------------------------------------------------
+   Brand colours are sampled from Requirement/logo.md. They are the *palette*,
+   not the interface: everything on screen is painted with the semantic tokens
+   below, so dark mode is a token swap rather than a second stylesheet.
+
+   Contrast note, deliberate and load-bearing: the logo gold (#D4AF37) scores
+   1.9:1 on white and is unreadable as text. It is used only for rules,
+   borders, and the diamond motif. Where gold must carry words we use
+   --color-brand-gold-ink (#6B5310, 7.1:1 on ivory).
+   ------------------------------------------------------------------------- */
+
+@theme {
+  /* Brand palette — from the logo, do not repaint */
+  --color-brand-gold: #d4af37;
+  --color-brand-gold-bright: #f4ea00;
+  --color-brand-gold-ink: #6b5310;
+  --color-brand-purple: #7b1fa2;
+  --color-brand-purple-deep: #55136f;
+  --color-brand-magenta: #d81b60;
+  --color-brand-crimson: #e53935;
+  --color-brand-ink: #1a1a1a;
+
+  /* Semantic tokens — light theme is the default definition */
+  --color-surface: #fdfbf7;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #f5f0e6;
+  --color-surface-invert: #221a2b;
+
+  --color-content: #1a1a1a;
+  --color-content-muted: #57534e;
+  --color-content-invert: #fdfbf7;
+  --color-content-invert-muted: #d9cfe4;
+
+  --color-accent: #7b1fa2;
+  --color-accent-hover: #55136f;
+  --color-accent-soft: #f3e8f8;
+  --color-accent-cutes: #d81b60;
+  --color-accent-cutes-soft: #fde7ef;
+  --color-alert: #c62828;
+
+  --color-line: #e5ded0;
+  --color-line-strong: #cdbfa4;
+
+  /* Type */
+  --font-display: 'Fraunces Variable', 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --text-hero: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
+  --text-hero--line-height: 1.05;
+  --text-hero--letter-spacing: -0.02em;
+
+  /* Rhythm */
+  --spacing-gutter: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  --radius-card: 0.75rem;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-surface: #14101a;
+    --color-surface-raised: #1e1826;
+    --color-surface-sunken: #0e0b13;
+    --color-surface-invert: #f5f0e6;
+
+    --color-content: #f2ece2;
+    --color-content-muted: #b3a9bd;
+    --color-content-invert: #1a1a1a;
+    --color-content-invert-muted: #57534e;
+
+    --color-accent: #d9a3f0;
+    --color-accent-hover: #efd4fa;
+    --color-accent-soft: #2a1c35;
+    --color-accent-cutes: #ff87ad;
+    --color-accent-cutes-soft: #33131f;
+    --color-alert: #ff8a80;
+
+    --color-line: #322a3d;
+    --color-line-strong: #4c4059;
+
+    --color-brand-gold-ink: #e9c85e;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------- */
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-content);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--color-accent);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: from-font;
+  }
+
+  a:hover {
+    color: var(--color-accent-hover);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-brand-gold);
+    color: #1a1a1a;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Components
+   The logo is a rhombus split by a cross. The rotated-square motif below is
+   that shape, reused as a divider glyph and a list marker so the brand shows
+   up in the page furniture rather than only in the header image.
+   ------------------------------------------------------------------------- */
+
+@layer components {
+  .prose-page {
+    max-width: 68ch;
+  }
+
+  .prose-page > * + * {
+    margin-block-start: 1.1em;
+  }
+
+  .prose-page h2 {
+    font-size: 1.6rem;
+    margin-block-start: 2.2em;
+    margin-block-end: 0.2em;
+  }
+
+  .prose-page h3 {
+    font-size: 1.2rem;
+    margin-block-start: 1.8em;
+    margin-block-end: 0.1em;
+  }
+
+  .prose-page ul,
+  .prose-page ol {
+    padding-inline-start: 1.4em;
+  }
+
+  .prose-page ul {
+    list-style: none;
+    padding-inline-start: 1.3em;
+  }
+
+  .prose-page ul > li {
+    position: relative;
+  }
+
+  .prose-page ul > li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: -1.15em;
+    inset-block-start: 0.62em;
+    width: 0.4em;
+    height: 0.4em;
+    background: var(--color-brand-gold);
+    transform: rotate(45deg);
+  }
+
+  .prose-page ol {
+    list-style: decimal;
+  }
+
+  .prose-page li + li {
+    margin-block-start: 0.4em;
+  }
+
+  .prose-page a {
+    text-decoration: underline;
+  }
+
+  .prose-page blockquote {
+    border-inline-start: 3px solid var(--color-brand-gold);
+    padding-inline-start: 1.1em;
+    font-style: italic;
+    color: var(--color-content-muted);
+  }
+
+  .prose-page table {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .prose-page th,
+  .prose-page td {
+    border-block-end: 1px solid var(--color-line);
+    padding: 0.5rem 0.75rem;
+    text-align: start;
+  }
+
+  /* Prayer texts. Responses are set in the accent colour and small caps so a
+     leader and an assembly can read the same page. */
+  .prose-prayer {
+    max-width: 46ch;
+    font-size: 1.075rem;
+    line-height: 1.8;
+  }
+
+  .prose-prayer strong {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .prose-prayer blockquote {
+    border: 0;
+    padding: 0;
+    font-style: normal;
+    color: var(--color-content);
+    font-weight: 500;
+  }
+
+  .prose-prayer blockquote::before {
+    content: 'R. ';
+    color: var(--color-brand-gold-ink);
+    font-variant: small-caps;
+    font-weight: 700;
+  }
+
+  .divider-diamond {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-line-strong);
+  }
+
+  .divider-diamond::before,
+  .divider-diamond::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .link-quiet {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .link-quiet:hover {
+    color: var(--color-accent);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Print — someone will print the prayers and the mass schedule.
+   ------------------------------------------------------------------------- */
+
+@media print {
+  @page {
+    margin: 18mm;
+  }
+
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  [data-print='hide'] {
+    display: none !important;
+  }
+
+  .prose-prayer,
+  .prose-page {
+    max-width: none;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}

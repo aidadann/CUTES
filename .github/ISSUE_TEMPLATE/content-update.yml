@@ -1,0 +1,58 @@
+name: Content update request
+description: Ask for something on the website to be changed, added or removed.
+title: 'Content: '
+labels: [content]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this if you are not editing the site yourself. If you are comfortable
+        editing files on github.com, CONTRIBUTING.md walks through the common
+        tasks and is usually faster than waiting for someone else.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: What part of the site?
+      options:
+        - Bulletin
+        - Mass schedule
+        - Parish pages (priest, deacon, history)
+        - CUTES committee roster
+        - Events
+        - Gallery photos
+        - Sacraments and services
+        - Prayers and resources
+        - Contact details
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: change
+    attributes:
+      label: What should change?
+      description: Paste the current wording and the wording you want, if you can.
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: Which page? (link if you have it)
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Which language does this affect?
+      options:
+        - Both English and Bahasa Malaysia
+        - English only
+        - Bahasa Malaysia only
+    validations:
+      required: true
+
+  - type: input
+    id: deadline
+    attributes:
+      label: Is there a date this needs to be live by?

@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+
+import MinistryRoster from '../../../components/MinistryRoster.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import { site } from '../../../data/site';
+import { useTranslations, type Lang, type UiKey } from '../../../i18n/ui';
+import { localeParams, localePath } from '../../../i18n/utils';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = localeParams;
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const ministries = (await getCollection('ministries')).sort((a, b) => a.data.order - b.data.order);
+const totalMembers = ministries.reduce((sum, entry) => sum + entry.data.members.length, 0);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('cutes.committeeTitle')}
+  description={t('cutes.committeeLead')}
+  path="cutes/committee"
+>
+  <PageHeader
+    lang={lang}
+    title={t('cutes.committeeTitle')}
+    lead={t('cutes.committeeLead')}
+    kicker={`${t('cutes.year')} ${site.committeeYear}`}
+    crumbs={[{ label: t('nav.cutes'), href: localePath(lang, 'cutes') }]}
+    accent="magenta"
+  />
+
+  <div class="mx-auto max-w-6xl px-gutter py-12">
+    <!-- Jump list. On a page of sixty names this is the difference between
+         usable and not, especially on a phone. -->
+    <nav aria-label={t('cutes.ministries')} data-print="hide">
+      <ul class="flex flex-wrap gap-2">
+        {
+          ministries.map((ministry) => (
+            <li>
+              <a
+                href={`#${ministry.data.id}`}
+                class="link-quiet inline-block rounded-full border border-line px-3.5 py-1.5 text-xs font-medium transition-colors hover:border-accent-cutes hover:text-accent-cutes"
+              >
+                {t(`ministry.${ministry.data.id}` as UiKey)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <p class="mt-6 text-sm text-content-muted">
+      {totalMembers} {t('role.member').toLowerCase()} &middot; {ministries.length}{' '}
+      {t('cutes.ministries').toLowerCase()}
+    </p>
+
+    <div class="mt-8 grid gap-6 lg:grid-cols-2">
+      {ministries.map((ministry) => <MinistryRoster lang={lang} ministry={ministry} />)}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+import MassScheduleTable from '../../components/MassScheduleTable.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { site } from '../../data/site';
+import { useTranslations, type Lang } from '../../i18n/ui';
+import { localeParams, localePath } from '../../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = localeParams;
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const sections = [
+  { key: 'mass' as const, heading: t('schedule.title') },
+  { key: 'confession' as const, heading: t('schedule.confession') },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('schedule.title')}
+  description={t('home.scheduleLead')}
+  path="mass-schedule"
+>
+  <PageHeader
+    lang={lang}
+    title={t('schedule.title')}
+    lead={t('home.scheduleLead')}
+    crumbs={[{ label: t('nav.parish'), href: localePath(lang, 'parish') }]}
+  />
+
+  <div class="mx-auto max-w-4xl px-gutter py-12">
+    {
+      sections.map((section) => (
+        <section class="mb-12">
+          <h2 class="font-display text-xl font-semibold">{section.heading}</h2>
+          <div class="mt-4">
+            <MassScheduleTable lang={lang} kind={section.key} />
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="mb-12">
+      <h2 class="font-display text-xl font-semibold">{t('schedule.devotions')}</h2>
+      <div class="mt-4">
+        <MassScheduleTable lang={lang} kind="adoration" />
+      </div>
+    </section>
+
+    <aside
+      class="rounded-card border border-line bg-surface-sunken p-5 text-sm text-content-muted"
+      data-print="hide"
+    >
+      <p>{t('schedule.holyDays')}</p>
+      <p class="mt-2">
+        <a href={localePath(lang, 'bulletin')} class="font-medium text-accent hover:underline">
+          {t('nav.bulletin')} &rarr;
+        </a>
+      </p>
+      <p class="mt-4">
+        {site.address.line2}, {site.address.postcode} {site.address.city}, {site.address.state}
+      </p>
+    </aside>
+  </div>
+</BaseLayout>

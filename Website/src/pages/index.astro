@@ -1,0 +1,68 @@
+---
+/**
+ * The root of the site is a language chooser that chooses for you.
+ *
+ * A real page rather than an Astro `redirect`, for two reasons: it can read the
+ * browser's preferred language, and it still works when JavaScript is off,
+ * where the meta refresh takes over and the two links are visible in the
+ * meantime.
+ */
+import { localePath } from '../i18n/utils';
+import { site } from '../data/site';
+
+const en = localePath('en');
+const ms = localePath('ms');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0; url=${en}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={en} />
+    <title>{site.parishName}, {site.town}</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-content: center;
+        gap: 1rem;
+        text-align: center;
+        font-family: system-ui, sans-serif;
+        background: #fdfbf7;
+        color: #1a1a1a;
+      }
+      a {
+        color: #7b1fa2;
+        font-weight: 600;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #14101a;
+          color: #f2ece2;
+        }
+        a {
+          color: #d9a3f0;
+        }
+      }
+    </style>
+    <script is:inline define:vars={{ en, ms }}>
+      // Send Malaysian-language browsers to /ms/ before the meta refresh fires.
+      const prefersMalay = (navigator.languages ?? [navigator.language ?? ''])
+        .join(',')
+        .toLowerCase()
+        .split(',')
+        .some((tag) => tag.startsWith('ms') || tag.startsWith('id'));
+      window.location.replace(prefersMalay ? ms : en);
+    </script>
+  </head>
+  <body>
+    <p>{site.parishName}, {site.town}</p>
+    <p>
+      <a href={en}>English</a> &nbsp;&middot;&nbsp; <a href={ms}>Bahasa Malaysia</a>
+    </p>
+  </body>
+</html>

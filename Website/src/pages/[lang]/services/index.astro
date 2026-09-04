@@ -1,0 +1,57 @@
+---
+import PageHeader from '../../../components/PageHeader.astro';
+import { site } from '../../../data/site';
+import { useTranslations, type Lang } from '../../../i18n/ui';
+import { localeParams, localePath } from '../../../i18n/utils';
+import { localized, slugOf } from '../../../lib/content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export const getStaticPaths = localeParams;
+
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const services = await localized('services', lang);
+---
+
+<BaseLayout lang={lang} title={t('services.title')} description={t('services.lead')} path="services">
+  <PageHeader lang={lang} title={t('services.title')} lead={t('services.lead')} />
+
+  <div class="mx-auto max-w-4xl px-gutter py-12">
+    <ul class="divide-y divide-line border-y border-line">
+      {
+        services.map((entry) => (
+          <li>
+            <a
+              href={localePath(lang, `services/${slugOf(entry.id)}`)}
+              class="link-quiet group flex flex-col gap-1 py-6 sm:flex-row sm:items-baseline sm:gap-6"
+            >
+              <h2 class="font-display text-xl font-semibold group-hover:text-accent sm:w-56 sm:shrink-0">
+                {entry.data.title}
+              </h2>
+              <span class="text-sm text-content-muted">
+                {entry.data.summary}
+                {entry.data.noticePeriod && (
+                  <span class="mt-1 block text-xs uppercase tracking-wide text-brand-gold-ink">
+                    {entry.data.noticePeriod}
+                  </span>
+                )}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <aside class="mt-10 rounded-card border border-line bg-surface-sunken p-5 text-sm">
+      <p class="text-content-muted">{t('services.contactFallback')}</p>
+      <p class="mt-2">
+        <a href={`mailto:${site.email}`} class="font-medium hover:underline">{site.email}</a>
+        <span class="text-content-muted"> &middot; </span>
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="font-medium hover:underline">
+          {site.phoneDisplay}
+        </a>
+      </p>
+    </aside>
+  </div>
+</BaseLayout>

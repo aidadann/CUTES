@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { useTranslations, type Lang, type UiKey } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  ministry: CollectionEntry<'ministries'>;
+}
+
+const { lang, ministry } = Astro.props;
+const t = useTranslations(lang);
+
+const data = ministry.data;
+const title = t(`ministry.${data.id}` as UiKey);
+
+// Leaders and assistants are pulled out and shown first; everyone else keeps
+// the order they appear in roster.yaml.
+const isLead = (role: string) => role !== 'member';
+const leads = data.members.filter((member) => isLead(member.role));
+const members = data.members.filter((member) => !isLead(member.role));
+---
+
+<section
+  id={data.id}
+  class="scroll-mt-24 rounded-card border border-line bg-surface-raised p-6 sm:p-7"
+  aria-labelledby={`ministry-${data.id}`}
+>
+  <header>
+    <h3 id={`ministry-${data.id}`} class="font-display text-xl font-semibold">
+      {title}
+    </h3>
+    {
+      data.description && (
+        <p class="mt-1.5 text-sm text-content-muted">{data.description[lang]}</p>
+      )
+    }
+  </header>
+
+  <div class="divider-diamond my-5" aria-hidden="true">
+    <span class="block h-2 w-2 rotate-45 bg-brand-gold"></span>
+  </div>
+
+  {
+    leads.length > 0 && (
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {leads.map((member) => (
+          <li class="rounded-lg bg-surface-sunken px-4 py-3">
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-cutes">
+              {t(`role.${member.role}` as UiKey)}
+            </p>
+            <p class="mt-0.5 font-medium">{member.name}</p>
+            {member.detail && <p class="text-xs text-content-muted">{member.detail}</p>}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    members.length > 0 && (
+      <div class:list={[leads.length > 0 && 'mt-5']}>
+        <h4 class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-content-muted">
+          {t('role.member')}
+        </h4>
+        <ul class="mt-2 flex flex-wrap gap-x-6 gap-y-1.5 text-sm">
+          {members.map((member) => (
+            <li>
+              {member.name}
+              {member.detail && <span class="text-content-muted"> · {member.detail}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</section>

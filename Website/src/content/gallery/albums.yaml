@@ -1,0 +1,98 @@
+# Gallery albums
+# =============================================================================
+# This file names and orders the albums. It does NOT list the photos.
+#
+# HOW TO ADD PHOTOS
+#
+#   1. Put the image files in  src/assets/gallery/<id>/
+#      — the folder name must match the `id` below, exactly.
+#   2. Commit. That is all. The photos appear in filename order.
+#
+# To arrange an album, prefix the filenames: 01-arrival.jpg, 02-mass.jpg, and
+# so on. To add a new album, add an entry here and create the matching folder.
+#
+# Before committing a batch of photos, downscale them to about 2000px on the
+# long edge. Full-size phone photos turn a 30-second build into a 10-minute one
+# and burn through the free CI minutes.
+# =============================================================================
+
+- id: mass
+  order: 1
+  title:
+    en: Mass
+    ms: Misa
+  description:
+    en: Sunday and student Masses at Most Holy Redeemer.
+    ms: Misa Ahad dan Misa pelajar di Most Holy Redeemer.
+
+- id: fellowship
+  order: 2
+  title:
+    en: Fellowship
+    ms: Perhimpunan
+  description:
+    en: Meals, games and the ordinary evenings that hold the community together.
+    ms: Jamuan, permainan dan malam biasa yang mengeratkan komuniti.
+
+- id: sport
+  order: 3
+  title:
+    en: Sport
+    ms: Sukan
+  description:
+    en: Futsal, badminton and the CUTES games day.
+    ms: Futsal, badminton dan hari sukan CUTES.
+
+- id: retreat
+  order: 4
+  title:
+    en: Retreat
+    ms: Retret
+  description:
+    en: Days away for prayer, silence and formation.
+    ms: Hari menyendiri untuk doa, keheningan dan pembinaan iman.
+
+- id: gawai-kaamatan
+  order: 5
+  title:
+    en: Gawai and Kaamatan
+    ms: Gawai dan Kaamatan
+  description:
+    en: The harvest festivals, celebrated by the East Malaysian students far from home.
+    ms: Perayaan menuai, disambut pelajar Malaysia Timur yang jauh dari kampung.
+
+- id: family-day
+  order: 6
+  title:
+    en: CUTES Family Day
+    ms: Hari Keluarga CUTES
+  description:
+    en: The whole community, seniors and juniors, in one place for a day.
+    ms: Seluruh komuniti, senior dan junior, berkumpul untuk sehari.
+
+- id: after-mass
+  order: 7
+  title:
+    en: After Mass
+    ms: Selepas Misa
+  description:
+    en: Supper, conversation and the slow walk back to campus.
+    ms: Makan malam, borak dan perjalanan pulang ke kampus.
+
+- id: chilling
+  order: 8
+  title:
+    en: Chilling
+    ms: Santai
+  description:
+    en: Unplanned, unposed, and the reason people keep coming back.
+    ms: Tidak dirancang, tidak berlakon, dan sebab orang terus kembali.
+
+- id: taize
+  order: 9
+  title:
+    en: Taize
+    ms: Taize
+  description:
+    en: Candlelight, chant and silence on Thursday evenings.
+    ms: Cahaya lilin, nyanyian dan keheningan pada malam Khamis.

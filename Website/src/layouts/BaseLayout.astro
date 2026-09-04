@@ -1,0 +1,74 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Seo from '../components/Seo.astro';
+import { site } from '../data/site';
+import { useTranslations, type Lang } from '../i18n/ui';
+import { assetPath, htmlLang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  /** Path below the language segment, e.g. "gallery/retreat". */
+  path: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description = site.parishName,
+  path,
+  image,
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={htmlLang[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href={assetPath('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={assetPath('logo.jpg')} />
+    <meta name="theme-color" content="#7b1fa2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14101a" media="(prefers-color-scheme: dark)" />
+    <Seo
+      lang={lang}
+      title={title}
+      description={description}
+      path={path}
+      image={image}
+      type={type}
+      noindex={noindex}
+    />
+  </head>
+
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#main"
+      class="sr-only rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50"
+    >
+      {t('site.skip')}
+    </a>
+
+    <Header lang={lang} path={path} />
+
+    <main id="main" class="grow">
+      <slot />
+    </main>
+
+    <Footer lang={lang} />
+  </body>
+</html>

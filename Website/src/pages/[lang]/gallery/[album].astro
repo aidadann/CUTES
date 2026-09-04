@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+
+import PageHeader from '../../../components/PageHeader.astro';
+import PhotoGrid from '../../../components/PhotoGrid.astro';
+import { languages, useTranslations, type Lang } from '../../../i18n/ui';
+import { localePath } from '../../../i18n/utils';
+import { photosInAlbum } from '../../../lib/gallery';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const albums = await getCollection('albums');
+  return (Object.keys(languages) as Lang[]).flatMap((lang) =>
+    albums.map((album) => ({
+      params: { lang, album: album.data.id },
+      props: { album: album.data },
+    })),
+  );
+}
+
+const { album } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const photos = photosInAlbum(album.id);
+const title = album.title[lang];
+const description = album.description?.[lang] ?? t('gallery.lead');
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={description}
+  path={`gallery/${album.id}`}
+  type="article"
+>
+  <PageHeader
+    lang={lang}
+    title={title}
+    lead={album.description?.[lang]}
+    kicker={`${photos.length} ${photos.length === 1 ? t('gallery.photoCountOne') : t('gallery.photoCount')}`}
+    crumbs={[{ label: t('gallery.title'), href: localePath(lang, 'gallery') }]}
+    accent="magenta"
+  />
+
+  <div class="mx-auto max-w-6xl px-gutter py-12">
+    <PhotoGrid lang={lang} photos={photos} albumTitle={title} />
+  </div>
+</BaseLayout>

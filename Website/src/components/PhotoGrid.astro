@@ -1,0 +1,165 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { useTranslations, type Lang } from '../i18n/ui';
+import type { GalleryPhoto } from '../lib/gallery';
+
+interface Props {
+  lang: Lang;
+  photos: GalleryPhoto[];
+  /** Used to build alt text: "Retreat 2026 — photo 3". */
+  albumTitle: string;
+}
+
+const { lang, photos, albumTitle } = Astro.props;
+const t = useTranslations(lang);
+
+// One full-size rendition per photo for the lightbox. Generated at build time
+// alongside the thumbnails, so the dialog never fetches an unprocessed
+// original.
+const full = await Promise.all(
+  photos.map((photo) =>
+    getImage({ src: photo.image, width: 1600, format: 'webp', quality: 82 }),
+  ),
+);
+---
+
+{
+  photos.length === 0 ? (
+    <p class="rounded-card border border-dashed border-line-strong px-5 py-10 text-center text-content-muted">
+      {t('gallery.empty')}
+    </p>
+  ) : (
+    <>
+      <ul
+        class="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4"
+        data-photo-grid
+        data-total={photos.length}
+      >
+        {photos.map((photo, index) => (
+          <li>
+            <a
+              href={full[index]!.src}
+              class="group block overflow-hidden rounded-lg bg-surface-sunken"
+              data-photo
+              data-index={index}
+              data-full={full[index]!.src}
+              data-alt={`${albumTitle} — ${index + 1}`}
+              aria-label={`${t('gallery.openPhoto')}: ${albumTitle} ${index + 1} ${t('gallery.photoOf')} ${photos.length}`}
+            >
+              <Image
+                src={photo.image}
+                alt={`${albumTitle} — ${index + 1}`}
+                width={500}
+                height={500}
+                widths={[300, 500, 800]}
+                sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
+                loading={index < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+                class="aspect-square h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      {/* Native <dialog>. With JavaScript off the anchors above simply open the
+          full image, which is a perfectly good gallery. */}
+      <dialog
+        data-lightbox
+        class="max-h-dvh max-w-dvw bg-transparent p-0 backdrop:bg-black/85 backdrop:backdrop-blur-sm"
+        aria-label={t('gallery.title')}
+      >
+        <div class="relative flex h-dvh w-dvw items-center justify-center p-3 sm:p-8">
+          <img data-lightbox-image src="" alt="" class="max-h-full max-w-full rounded-lg object-contain" />
+
+          <p
+            data-lightbox-counter
+            class="absolute inset-x-0 bottom-3 text-center text-xs font-medium text-white/80"
+          ></p>
+
+          <button
+            type="button"
+            data-lightbox-close
+            class="absolute end-3 top-3 rounded-full bg-black/60 p-2.5 text-white transition-colors hover:bg-black/80 sm:end-6 sm:top-6"
+            aria-label={t('gallery.lightboxClose')}
+          >
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            data-lightbox-prev
+            class="absolute start-2 rounded-full bg-black/60 p-2.5 text-white transition-colors hover:bg-black/80 sm:start-6"
+            aria-label={t('gallery.lightboxPrev')}
+          >
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M12.5 4 6.5 10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            data-lightbox-next
+            class="absolute end-2 rounded-full bg-black/60 p-2.5 text-white transition-colors hover:bg-black/80 sm:end-6"
+            aria-label={t('gallery.lightboxNext')}
+          >
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </dialog>
+    </>
+  )
+}
+
+<script>
+  const grid = document.querySelector<HTMLElement>('[data-photo-grid]');
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+
+  if (grid && dialog) {
+    const image = dialog.querySelector<HTMLImageElement>('[data-lightbox-image]')!;
+    const counter = dialog.querySelector<HTMLElement>('[data-lightbox-counter]')!;
+    const links = [...grid.querySelectorAll<HTMLAnchorElement>('[data-photo]')];
+    let index = 0;
+    let opener: HTMLAnchorElement | null = null;
+
+    const show = (next: number) => {
+      index = (next + links.length) % links.length;
+      const link = links[index]!;
+      image.src = link.dataset.full ?? link.href;
+      image.alt = link.dataset.alt ?? '';
+      counter.textContent = `${index + 1} / ${links.length}`;
+    };
+
+    grid.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>('[data-photo]');
+      if (!link) return;
+      event.preventDefault();
+      opener = link;
+      show(Number(link.dataset.index ?? 0));
+      dialog.showModal();
+    });
+
+    dialog.querySelector('[data-lightbox-prev]')!.addEventListener('click', () => show(index - 1));
+    dialog.querySelector('[data-lightbox-next]')!.addEventListener('click', () => show(index + 1));
+    dialog.querySelector('[data-lightbox-close]')!.addEventListener('click', () => dialog.close());
+
+    // Clicking the backdrop closes. The dialog fills the viewport, so "the
+    // backdrop" is any click that is not on the image or a button.
+    dialog.addEventListener('click', (event) => {
+      const target = event.target as Element;
+      if (target === dialog || target.tagName === 'DIV') dialog.close();
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') show(index + 1);
+      if (event.key === 'ArrowLeft') show(index - 1);
+    });
+
+    // Escape is handled by <dialog> itself; this returns focus where it was.
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+</script>

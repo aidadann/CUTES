@@ -1,0 +1,31 @@
+---
+import { render } from 'astro:content';
+
+import { languages, useTranslations, type Lang } from '../../../i18n/ui';
+import { localePath } from '../../../i18n/utils';
+import { localizedPaths } from '../../../lib/content';
+import ProseLayout from '../../../layouts/ProseLayout.astro';
+
+export async function getStaticPaths() {
+  const paths = await localizedPaths('pages', Object.keys(languages) as Lang[]);
+  return paths.filter(({ props }) => props.entry.data.section === 'parish');
+}
+
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const slug = Astro.params.slug as string;
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+---
+
+<ProseLayout
+  lang={lang}
+  title={entry.data.title}
+  summary={entry.data.summary}
+  path={`parish/${slug}`}
+  kicker={t('parish.title')}
+  crumbs={[{ label: t('nav.parish'), href: localePath(lang, 'parish') }]}
+  updated={entry.data.updated}
+>
+  <Content />
+</ProseLayout>

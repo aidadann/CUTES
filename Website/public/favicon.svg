@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CUTES">
+  <!-- The logo reduced to what survives at 16px: the rhombus, the four
+       quadrant colours, and the cross. Sampled from Requirement/logo.md. -->
+  <defs>
+    <clipPath id="diamond">
+      <path d="M32 2 62 32 32 62 2 32Z" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#diamond)">
+    <rect x="0" y="0" width="64" height="32" fill="#D4AF37" />
+    <rect x="0" y="32" width="64" height="32" fill="#D4AF37" />
+    <path d="M32 2 2 32 32 62Z" fill="#D81B60" />
+    <path d="M32 2 62 32 32 62Z" fill="#7B1FA2" />
+    <path d="M32 2 2 32 32 62 62 32Z" fill="none" />
+  </g>
+  <path d="M32 2 62 32 32 62 2 32Z" fill="none" stroke="#1A1A1A" stroke-width="3" />
+  <path d="M32 12v40M18 28h28" stroke="#1A1A1A" stroke-width="7" stroke-linecap="butt" />
+</svg>
