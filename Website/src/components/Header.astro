@@ -79,8 +79,8 @@ const isActive = (item: Resolved) => {
 };
 ---
 
-<header data-print="hide" class="sticky top-0 z-50 bg-paper/95 backdrop-blur-md transition-all duration-200 border-b border-rule">
-  <div class="mx-auto flex max-w-[84rem] items-center justify-between gap-6 px-gutter py-4">
+<header data-print="hide" data-site-header class="sticky top-0 z-50 bg-paper/85 backdrop-blur-md">
+  <div class="mx-auto flex max-w-[84rem] items-center justify-between gap-6 px-gutter" data-header-bar>
     <!-- LEFT: Church Logo / Church Name -->
     <a href={localePath(lang, '')} class="group flex shrink-0 items-center gap-3.5 no-underline">
       <img
@@ -102,7 +102,7 @@ const isActive = (item: Resolved) => {
 
     <!-- CENTER / RIGHT: Editorial Clean Navigation Links -->
     <nav class="hidden lg:block" aria-label={t('site.menu')}>
-      <ul class="flex items-center gap-8 text-[0.9375rem] font-medium text-ink">
+      <ul class="flex items-center gap-6 xl:gap-8 text-[0.9375rem] font-medium text-ink">
         {
           items.map((item) => (
             <li class="relative">
@@ -110,9 +110,10 @@ const isActive = (item: Resolved) => {
                 <a
                   href={item.href}
                   class:list={[
-                    'relative py-2 tracking-wide transition-colors hover:text-ink-soft',
-                    isActive(item) ? 'font-bold text-ink border-b-2 border-ink' : 'text-ink-soft',
+                    'nav-link relative py-2 tracking-wide transition-colors hover:text-ink',
+                    isActive(item) ? 'font-bold text-ink' : 'text-ink-soft',
                   ]}
+                  data-current={isActive(item) ? '' : undefined}
                   aria-current={isActive(item) ? 'page' : undefined}
                 >
                   {item.label}
@@ -121,9 +122,10 @@ const isActive = (item: Resolved) => {
                 <details data-nav-dropdown class="group">
                   <summary
                     class:list={[
-                      'flex items-center gap-1.5 cursor-pointer list-none py-2 tracking-wide transition-colors hover:text-ink',
-                      isActive(item) ? 'font-bold text-ink border-b-2 border-ink' : 'text-ink-soft',
+                      'nav-link flex items-center gap-1.5 cursor-pointer list-none py-2 tracking-wide transition-colors hover:text-ink',
+                      isActive(item) ? 'font-bold text-ink' : 'text-ink-soft',
                     ]}
+                    data-current={isActive(item) ? '' : undefined}
                   >
                     <span>{item.label}</span>
                     <svg
@@ -139,7 +141,7 @@ const isActive = (item: Resolved) => {
                       />
                     </svg>
                   </summary>
-                  <ul class="absolute start-0 z-50 mt-2 min-w-64 border border-rule bg-paper p-2 shadow-lg animate-in fade-in duration-150">
+                  <ul data-dropdown-panel class="absolute start-0 z-50 mt-2 min-w-64 border border-rule bg-paper-card p-2 shadow-[0_16px_40px_-16px_rgba(28,28,30,0.35)]">
                     {item.children.map((child) => (
                       <li>
                         <a
@@ -164,7 +166,7 @@ const isActive = (item: Resolved) => {
     </nav>
 
     <!-- RIGHT: Language Switcher + Primary CTA "Plan a Visit" -->
-    <div class="hidden sm:flex items-center gap-5">
+    <div class="hidden sm:flex shrink-0 items-center gap-4">
       <!-- Language Switcher -->
       <div class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ink-muted">
         <a
@@ -191,7 +193,7 @@ const isActive = (item: Resolved) => {
       <!-- Primary CTA Button (Clean square/slightly rounded) -->
       <a
         href={localePath(lang, 'contact')}
-        class="btn-action btn-primary !py-2.5 !px-5 !text-xs"
+        class="btn-action btn-primary shrink-0 whitespace-nowrap !py-2.5 !px-4 !text-[0.6875rem]"
       >
         <span>{t('home.ctaPlanVisit')}</span>
         <span>&rarr;</span>
@@ -220,6 +222,7 @@ const isActive = (item: Resolved) => {
         </summary>
 
         <nav
+          data-mobile-panel
           class="fixed inset-x-0 top-[65px] h-[calc(100dvh-65px)] overflow-y-auto border-t border-rule bg-paper p-6 shadow-2xl z-50 flex flex-col justify-between"
           aria-label={t('site.menu')}
         >
@@ -277,6 +280,84 @@ const isActive = (item: Resolved) => {
   }
   summary::marker {
     content: '';
+  }
+
+  /* The header sits flat on the hero and lifts off the page once content
+     starts passing under it. Both properties are cheap to animate. */
+  [data-site-header] {
+    border-block-end: 1px solid transparent;
+    transition:
+      border-color var(--dur-state) ease,
+      box-shadow var(--dur-state) var(--ease-out),
+      background-color var(--dur-state) ease;
+  }
+
+  [data-site-header][data-scrolled] {
+    border-block-end-color: var(--color-rule);
+    box-shadow: 0 10px 30px -24px rgba(28, 28, 30, 0.55);
+  }
+
+  [data-header-bar] {
+    padding-block: 1rem;
+  }
+
+  /* Underline drawn, not bordered: an inactive item reserves the same box, so
+     nothing shifts when the active page changes. */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: inline-start;
+    transition: transform var(--dur-state) var(--ease-out);
+  }
+
+  .nav-link[data-current]::after {
+    transform: scaleX(1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Dropdowns scale out of their trigger, not out of the middle of nowhere. */
+  [data-dropdown-panel] {
+    transform-origin: top left;
+    animation: dropdown-in 170ms var(--ease-out) both;
+  }
+
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.97);
+    }
+  }
+
+  [data-mobile-panel] {
+    animation: panel-in 260ms var(--ease-out-quint) both;
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dropdown-panel],
+    [data-mobile-panel] {
+      animation: none;
+    }
+
+    .nav-link::after {
+      transition: none;
+    }
   }
 </style>
 
