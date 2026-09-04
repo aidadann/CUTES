@@ -13,60 +13,44 @@ const t = useTranslations(lang);
 const data = ministry.data;
 const title = t(`ministry.${data.id}` as UiKey);
 
-// Leaders and assistants are pulled out and shown first; everyone else keeps
-// the order they appear in roster.yaml.
-const isLead = (role: string) => role !== 'member';
-const leads = data.members.filter((member) => isLead(member.role));
-const members = data.members.filter((member) => !isLead(member.role));
+// Leaders and assistants are named with their role; everyone else keeps the
+// order they appear in roster.yaml.
+const leads = data.members.filter((member) => member.role !== 'member');
+const members = data.members.filter((member) => member.role === 'member');
 ---
 
-<section
-  id={data.id}
-  class="scroll-mt-24 rounded-card border border-line bg-surface-raised p-6 sm:p-7"
-  aria-labelledby={`ministry-${data.id}`}
->
-  <header>
-    <h3 id={`ministry-${data.id}`} class="font-display text-xl font-semibold">
-      {title}
-    </h3>
+{/* Set like a printed roster: a rule, a heading, names in columns. Sixty
+    names in sixty identical bordered cards is unreadable. */}
+<section id={data.id} class="scroll-mt-8 border-t border-ink pt-5" aria-labelledby={`ministry-${data.id}`}>
+  <h3 id={`ministry-${data.id}`} class="text-xl font-semibold">{title}</h3>
+
+  {data.description && <p class="mt-1.5 max-w-[56ch] font-serif text-ink-soft">{data.description[lang]}</p>}
+
+  <dl class="mt-5">
     {
-      data.description && (
-        <p class="mt-1.5 text-sm text-content-muted">{data.description[lang]}</p>
-      )
+      leads.map((member) => (
+        <div class="flex flex-wrap items-baseline gap-x-4 border-b border-rule py-2.5">
+          <dt class="w-40 shrink-0 text-[0.9375rem]" style="color: var(--color-cutes)">
+            {t(`role.${member.role}` as UiKey)}
+          </dt>
+          <dd class="font-semibold">
+            {member.name}
+            {member.detail && <span class="ms-2 font-normal text-sm text-ink-soft">{member.detail}</span>}
+          </dd>
+        </div>
+      ))
     }
-  </header>
-
-  <div class="divider-diamond my-5" aria-hidden="true">
-    <span class="block h-2 w-2 rotate-45 bg-brand-gold"></span>
-  </div>
-
-  {
-    leads.length > 0 && (
-      <ul class="grid gap-3 sm:grid-cols-2">
-        {leads.map((member) => (
-          <li class="rounded-lg bg-surface-sunken px-4 py-3">
-            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-cutes">
-              {t(`role.${member.role}` as UiKey)}
-            </p>
-            <p class="mt-0.5 font-medium">{member.name}</p>
-            {member.detail && <p class="text-xs text-content-muted">{member.detail}</p>}
-          </li>
-        ))}
-      </ul>
-    )
-  }
+  </dl>
 
   {
     members.length > 0 && (
-      <div class:list={[leads.length > 0 && 'mt-5']}>
-        <h4 class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-content-muted">
-          {t('role.member')}
-        </h4>
-        <ul class="mt-2 flex flex-wrap gap-x-6 gap-y-1.5 text-sm">
+      <div class="mt-5">
+        <h4 class="text-[0.9375rem] text-ink-soft">{t('role.member')}</h4>
+        <ul class="mt-2 columns-2 gap-8 text-[0.9375rem] [column-fill:balance]">
           {members.map((member) => (
-            <li>
+            <li class="break-inside-avoid py-0.5">
               {member.name}
-              {member.detail && <span class="text-content-muted"> · {member.detail}</span>}
+              {member.detail && <span class="block text-sm text-ink-soft">{member.detail}</span>}
             </li>
           ))}
         </ul>

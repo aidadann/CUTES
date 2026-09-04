@@ -23,7 +23,7 @@ const { Content } = await render(entry);
   title={entry.data.title}
   summary={entry.data.summary}
   path={`parish/${slug}`}
-  kicker={t('parish.title')}
+  note={t('parish.title')}
   crumbs={[{ label: t('nav.parish'), href: localePath(lang, 'parish') }]}
   updated={entry.data.updated}
 >

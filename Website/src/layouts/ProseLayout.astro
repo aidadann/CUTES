@@ -12,14 +12,13 @@ interface Crumb {
 interface Props {
   lang: Lang;
   title: string;
-  /** Meta description and page lead. */
   summary: string;
   path: string;
-  kicker?: string;
+  note?: string;
   crumbs?: Crumb[];
   updated?: Date;
-  accent?: 'purple' | 'magenta';
-  /** Prayer pages get a narrower measure and a print button. */
+  accent?: 'season' | 'cutes';
+  /** Prayers get a narrower measure, larger type and a print button. */
   variant?: 'page' | 'prayer';
   image?: string;
 }
@@ -29,10 +28,10 @@ const {
   title,
   summary,
   path,
-  kicker,
+  note,
   crumbs = [],
   updated,
-  accent = 'purple',
+  accent = 'season',
   variant = 'page',
   image,
 } = Astro.props;
@@ -41,23 +40,31 @@ const t = useTranslations(lang);
 ---
 
 <BaseLayout lang={lang} title={title} description={summary} path={path} type="article" image={image}>
-  <PageHeader lang={lang} title={title} lead={summary} kicker={kicker} crumbs={crumbs} accent={accent} />
+  <PageHeader
+    lang={lang}
+    title={title}
+    lead={summary}
+    note={note}
+    crumbs={crumbs}
+    accent={accent}
+  />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
-    <div class:list={['mx-auto', variant === 'prayer' ? 'prose-page prose-prayer' : 'prose-page']}>
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
+    <div class:list={['reading border-t border-rule pt-10', variant === 'prayer' && 'prayer']}>
       <slot />
     </div>
 
     <div
       class:list={[
-        'mx-auto mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5 text-xs text-content-muted',
-        variant === 'prayer' ? 'max-w-[46ch]' : 'max-w-[68ch]',
+        'mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-5 text-[0.875rem] text-ink-soft',
+        variant === 'prayer' ? 'max-w-[44ch]' : 'max-w-[63ch]',
       ]}
     >
       {
         updated ? (
           <p>
-            {t('common.updated')} <time datetime={updated.toISOString()}>{formatDate(updated, lang)}</time>
+            {t('common.updated')}{' '}
+            <time datetime={updated.toISOString()}>{formatDate(updated, lang)}</time>
           </p>
         ) : (
           <span />
@@ -71,7 +78,7 @@ const t = useTranslations(lang);
             data-print-button
             data-print="hide"
             hidden
-            class="rounded-md border border-line-strong px-3 py-1.5 font-medium text-content transition-colors hover:border-accent hover:text-accent"
+            class="link cursor-pointer text-ink"
           >
             {t('resources.print')}
           </button>
@@ -84,9 +91,8 @@ const t = useTranslations(lang);
 </BaseLayout>
 
 <script>
-  // The print stylesheet does the work; this is just the affordance. Hidden
-  // entirely when JavaScript is off, which is correct — a dead button is worse
-  // than no button, and the browser's own print command still works.
+  // The print stylesheet does the work; this is only the affordance, and it
+  // stays hidden without JavaScript because a dead button is worse than none.
   document.querySelectorAll<HTMLButtonElement>('[data-print-button]').forEach((button) => {
     button.hidden = false;
     button.addEventListener('click', () => window.print());

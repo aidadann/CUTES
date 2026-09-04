@@ -2,8 +2,8 @@
 title: Gawai and Kaamatan Celebration
 summary: The Dayak and Kadazandusun harvest festivals, celebrated by the students who are far from home for them.
 order: 2
-startDate: 2026-05-30
-endDate: 2026-05-30
+startDate: 2027-05-29
+endDate: 2027-05-29
 location: Parish hall, Most Holy Redeemer Church
 gallery: gawai-kaamatan
 annual: true

@@ -25,7 +25,7 @@ const full = await Promise.all(
 
 {
   photos.length === 0 ? (
-    <p class="rounded-card border border-dashed border-line-strong px-5 py-10 text-center text-content-muted">
+    <p class="border-t border-rule pt-6 font-serif text-lg text-ink-soft">
       {t('gallery.empty')}
     </p>
   ) : (
@@ -39,7 +39,7 @@ const full = await Promise.all(
           <li>
             <a
               href={full[index]!.src}
-              class="group block overflow-hidden rounded-lg bg-surface-sunken"
+              class="block overflow-hidden bg-paper-shade"
               data-photo
               data-index={index}
               data-full={full[index]!.src}
@@ -55,7 +55,7 @@ const full = await Promise.all(
                 sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
                 loading={index < 4 ? 'eager' : 'lazy'}
                 decoding="async"
-                class="aspect-square h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                class="aspect-square h-full w-full object-cover"
               />
             </a>
           </li>

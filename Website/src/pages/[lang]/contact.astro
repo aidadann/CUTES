@@ -18,63 +18,44 @@ const tel = site.phone.replace(/\s/g, '');
 <BaseLayout lang={lang} title={t('contact.title')} description={t('contact.lead')} path="contact">
   <PageHeader lang={lang} title={t('contact.title')} lead={t('contact.lead')} />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
-    <div class="grid gap-10 lg:grid-cols-2">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
+    <div class="grid gap-12 border-t border-ink pt-8 lg:grid-cols-2 lg:gap-16">
       <div>
-        <dl class="space-y-7">
-          <div>
-            <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-              {t('contact.address')}
-            </dt>
-            <dd class="mt-2">
-              <address class="not-italic leading-relaxed">
-                {site.address.line1}<br />
-                {site.address.line2}<br />
-                {site.address.postcode} {site.address.city}<br />
-                {site.address.state}, {site.address.country}
-              </address>
-            </dd>
-          </div>
+        <address class="not-italic">
+          <p class="text-[clamp(1.5rem,1.2rem+1.2vw,2.25rem)] font-semibold leading-tight">
+            {site.address.line2}<br />
+            <span class="tabular">{site.address.postcode}</span>
+            {site.address.city}
+          </p>
+          <p class="mt-2 text-ink-soft">{site.address.state}, {site.address.country}</p>
+        </address>
 
-          <div>
-            <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-              {t('contact.email')}
-            </dt>
-            <dd class="mt-2">
-              <a href={`mailto:${site.email}`} class="font-medium hover:underline">{site.email}</a>
-            </dd>
-          </div>
+        <p class="mt-8">
+          <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" class="button">
+            {t('contact.openMaps')}
+          </a>
+        </p>
 
-          <div>
-            <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-              {t('contact.phone')}
-            </dt>
-            <dd class="mt-2">
-              <a href={`tel:${tel}`} class="font-medium hover:underline">{site.phoneDisplay}</a>
-            </dd>
+        <dl class="mt-10 border-t border-rule">
+          <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
+            <dt class="w-32 shrink-0 text-ink-soft">{t('contact.email')}</dt>
+            <dd><a href={`mailto:${site.email}`} class="link">{site.email}</a></dd>
           </div>
-
-          <div>
-            <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-              {t('contact.hours')}
-            </dt>
-            <dd class="mt-2 text-content-muted">{t('contact.hoursValue')}</dd>
+          <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
+            <dt class="w-32 shrink-0 text-ink-soft">{t('contact.phone')}</dt>
+            <dd><a href={`tel:${tel}`} class="link tabular">{site.phoneDisplay}</a></dd>
           </div>
-
+          <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
+            <dt class="w-32 shrink-0 text-ink-soft">{t('contact.hours')}</dt>
+            <dd class="max-w-[32ch]">{t('contact.hoursValue')}</dd>
+          </div>
           {
             socials.length > 0 && (
-              <div>
-                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-                  {t('contact.follow')}
-                </dt>
-                <dd class="mt-2 flex gap-4">
+              <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
+                <dt class="w-32 shrink-0 text-ink-soft">{t('contact.follow')}</dt>
+                <dd class="flex gap-5">
                   {socials.map(([name, url]) => (
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="font-medium capitalize hover:underline"
-                    >
+                    <a href={url} target="_blank" rel="noopener noreferrer" class="link capitalize">
                       {name}
                     </a>
                   ))}
@@ -84,61 +65,18 @@ const tel = site.phone.replace(/\s/g, '');
           }
         </dl>
 
-        <section class="mt-10 rounded-card border border-line bg-accent-cutes-soft p-5">
-          <h2 class="font-display text-lg font-semibold">{t('contact.cutesHeading')}</h2>
-          <p class="mt-1.5 text-sm text-content-muted">{t('contact.cutesLead')}</p>
+        <section class="mt-12" style="border-top: 3px solid var(--color-cutes)">
+          <h2 class="mt-5 text-xl font-semibold">{t('contact.cutesHeading')}</h2>
+          <p class="mt-1.5 max-w-[48ch] font-serif text-ink-soft">{t('contact.cutesLead')}</p>
           <p class="mt-3">
-            <a href={`mailto:${site.cutesEmail}`} class="font-medium hover:underline">
-              {site.cutesEmail}
-            </a>
+            <a href={`mailto:${site.cutesEmail}`} class="link">{site.cutesEmail}</a>
           </p>
         </section>
       </div>
 
       <div>
-        <h2 class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-          {t('contact.map')}
-        </h2>
-
-        {/* A link and a static illustration, not an embedded map. An iframe
-            here would load several hundred kilobytes of third-party
-            JavaScript and set cookies on a page that exists to show an
-            address. */}
-        <a
-          href={site.mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group mt-3 block overflow-hidden rounded-card border border-line bg-surface-sunken"
-        >
-          <div class="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-accent-soft via-surface-sunken to-surface-sunken">
-            <span class="text-center">
-              <svg
-                class="mx-auto h-10 w-10 text-accent"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                />
-                <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5" />
-              </svg>
-              <span class="mt-3 block font-medium group-hover:underline">
-                {t('contact.openMaps')}
-              </span>
-              <span class="mt-1 block text-sm text-content-muted">
-                {site.address.city}, {site.address.state}
-              </span>
-            </span>
-          </div>
-        </a>
-
-        <h2 class="mt-10 text-xs font-semibold uppercase tracking-[0.14em] text-brand-gold-ink">
-          {t('schedule.title')}
-        </h2>
-        <div class="mt-3">
+        <h2 class="text-xl font-semibold">{t('schedule.title')}</h2>
+        <div class="mt-4">
           <MassScheduleTable lang={lang} highlightOnly />
         </div>
       </div>

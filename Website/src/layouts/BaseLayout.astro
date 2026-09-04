@@ -1,6 +1,8 @@
 ---
-import '@fontsource-variable/fraunces';
-import '@fontsource-variable/inter';
+// Weight axis only. The width axis is another 50KB on the first load of every
+// page, and this site is read on phones over campus wifi.
+import '@fontsource-variable/archivo/wght.css';
+import '@fontsource-variable/source-serif-4/wght.css';
 import '../styles/global.css';
 
 import Footer from '../components/Footer.astro';
@@ -9,6 +11,7 @@ import Seo from '../components/Seo.astro';
 import { site } from '../data/site';
 import { useTranslations, type Lang } from '../i18n/ui';
 import { assetPath, htmlLang } from '../i18n/utils';
+import { liturgicalDay } from '../lib/liturgical';
 
 interface Props {
   lang: Lang;
@@ -32,18 +35,25 @@ const {
 } = Astro.props;
 
 const t = useTranslations(lang);
+
+// The whole site's accent colour, decided by the church calendar rather than
+// by a brand guideline. Set once, here, on <html>.
+const today = liturgicalDay();
+
+const themeColour = { violet: '#5b2b8a', white: '#7a5a12', red: '#a8161c', green: '#14603c' }[
+  today.colour
+];
 ---
 
 <!doctype html>
-<html lang={htmlLang[lang]}>
+<html lang={htmlLang[lang]} data-season={today.colour}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href={assetPath('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={assetPath('logo.jpg')} />
-    <meta name="theme-color" content="#7b1fa2" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#14101a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content={themeColour} />
     <Seo
       lang={lang}
       title={title}
@@ -58,12 +68,12 @@ const t = useTranslations(lang);
   <body class="flex min-h-dvh flex-col">
     <a
       href="#main"
-      class="sr-only rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50"
+      class="sr-only bg-ink px-4 py-2 text-sm font-semibold text-paper focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50"
     >
       {t('site.skip')}
     </a>
 
-    <Header lang={lang} path={path} />
+    <Header lang={lang} path={path} season={today} />
 
     <main id="main" class="grow">
       <slot />

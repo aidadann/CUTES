@@ -2,8 +2,8 @@
 title: Hari Keluarga CUTES
 summary: Seluruh komuniti berkumpul untuk sehari — junior, senior, dan graduan yang pulang.
 order: 3
-startDate: 2026-07-18
-endDate: 2026-07-18
+startDate: 2027-07-17
+endDate: 2027-07-17
 location: TODO — tempat
 gallery: family-day
 annual: true

@@ -27,26 +27,23 @@ const totalPhotos = albums.reduce((sum, album) => sum + album.count, 0);
 ---
 
 <BaseLayout lang={lang} title={t('gallery.title')} description={t('gallery.lead')} path="gallery">
-  <PageHeader lang={lang} title={t('gallery.title')} lead={t('gallery.lead')} accent="magenta" />
+  <PageHeader lang={lang} title={t('gallery.title')} lead={t('gallery.lead')} accent="cutes" />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
     {
       totalPhotos === 0 && (
-        <p class="mb-8 rounded-card border border-dashed border-line-strong px-5 py-6 text-center text-sm text-content-muted">
+        <p class="mb-10 max-w-[52ch] border-t border-rule pt-6 font-serif text-lg text-ink-soft">
           {t('gallery.emptyAll')}
         </p>
       )
     }
 
-    <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {
         albums.map((album) => (
           <li>
-            <a
-              href={localePath(lang, `gallery/${album.id}`)}
-              class="group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface-raised transition-shadow hover:shadow-md"
-            >
-              <div class="aspect-[4/3] overflow-hidden bg-surface-sunken">
+            <a href={localePath(lang, `gallery/${album.id}`)} class="block no-underline">
+              <div class="aspect-[4/3] overflow-hidden bg-paper-shade">
                 {album.cover ? (
                   <Image
                     src={album.cover}
@@ -57,30 +54,28 @@ const totalPhotos = albums.reduce((sum, album) => sum + album.count, 0);
                     sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
                     loading="lazy"
                     decoding="async"
-                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    class="h-full w-full object-cover"
                   />
                 ) : (
+                  /* An empty album is honest about being empty rather than
+                     filling the space with a decorative placeholder. */
                   <div
-                    class="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent-cutes-soft to-surface-sunken"
+                    class="flex h-full w-full items-end p-4 text-sm text-ink-soft"
                     aria-hidden="true"
                   >
-                    <span class="block h-9 w-9 rotate-45 border-2 border-brand-gold" />
+                    {t('gallery.emptyAll')}
                   </div>
                 )}
               </div>
 
-              <div class="flex grow flex-col p-5">
-                <h2 class="font-display text-lg font-semibold group-hover:text-accent-cutes">
-                  {album.title}
-                </h2>
-                {album.description && (
-                  <p class="mt-1.5 text-sm text-content-muted">{album.description}</p>
-                )}
-                <p class="mt-3 text-xs uppercase tracking-[0.1em] text-content-muted">
-                  {album.count}{' '}
-                  {album.count === 1 ? t('gallery.photoCountOne') : t('gallery.photoCount')}
-                </p>
-              </div>
+              <h2 class="mt-3 text-lg font-semibold">{album.title}</h2>
+              {album.description && (
+                <p class="mt-1 font-serif text-[0.9375rem] text-ink-soft">{album.description}</p>
+              )}
+              <p class="mt-1.5 text-sm text-ink-soft">
+                <span class="tabular">{album.count}</span>{' '}
+                {album.count === 1 ? t('gallery.photoCountOne') : t('gallery.photoCount')}
+              </p>
             </a>
           </li>
         ))

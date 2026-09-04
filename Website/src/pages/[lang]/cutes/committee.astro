@@ -14,7 +14,6 @@ const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 
 const ministries = (await getCollection('ministries')).sort((a, b) => a.data.order - b.data.order);
-const totalMembers = ministries.reduce((sum, entry) => sum + entry.data.members.length, 0);
 ---
 
 <BaseLayout
@@ -27,23 +26,20 @@ const totalMembers = ministries.reduce((sum, entry) => sum + entry.data.members.
     lang={lang}
     title={t('cutes.committeeTitle')}
     lead={t('cutes.committeeLead')}
-    kicker={`${t('cutes.year')} ${site.committeeYear}`}
+    note={`${t('cutes.year')} ${site.committeeYear}`}
     crumbs={[{ label: t('nav.cutes'), href: localePath(lang, 'cutes') }]}
-    accent="magenta"
+    accent="cutes"
   />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
-    <!-- Jump list. On a page of sixty names this is the difference between
-         usable and not, especially on a phone. -->
-    <nav aria-label={t('cutes.ministries')} data-print="hide">
-      <ul class="flex flex-wrap gap-2">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
+    <!-- On a page of sixty names a jump list is the difference between usable
+         and not, especially on a phone. -->
+    <nav aria-label={t('cutes.ministries')} data-print="hide" class="border-t border-rule pt-5">
+      <ul class="flex flex-wrap gap-x-6 gap-y-1.5 text-[0.9375rem] text-ink-soft">
         {
           ministries.map((ministry) => (
             <li>
-              <a
-                href={`#${ministry.data.id}`}
-                class="link-quiet inline-block rounded-full border border-line px-3.5 py-1.5 text-xs font-medium transition-colors hover:border-accent-cutes hover:text-accent-cutes"
-              >
+              <a href={`#${ministry.data.id}`} class="no-underline hover:underline">
                 {t(`ministry.${ministry.data.id}` as UiKey)}
               </a>
             </li>
@@ -52,12 +48,7 @@ const totalMembers = ministries.reduce((sum, entry) => sum + entry.data.members.
       </ul>
     </nav>
 
-    <p class="mt-6 text-sm text-content-muted">
-      {totalMembers} {t('role.member').toLowerCase()} &middot; {ministries.length}{' '}
-      {t('cutes.ministries').toLowerCase()}
-    </p>
-
-    <div class="mt-8 grid gap-6 lg:grid-cols-2">
+    <div class="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-x-16">
       {ministries.map((ministry) => <MinistryRoster lang={lang} ministry={ministry} />)}
     </div>
   </div>

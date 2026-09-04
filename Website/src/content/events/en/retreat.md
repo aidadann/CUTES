@@ -2,8 +2,8 @@
 title: CUTES Retreat
 summary: Two days away from campus for prayer, silence, talks and confession.
 order: 1
-startDate: 2026-03-13
-endDate: 2026-03-15
+startDate: 2027-03-12
+endDate: 2027-03-14
 location: TODO — retreat centre
 gallery: retreat
 annual: true

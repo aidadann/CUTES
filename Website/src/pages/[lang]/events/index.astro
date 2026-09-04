@@ -17,22 +17,18 @@ const { upcoming, past } = splitEvents(await localized('events', lang));
 <BaseLayout lang={lang} title={t('events.title')} description={t('events.lead')} path="events">
   <PageHeader lang={lang} title={t('events.title')} lead={t('events.lead')} />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
     <section>
-      <h2 class="font-display text-xl font-semibold">{t('events.upcoming')}</h2>
+      <h2 class="text-xl font-semibold">{t('events.upcoming')}</h2>
       {
         upcoming.length === 0 ? (
-          <p class="mt-4 rounded-card border border-dashed border-line-strong px-5 py-10 text-center text-content-muted">
-            {t('events.emptyUpcoming')}
-          </p>
+          <p class="mt-4 border-t border-ink pt-6 text-ink-soft">{t('events.emptyUpcoming')}</p>
         ) : (
-          <ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="mt-4 border-t border-ink">
             {upcoming.map((entry) => (
-              <li>
-                <EventCard lang={lang} entry={entry} />
-              </li>
+              <EventCard lang={lang} entry={entry} />
             ))}
-          </ul>
+          </div>
         )
       }
     </section>
@@ -40,14 +36,12 @@ const { upcoming, past } = splitEvents(await localized('events', lang));
     {
       past.length > 0 && (
         <section class="mt-16">
-          <h2 class="font-display text-xl font-semibold">{t('events.past')}</h2>
-          <ul class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 class="text-xl font-semibold">{t('events.past')}</h2>
+          <div class="mt-4 border-t border-ink">
             {past.map((entry) => (
-              <li>
-                <EventCard lang={lang} entry={entry} past />
-              </li>
+              <EventCard lang={lang} entry={entry} past />
             ))}
-          </ul>
+          </div>
         </section>
       )
     }

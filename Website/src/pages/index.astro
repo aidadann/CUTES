@@ -24,28 +24,38 @@ const ms = localePath('ms');
     <link rel="canonical" href={en} />
     <title>{site.parishName}, {site.town}</title>
     <style>
+      /* Standalone: this page loads before the site's stylesheet, so it
+         carries its own copy of the palette. Keep the two in step. */
       body {
         margin: 0;
         min-height: 100dvh;
         display: grid;
         place-content: center;
-        gap: 1rem;
+        gap: 1.25rem;
         text-align: center;
         font-family: system-ui, sans-serif;
-        background: #fdfbf7;
-        color: #1a1a1a;
+        background: #fff;
+        color: #000;
+      }
+      p {
+        margin: 0;
       }
       a {
-        color: #7b1fa2;
+        color: #000;
         font-weight: 600;
+        text-underline-offset: 0.2em;
+      }
+      .sep {
+        color: #a8a19a;
+        margin: 0 0.6em;
       }
       @media (prefers-color-scheme: dark) {
         body {
-          background: #14101a;
-          color: #f2ece2;
+          background: #0d0c0b;
+          color: #f6f3ee;
         }
         a {
-          color: #d9a3f0;
+          color: #f6f3ee;
         }
       }
     </style>
@@ -62,7 +72,7 @@ const ms = localePath('ms');
   <body>
     <p>{site.parishName}, {site.town}</p>
     <p>
-      <a href={en}>English</a> &nbsp;&middot;&nbsp; <a href={ms}>Bahasa Malaysia</a>
+      <a href={en}>English</a><span class="sep" aria-hidden="true">/</span><a href={ms}>Bahasa Malaysia</a>
     </p>
   </body>
 </html>

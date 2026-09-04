@@ -4,9 +4,8 @@ import { useTranslations, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
-  /** Show only the entries flagged `highlight: true` — used on the home page. */
+  /** Show only the entries flagged `highlight: true`. */
   highlightOnly?: boolean;
-  /** Filter to one kind of celebration. */
   kind?: 'mass' | 'confession' | 'adoration' | 'devotion';
 }
 
@@ -34,57 +33,22 @@ const rows = all
 
 {
   rows.length === 0 ? (
-    <p class="text-content-muted">{t('schedule.empty')}</p>
+    <p class="text-ink-soft">{t('schedule.empty')}</p>
   ) : (
-    <div class="overflow-x-auto">
-      <table class="w-full min-w-0 border-collapse text-start">
-        <caption class="sr-only">{t('schedule.title')}</caption>
-        <thead>
-          <tr class="border-b border-line-strong text-start text-[0.7rem] uppercase tracking-[0.12em] text-content-muted">
-            <th scope="col" class="py-2.5 pe-4 text-start font-semibold">
-              {t('schedule.day')}
-            </th>
-            <th scope="col" class="py-2.5 pe-4 text-start font-semibold">
-              {t('schedule.time')}
-            </th>
-            <th scope="col" class="py-2.5 pe-4 text-start font-semibold">
-              {t('schedule.language')}
-            </th>
-            <th scope="col" class="hidden py-2.5 text-start font-semibold sm:table-cell">
-              {t('schedule.note')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr class="border-b border-line align-top last:border-0">
-              <th scope="row" class="py-3 pe-4 text-start font-display text-base font-semibold">
-                {dayNames[row.data.day]?.[lang] ?? row.data.day}
-              </th>
-              <td class="py-3 pe-4 tabular-nums">{row.data.time}</td>
-              <td class="py-3 pe-4 text-content-muted">{row.data.language}</td>
-              <td class="hidden py-3 text-sm text-content-muted sm:table-cell">
-                {row.data.note?.[lang] ?? ''}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* On phones the notes column is dropped from the table and listed below,
-          so nothing is lost and nothing scrolls sideways. */}
-      <ul class="mt-4 space-y-1 text-sm text-content-muted sm:hidden">
-        {rows
-          .filter((row) => row.data.note)
-          .map((row) => (
-            <li>
-              <span class="font-medium text-content">
-                {dayNames[row.data.day]?.[lang] ?? row.data.day} {row.data.time}
-              </span>{' '}
-              — {row.data.note?.[lang]}
-            </li>
-          ))}
-      </ul>
-    </div>
+    /* A list rather than a table: the day, the time and the language are one
+       statement, and on a phone a three-column table either scrolls sideways
+       or drops a column. */
+    <ul class="border-t border-rule">
+      {rows.map((row) => (
+        <li class="grid gap-x-8 gap-y-1 border-b border-rule py-4 sm:grid-cols-[10rem_7rem_1fr]">
+          <span class="font-semibold">{dayNames[row.data.day]?.[lang] ?? row.data.day}</span>
+          <span class="clock tabular text-lg leading-tight">{row.data.time}</span>
+          <span class="text-ink-soft">
+            {row.data.language}
+            {row.data.note && <span class="block text-sm">{row.data.note[lang]}</span>}
+          </span>
+        </li>
+      ))}
+    </ul>
   )
 }

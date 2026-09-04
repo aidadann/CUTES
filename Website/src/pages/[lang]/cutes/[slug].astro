@@ -27,10 +27,10 @@ const { Content } = await render(entry);
   title={entry.data.title}
   summary={entry.data.summary}
   path={`cutes/${slug}`}
-  kicker={t('cutes.title')}
+  note={t('cutes.title')}
   crumbs={[{ label: t('nav.cutes'), href: localePath(lang, 'cutes') }]}
   updated={entry.data.updated}
-  accent="magenta"
+  accent="cutes"
 >
   <Content />
 </ProseLayout>

@@ -1,19 +1,19 @@
 ---
-import { Image } from 'astro:assets';
-import logo from '../assets/logo.jpg';
 import { site } from '../data/site';
 import { nav, type NavItem } from '../i18n/nav';
 import { languageShort, useTranslations, type Lang, type UiKey } from '../i18n/ui';
 import { localePath, otherLang, switchLangPath } from '../i18n/utils';
 import { localized, slugOf } from '../lib/content';
+import type { LiturgicalDay } from '../lib/liturgical';
 
 interface Props {
   lang: Lang;
   /** Current path below the language segment, used to mark the active item. */
   path: string;
+  season: LiturgicalDay;
 }
 
-const { lang, path } = Astro.props;
+const { lang, path, season } = Astro.props;
 const t = useTranslations(lang);
 const other = otherLang(lang);
 
@@ -38,79 +38,60 @@ const dynamicChildren = {
 };
 
 type Resolved = {
-  key: UiKey;
   label: string;
   href: string;
   path: string;
   children: { label: string; href: string; path: string }[];
 };
 
-const items: Resolved[] = nav.map((item: NavItem) => {
-  const children = item.dynamic
-    ? [
-        { label: t(`${item.dynamic}.all` as UiKey), href: localePath(lang, item.path), path: item.path },
-        ...dynamicChildren[item.dynamic],
-      ]
-    : (item.children ?? []).map((child) => ({
-        label: t(child.key),
-        href: localePath(lang, child.path),
-        path: child.path,
-      }));
+const items: Resolved[] = nav
+  .filter((item) => item.path !== '')
+  .map((item: NavItem) => {
+    const children = item.dynamic
+      ? [
+          {
+            label: t(`${item.dynamic}.all` as UiKey),
+            href: localePath(lang, item.path),
+            path: item.path,
+          },
+          ...dynamicChildren[item.dynamic],
+        ]
+      : (item.children ?? []).map((child) => ({
+          label: t(child.key),
+          href: localePath(lang, child.path),
+          path: child.path,
+        }));
 
-  return {
-    key: item.key,
-    label: t(item.key),
-    href: localePath(lang, item.path),
-    path: item.path,
-    children,
-  };
-});
+    return {
+      label: t(item.key),
+      href: localePath(lang, item.path),
+      path: item.path,
+      children,
+    };
+  });
 
 const isActive = (item: Resolved) => {
-  if (item.path === '') return path === '';
   const root = item.path.split('/')[0]!;
   if (path === item.path || path === root || path.startsWith(`${root}/`)) return true;
   // The bulletin and the mass schedule sit at the top level but belong under
   // "Parish" in the menu, so match on the children too.
   return item.children.some((child) => path === child.path || path.startsWith(`${child.path}/`));
 };
-
-const switchHref = switchLangPath(Astro.url.pathname, other);
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-line bg-surface/85 backdrop-blur supports-[backdrop-filter]:bg-surface/75"
-  data-print="hide"
->
-  <div class="mx-auto flex max-w-6xl items-center gap-3 px-gutter py-3">
-    <a
-      href={localePath(lang, '')}
-      class="link-quiet flex shrink-0 items-center gap-3"
-      aria-label={`${site.parishName} — ${t('site.home')}`}
-    >
-      <Image
-        src={logo}
-        alt=""
-        width={44}
-        height={44}
-        loading="eager"
-        class="h-11 w-11 rounded-md object-cover ring-1 ring-line-strong"
-      />
-      <span class="leading-tight">
-        <span class="block font-display text-[0.95rem] font-semibold tracking-tight sm:text-base">
-          {site.parishShortName}
-        </span>
-        <span class="block text-[0.7rem] uppercase tracking-[0.14em] text-content-muted">
-          {site.town}
-        </span>
+<header data-print="hide">
+  <div class="mx-auto flex max-w-[80rem] items-center gap-6 px-gutter py-4">
+    <a href={localePath(lang, '')} class="flex shrink-0 items-baseline gap-2.5 no-underline">
+      <span class="text-[1.0625rem] font-semibold leading-none tracking-tight sm:text-lg">
+        {site.parishShortName}
       </span>
+      <span class="hidden text-sm text-ink-soft sm:inline">{site.town}</span>
     </a>
 
     <div class="grow"></div>
 
-    <!-- Desktop navigation -->
     <nav class="hidden lg:block" aria-label={t('site.menu')}>
-      <ul class="flex items-center gap-1">
+      <ul class="flex items-center gap-6 text-[0.9375rem]">
         {
           items.map((item) => (
             <li class="relative">
@@ -118,47 +99,33 @@ const switchHref = switchLangPath(Astro.url.pathname, other);
                 <a
                   href={item.href}
                   class:list={[
-                    'block rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                    isActive(item)
-                      ? 'text-accent'
-                      : 'text-content hover:bg-accent-soft hover:text-accent',
+                    'py-2 no-underline decoration-2 underline-offset-[6px] hover:underline',
+                    isActive(item) && 'underline',
                   ]}
+                  style={isActive(item) ? 'text-decoration-color: var(--season)' : undefined}
                   aria-current={isActive(item) ? 'page' : undefined}
                 >
                   {item.label}
                 </a>
               ) : (
-                <details class="group" data-nav-dropdown>
+                <details data-nav-dropdown>
                   <summary
                     class:list={[
-                      'flex cursor-pointer list-none items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                      isActive(item)
-                        ? 'text-accent'
-                        : 'text-content hover:bg-accent-soft hover:text-accent',
+                      'cursor-pointer list-none py-2 decoration-2 underline-offset-[6px] hover:underline',
+                      isActive(item) && 'underline',
                     ]}
+                    style={isActive(item) ? 'text-decoration-color: var(--season)' : undefined}
                   >
                     {item.label}
-                    <svg
-                      class="h-3 w-3 transition-transform group-open:rotate-180"
-                      viewBox="0 0 12 12"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path d="M2 4.5 6 8.5 10 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                    </svg>
                   </summary>
-                  <ul
-                    class="absolute start-0 z-50 mt-1 min-w-56 rounded-lg border border-line bg-surface-raised p-1.5 shadow-lg shadow-black/5"
-                  >
+                  <ul class="absolute start-0 z-50 mt-2 min-w-60 bg-paper py-2 shadow-[0_0_0_1px_var(--color-rule)]">
                     {item.children.map((child) => (
                       <li>
                         <a
                           href={child.href}
                           class:list={[
-                            'block rounded-md px-3 py-2 text-sm transition-colors',
-                            path === child.path
-                              ? 'bg-accent-soft text-accent'
-                              : 'text-content hover:bg-accent-soft hover:text-accent',
+                            'block px-4 py-2 no-underline hover:bg-paper-shade',
+                            path === child.path && 'font-semibold',
                           ]}
                           aria-current={path === child.path ? 'page' : undefined}
                         >
@@ -175,55 +142,51 @@ const switchHref = switchLangPath(Astro.url.pathname, other);
       </ul>
     </nav>
 
-    <a
-      href={switchHref}
-      hreflang={other}
-      lang={other}
-      rel="alternate"
-      class="ms-1 shrink-0 rounded-md border border-line-strong px-2.5 py-1.5 text-xs font-semibold tracking-wide text-content transition-colors hover:border-accent hover:text-accent"
-      title={t('site.switchTo')}
-    >
-      {languageShort[other]}
-    </a>
+    {/* Both languages sit side by side rather than behind a toggle: in this
+        parish neither one is the translation of the other. */}
+    <p class="flex shrink-0 items-center gap-1.5 text-[0.9375rem]">
+      <span class="font-semibold" aria-current="true">{languageShort[lang]}</span>
+      <span class="text-rule-strong" aria-hidden="true">/</span>
+      <a
+        href={switchLangPath(Astro.url.pathname, other)}
+        hreflang={other}
+        lang={other}
+        rel="alternate"
+        class="text-ink-soft no-underline hover:underline"
+        title={t('site.switchTo')}
+      >
+        {languageShort[other]}
+      </a>
+    </p>
 
-    <!-- Mobile menu: a <details> element, so it works with JavaScript off -->
     <details class="lg:hidden" data-mobile-menu>
       <summary
-        class="flex cursor-pointer list-none items-center gap-1.5 rounded-md border border-line-strong px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wide"
+        class="cursor-pointer list-none px-1 py-1.5 text-[0.9375rem] font-semibold"
         aria-label={t('site.menu')}
       >
-        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-        </svg>
         {t('site.menu')}
       </summary>
 
       <nav
-        class="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-line bg-surface-raised px-gutter pb-8 pt-2 shadow-lg"
+        class="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-paper px-gutter pb-10 pt-4"
         aria-label={t('site.menu')}
       >
-        <ul class="mx-auto max-w-6xl divide-y divide-line">
+        <ul class="mx-auto max-w-[80rem]">
           {
             items.map((item) => (
-              <li class="py-1">
+              <li class="border-b border-rule py-3 last:border-0">
                 <a
                   href={item.href}
-                  class:list={[
-                    'block rounded-md px-2 py-2.5 font-display text-lg font-semibold',
-                    isActive(item) ? 'text-accent' : 'text-content',
-                  ]}
-                  aria-current={isActive(item) ? 'page' : undefined}
+                  class:list={['block text-xl font-semibold no-underline', isActive(item) && 'underline']}
+                  style={isActive(item) ? 'text-decoration-color: var(--season)' : undefined}
                 >
                   {item.label}
                 </a>
                 {item.children.length > 0 && (
-                  <ul class="mb-1 ms-2 border-s border-line ps-3">
+                  <ul class="mt-1.5 flex flex-wrap gap-x-5 gap-y-1 text-[0.9375rem] text-ink-soft">
                     {item.children.map((child) => (
                       <li>
-                        <a
-                          href={child.href}
-                          class="block rounded px-2 py-1.5 text-sm text-content-muted hover:text-accent"
-                        >
+                        <a href={child.href} class="no-underline hover:underline">
                           {child.label}
                         </a>
                       </li>
@@ -237,10 +200,16 @@ const switchHref = switchLangPath(Astro.url.pathname, other);
       </nav>
     </details>
   </div>
+
+  {/* The season's colour, stated plainly. It is the only ornament on the page
+      and it is also a fact: this is what colour the vestments are today. */}
+  <div class="rule-season"></div>
+  <p class="mx-auto max-w-[80rem] px-gutter pb-1 pt-1.5 text-[0.8125rem] text-ink-soft">
+    {season.name[lang]}
+  </p>
 </header>
 
 <style>
-  /* Hide the default disclosure triangle across engines. */
   summary::-webkit-details-marker {
     display: none;
   }
@@ -262,8 +231,7 @@ const switchHref = switchLangPath(Astro.url.pathname, other);
 
   document.addEventListener('click', (event) => {
     const target = event.target as Element | null;
-    const inside = target?.closest('[data-nav-dropdown], [data-mobile-menu]');
-    closeAll(inside ?? undefined);
+    closeAll(target?.closest('[data-nav-dropdown], [data-mobile-menu]') ?? undefined);
   });
 
   document.addEventListener('keydown', (event) => {

@@ -1,14 +1,11 @@
 ---
-import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import { render } from 'astro:content';
 
-import logo from '../../assets/logo.jpg';
-import EventCard from '../../components/EventCard.astro';
-import MassScheduleTable from '../../components/MassScheduleTable.astro';
 import { site } from '../../data/site';
 import { useTranslations, type Lang } from '../../i18n/ui';
-import { localeParams, localePath } from '../../i18n/utils';
-import { localized, localizedEntry, splitEvents } from '../../lib/content';
+import { formatDateRange, localeParams, localePath } from '../../i18n/utils';
+import { localized, localizedEntry, slugOf, splitEvents } from '../../lib/content';
 import { listBulletins } from '../../lib/bulletin';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -17,8 +14,37 @@ export const getStaticPaths = localeParams;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 
+const dayNames: Record<string, { en: string; ms: string }> = {
+  monday: { en: 'Monday', ms: 'Isnin' },
+  tuesday: { en: 'Tuesday', ms: 'Selasa' },
+  wednesday: { en: 'Wednesday', ms: 'Rabu' },
+  thursday: { en: 'Thursday', ms: 'Khamis' },
+  friday: { en: 'Friday', ms: 'Jumaat' },
+  saturday: { en: 'Saturday', ms: 'Sabtu' },
+  sunday: { en: 'Sunday', ms: 'Ahad' },
+  'first-friday': { en: 'First Friday', ms: 'Jumaat Pertama' },
+  weekday: { en: 'Weekdays', ms: 'Hari biasa' },
+};
+
+/**
+ * "8:30 am" -> { clock: "8:30", meridiem: "am" }, so the digits can be set
+ * large and the meridiem small beside them. Times without a meridiem (a
+ * 24-hour parish, or a range) pass through whole.
+ */
+function splitTime(time: string): { clock: string; meridiem: string } {
+  const match = /^(.*?)\s*(am|pm|AM|PM)$/.exec(time.trim());
+  return match ? { clock: match[1]!, meridiem: match[2]!.toLowerCase() } : { clock: time, meridiem: '' };
+}
+
 const vision = await localizedEntry('pages', lang, 'vision-mission');
 const { Content: Vision } = vision ? await render(vision) : { Content: null };
+
+const masses = (await getCollection('massTimes'))
+  .filter((entry) => entry.data.kind === 'mass')
+  .sort((a, b) => a.data.order - b.data.order);
+
+const sunday = masses.filter((entry) => entry.data.day === 'sunday');
+const otherMasses = masses.filter((entry) => entry.data.day !== 'sunday');
 
 const { upcoming } = splitEvents(await localized('events', lang));
 const nextEvents = upcoming.slice(0, 3);
@@ -26,108 +52,127 @@ const latestBulletin = listBulletins()[0];
 ---
 
 <BaseLayout lang={lang} title={site.parishName} description={t('home.heroLead')} path="">
-  <!-- Hero ---------------------------------------------------------------->
-  <section class="relative overflow-hidden border-b border-line bg-surface-sunken">
-    <div
-      class="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rotate-45 bg-gradient-to-br from-brand-gold/20 to-transparent"
-      aria-hidden="true"
-    >
-    </div>
+  <!-- The hero is the timetable. On a parish website it is what almost
+       everyone came for, so it is the first thing on the page at the size
+       you can read from across a room. -->
+  <section class="mx-auto max-w-[80rem] px-gutter pb-16 pt-10 sm:pt-16">
+    <h1 class="max-w-[16ch] text-[clamp(2.5rem,1.4rem+4.6vw,5rem)] font-semibold">
+      {site.parishName}
+    </h1>
+    <p class="mt-5 max-w-[46ch] font-serif text-lg leading-relaxed text-ink-soft sm:text-xl">
+      {t('home.heroLead')}
+    </p>
 
-    <div class="mx-auto grid max-w-6xl gap-10 px-gutter py-16 sm:py-20 lg:grid-cols-[1.35fr_1fr] lg:items-center">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-gold-ink">
-          {t('home.kicker')}
-        </p>
-        <h1 class="mt-3 font-display text-hero font-semibold">
-          {site.parishName}
-        </h1>
-        <p class="mt-1 font-display text-xl text-content-muted sm:text-2xl">
-          {site.town}, {site.state}
-        </p>
-        <p class="mt-6 max-w-xl text-lg text-content-muted">{t('home.heroLead')}</p>
+    <div class="mt-12 border-t border-rule sm:mt-16">
+      <h2 class="sr-only">{t('home.scheduleTitle')}</h2>
 
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            href={localePath(lang, 'mass-schedule')}
-            class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
-          >
-            {t('home.ctaMass')}
-          </a>
-          <a
-            href={localePath(lang, 'bulletin')}
-            class="rounded-md border border-line-strong px-5 py-2.5 text-sm font-semibold transition-colors hover:border-accent hover:text-accent"
-          >
-            {t('home.ctaBulletin')}
-            {latestBulletin && <span class="ms-1.5 text-content-muted">· {latestBulletin.iso}</span>}
-          </a>
-        </div>
+      <p class="pt-6 text-lg font-semibold sm:text-xl">
+        {dayNames.sunday?.[lang]}
+      </p>
+
+      <ul class="mt-3">
+        {
+          sunday.map((entry) => (
+            <li class="flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-rule py-4 sm:gap-x-10">
+              <span class="flex shrink-0 items-baseline gap-1 sm:w-[9rem]">
+                <span class="clock text-[clamp(1.75rem,1.1rem+2.4vw,3rem)] leading-none">
+                  {splitTime(entry.data.time).clock}
+                </span>
+                <span class="text-sm text-ink-soft sm:text-base">
+                  {splitTime(entry.data.time).meridiem}
+                </span>
+              </span>
+              <span class="text-base sm:text-lg">
+                {entry.data.language}
+                {entry.data.note && (
+                  <span class="block text-sm text-ink-soft sm:text-base">
+                    {entry.data.note[lang]}
+                  </span>
+                )}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <ul class="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-[0.9375rem] text-ink-soft">
+        {
+          otherMasses.map((entry) => (
+            <li>
+              <span class="text-ink">{dayNames[entry.data.day]?.[lang] ?? entry.data.day}</span>{' '}
+              <span class="tabular">{entry.data.time}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a href={localePath(lang, 'bulletin')} class="button">
+          {t('home.ctaBulletin')}
+        </a>
+        <a href={localePath(lang, 'contact')} class="button-quiet">{t('contact.map')}</a>
+        {
+          latestBulletin && (
+            <span class="text-sm text-ink-soft">
+              {t('bulletin.thisWeek')} <time datetime={latestBulletin.iso}>{latestBulletin.iso}</time>
+            </span>
+          )
+        }
       </div>
 
-      <div class="justify-self-center lg:justify-self-end">
-        <Image
-          src={logo}
-          alt={`${site.communityName} — ${site.communityFullName}`}
-          width={320}
-          height={320}
-          loading="eager"
-          fetchpriority="high"
-          class="h-56 w-56 rounded-2xl object-cover shadow-lg ring-1 ring-line-strong sm:h-72 sm:w-72"
-        />
-      </div>
+      <p class="mt-8 text-[0.9375rem] text-ink-soft">
+        {site.address.line2}, {site.address.postcode} {site.address.city}.{' '}
+        <a href={localePath(lang, 'mass-schedule')} class="link text-ink">
+          {t('home.scheduleAll')}
+        </a>
+      </p>
     </div>
   </section>
 
-  <!-- Vision and mission -------------------------------------------------->
+  <!-- Vision and mission, set as something to read rather than as cards. -->
   {
     Vision && (
-      <section class="mx-auto max-w-6xl px-gutter py-16">
-        <h2 class="font-display text-2xl font-semibold sm:text-3xl">{t('home.visionTitle')}</h2>
-        <div class="prose-page mt-6">
-          <Vision />
+      <section class="border-t border-rule bg-paper-shade">
+        <div class="mx-auto max-w-[80rem] px-gutter py-16 sm:py-20">
+          <div class="reading">
+            <Vision />
+          </div>
         </div>
       </section>
     )
   }
 
-  <!-- Mass schedule ------------------------------------------------------->
-  <section class="border-y border-line bg-surface-sunken">
-    <div class="mx-auto max-w-6xl px-gutter py-16">
-      <div class="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h2 class="font-display text-2xl font-semibold sm:text-3xl">{t('home.scheduleTitle')}</h2>
-          <p class="mt-1.5 text-content-muted">{t('home.scheduleLead')}</p>
-        </div>
-        <a href={localePath(lang, 'mass-schedule')} class="text-sm font-semibold hover:underline">
-          {t('home.scheduleAll')} &rarr;
-        </a>
-      </div>
-
-      <div class="mt-8">
-        <MassScheduleTable lang={lang} highlightOnly />
-      </div>
-    </div>
-  </section>
-
-  <!-- Upcoming events ----------------------------------------------------->
-  <section class="mx-auto max-w-6xl px-gutter py-16">
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <h2 class="font-display text-2xl font-semibold sm:text-3xl">{t('home.eventsTitle')}</h2>
-      <a href={localePath(lang, 'events')} class="text-sm font-semibold hover:underline">
-        {t('home.eventsAll')} &rarr;
-      </a>
+  <!-- What's on. Three items is a list, not a grid of cards. -->
+  <section class="mx-auto max-w-[80rem] px-gutter py-16 sm:py-20">
+    <div class="flex flex-wrap items-baseline justify-between gap-4">
+      <h2 class="text-2xl font-semibold sm:text-3xl">{t('home.eventsTitle')}</h2>
+      <a href={localePath(lang, 'events')} class="link text-[0.9375rem]">{t('home.eventsAll')}</a>
     </div>
 
     {
       nextEvents.length === 0 ? (
-        <p class="mt-8 rounded-card border border-dashed border-line-strong px-5 py-10 text-center text-content-muted">
-          {t('home.eventsEmpty')}
-        </p>
+        <p class="mt-8 border-t border-rule pt-6 text-ink-soft">{t('home.eventsEmpty')}</p>
       ) : (
-        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul class="mt-8 border-t border-rule">
           {nextEvents.map((entry) => (
-            <li>
-              <EventCard lang={lang} entry={entry} />
+            <li class="border-b border-rule">
+              <a
+                href={localePath(lang, `events/${slugOf(entry.id)}`)}
+                class="grid gap-x-8 gap-y-1 py-6 no-underline sm:grid-cols-[13rem_1fr]"
+              >
+                <time
+                  datetime={entry.data.startDate.toISOString().slice(0, 10)}
+                  class="text-[0.9375rem] font-semibold"
+                  style="color: var(--season-ink)"
+                >
+                  {formatDateRange(entry.data.startDate, entry.data.endDate, lang)}
+                </time>
+                <div>
+                  <h3 class="text-xl font-semibold sm:text-2xl">{entry.data.title}</h3>
+                  <p class="mt-1 max-w-[60ch] font-serif text-ink-soft">{entry.data.summary}</p>
+                  <p class="mt-1.5 text-sm text-ink-soft">{entry.data.location}</p>
+                </div>
+              </a>
             </li>
           ))}
         </ul>
@@ -135,17 +180,20 @@ const latestBulletin = listBulletins()[0];
     }
   </section>
 
-  <!-- CUTES band ---------------------------------------------------------->
-  <section class="border-t border-line bg-accent-cutes-soft">
-    <div class="mx-auto max-w-6xl px-gutter py-16">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-accent-cutes">
+  <!-- The one loud thing on the site. CUTES is a student community; it is
+       allowed to be the part that shouts. -->
+  <section style="background: var(--color-cutes-band); color: #fff">
+    <div class="mx-auto max-w-[80rem] px-gutter py-20 sm:py-28">
+      <h2 class="max-w-[14ch] text-[clamp(2.5rem,1.5rem+4vw,4.5rem)] font-semibold leading-[0.95]">
         {site.communityFullName}
+      </h2>
+      <p class="mt-6 max-w-[52ch] font-serif text-lg leading-relaxed text-white/85 sm:text-xl">
+        {t('home.cutesLead')}
       </p>
-      <h2 class="mt-2 font-display text-2xl font-semibold sm:text-3xl">{t('home.cutesTitle')}</h2>
-      <p class="mt-3 max-w-2xl text-content-muted">{t('home.cutesLead')}</p>
       <a
         href={localePath(lang, 'cutes')}
-        class="mt-6 inline-block rounded-md bg-accent-cutes px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+        class="mt-9 inline-block bg-white px-6 py-3 font-semibold no-underline"
+        style="color: var(--color-cutes-band)"
       >
         {t('home.cutesCta')}
       </a>

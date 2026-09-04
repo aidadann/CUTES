@@ -15,7 +15,6 @@ const categories = ['prayer', 'devotion', 'other'] as const;
 
 const grouped = categories
   .map((category) => ({
-    category,
     heading: t(`resources.category.${category}` as UiKey),
     entries: resources.filter((entry) => entry.data.category === category),
   }))
@@ -30,24 +29,20 @@ const grouped = categories
 >
   <PageHeader lang={lang} title={t('resources.title')} lead={t('resources.lead')} />
 
-  <div class="mx-auto max-w-4xl px-gutter py-12">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
     {
       grouped.map((group) => (
-        <section class="mb-12">
-          <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-brand-gold-ink">
-            {group.heading}
-          </h2>
-          <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+        <section class="mb-14">
+          <h2 class="text-xl font-semibold">{group.heading}</h2>
+          <ul class="mt-4 border-t border-ink">
             {group.entries.map((entry) => (
-              <li>
+              <li class="border-b border-rule">
                 <a
                   href={localePath(lang, `resources/${slugOf(entry.id)}`)}
-                  class="group flex h-full flex-col rounded-card border border-line bg-surface-raised p-5 transition-shadow hover:shadow-md"
+                  class="grid gap-x-10 gap-y-1 py-6 no-underline sm:grid-cols-[18rem_1fr]"
                 >
-                  <h3 class="font-display text-lg font-semibold group-hover:text-accent">
-                    {entry.data.title}
-                  </h3>
-                  <p class="mt-1.5 text-sm text-content-muted">{entry.data.summary}</p>
+                  <h3 class="text-xl font-semibold sm:text-2xl">{entry.data.title}</h3>
+                  <p class="max-w-[58ch] font-serif text-ink-soft">{entry.data.summary}</p>
                 </a>
               </li>
             ))}

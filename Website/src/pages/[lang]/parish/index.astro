@@ -12,14 +12,10 @@ const t = useTranslations(lang);
 
 const pages = (await localized('pages', lang)).filter((entry) => entry.data.section === 'parish');
 
-// The two pages that are not prose live outside the `pages` collection, so
-// they are added here by hand to keep this index complete.
-const cards = [
-  {
-    title: t('nav.bulletin'),
-    summary: t('bulletin.lead'),
-    href: localePath(lang, 'bulletin'),
-  },
+// The bulletin and the schedule are not prose pages, so they are added by
+// hand to keep this index complete.
+const entries = [
+  { title: t('nav.bulletin'), summary: t('bulletin.lead'), href: localePath(lang, 'bulletin') },
   {
     title: t('nav.massSchedule'),
     summary: t('home.scheduleLead'),
@@ -34,22 +30,16 @@ const cards = [
 ---
 
 <BaseLayout lang={lang} title={t('parish.title')} description={t('parish.lead')} path="parish">
-  <PageHeader lang={lang} title={t('parish.title')} lead={t('parish.lead')} crumbs={[]} />
+  <PageHeader lang={lang} title={t('parish.title')} lead={t('parish.lead')} />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
-    <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
+    <ul class="border-t border-ink">
       {
-        cards.map((card) => (
-          <li>
-            <a
-              href={card.href}
-              class="group flex h-full flex-col rounded-card border border-line bg-surface-raised p-6 transition-shadow hover:shadow-md"
-            >
-              <span class="block h-2.5 w-2.5 rotate-45 bg-brand-gold" aria-hidden="true" />
-              <h2 class="mt-4 font-display text-xl font-semibold group-hover:text-accent">
-                {card.title}
-              </h2>
-              <p class="mt-2 text-sm text-content-muted">{card.summary}</p>
+        entries.map((entry) => (
+          <li class="border-b border-rule">
+            <a href={entry.href} class="grid gap-x-10 gap-y-1 py-6 no-underline sm:grid-cols-[18rem_1fr]">
+              <h2 class="text-xl font-semibold sm:text-2xl">{entry.title}</h2>
+              <p class="max-w-[58ch] font-serif text-ink-soft">{entry.summary}</p>
             </a>
           </li>
         ))

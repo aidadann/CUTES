@@ -1,123 +1,115 @@
 @import 'tailwindcss';
 
-/* -------------------------------------------------------------------------
-   Design tokens
-   -------------------------------------------------------------------------
-   Brand colours are sampled from Requirement/logo.md. They are the *palette*,
-   not the interface: everything on screen is painted with the semantic tokens
-   below, so dark mode is a token swap rather than a second stylesheet.
+/* =========================================================================
+   Most Holy Redeemer, Tanjung Malim
 
-   Contrast note, deliberate and load-bearing: the logo gold (#D4AF37) scores
-   1.9:1 on white and is unreadable as text. It is used only for rules,
-   borders, and the diamond motif. Where gold must carry words we use
-   --color-brand-gold-ink (#6B5310, 7.1:1 on ivory).
-   ------------------------------------------------------------------------- */
+   The page is white paper, black ink, and one colour taken from the
+   liturgical season — violet in Advent and Lent, gold at Christmas and
+   Easter, red at Pentecost, green the rest of the year. The season is
+   computed at build time in src/lib/liturgical.ts and set as
+   data-season on <html>, so the whole site turns over with the church year.
+
+   Structure comes from rules and space. There is no card kit, no gradient,
+   and no shadow: a parish bulletin is a sheet of paper with lines on it, and
+   that is a better model for this site than a dashboard.
+
+   The one loud thing is the CUTES band. Everything else stays quiet so it
+   can be loud.
+   ========================================================================= */
 
 @theme {
-  /* Brand palette — from the logo, do not repaint */
-  --color-brand-gold: #d4af37;
-  --color-brand-gold-bright: #f4ea00;
-  --color-brand-gold-ink: #6b5310;
-  --color-brand-purple: #7b1fa2;
-  --color-brand-purple-deep: #55136f;
-  --color-brand-magenta: #d81b60;
-  --color-brand-crimson: #e53935;
-  --color-brand-ink: #1a1a1a;
+  /* --- Ground ---------------------------------------------------------- */
+  --color-paper: #ffffff;
+  --color-paper-shade: #f4f2ee;
+  --color-ink: #000000;
+  --color-ink-soft: #5a5551;
+  --color-rule: #ddd8d1;
+  --color-rule-strong: #a8a19a;
 
-  /* Semantic tokens — light theme is the default definition */
-  --color-surface: #fdfbf7;
-  --color-surface-raised: #ffffff;
-  --color-surface-sunken: #f5f0e6;
-  --color-surface-invert: #221a2b;
+  /* --- Liturgical accents ---------------------------------------------- */
+  --color-violet: #5b2b8a;
+  --color-gold: #7a5a12;
+  --color-red: #a8161c;
+  --color-green: #14603c;
 
-  --color-content: #1a1a1a;
-  --color-content-muted: #57534e;
-  --color-content-invert: #fdfbf7;
-  --color-content-invert-muted: #d9cfe4;
+  /* --- CUTES ------------------------------------------------------------ */
+  /* Two values, because they do two jobs. The band is a background that
+     carries white type, so it has to stay dark in both themes. The text
+     variant sits on paper and has to lighten in the dark theme. */
+  --color-cutes-band: #b3164f;
+  --color-cutes: #b3164f;
 
-  --color-accent: #7b1fa2;
-  --color-accent-hover: #55136f;
-  --color-accent-soft: #f3e8f8;
-  --color-accent-cutes: #d81b60;
-  --color-accent-cutes-soft: #fde7ef;
-  --color-alert: #c62828;
+  /* --- Type ------------------------------------------------------------- */
+  --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4 Variable', ui-serif, Georgia, 'Times New Roman', serif;
 
-  --color-line: #e5ded0;
-  --color-line-strong: #cdbfa4;
+  --spacing-gutter: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+}
 
-  /* Type */
-  --font-display: 'Fraunces Variable', 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-
-  --text-hero: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
-  --text-hero--line-height: 1.05;
-  --text-hero--letter-spacing: -0.02em;
-
-  /* Rhythm */
-  --spacing-gutter: clamp(1rem, 0.5rem + 2vw, 2.5rem);
-  --radius-card: 0.75rem;
-
-  /* Motion */
-  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+/* The season colour, resolved once. Everything downstream uses --season. */
+:root {
+  --season: var(--color-green);
+  --season-ink: var(--color-green);
+}
+[data-season='violet'] {
+  --season: var(--color-violet);
+  --season-ink: var(--color-violet);
+}
+[data-season='white'] {
+  --season: var(--color-gold);
+  --season-ink: var(--color-gold);
+}
+[data-season='red'] {
+  --season: var(--color-red);
+  --season-ink: var(--color-red);
+}
+[data-season='green'] {
+  --season: var(--color-green);
+  --season-ink: var(--color-green);
 }
 
 @media (prefers-color-scheme: dark) {
-  @theme {
-    --color-surface: #14101a;
-    --color-surface-raised: #1e1826;
-    --color-surface-sunken: #0e0b13;
-    --color-surface-invert: #f5f0e6;
+  :root {
+    --color-paper: #0d0c0b;
+    --color-paper-shade: #171512;
+    --color-ink: #f6f3ee;
+    --color-ink-soft: #a9a29a;
+    --color-rule: #2e2a26;
+    --color-rule-strong: #57504a;
 
-    --color-content: #f2ece2;
-    --color-content-muted: #b3a9bd;
-    --color-content-invert: #1a1a1a;
-    --color-content-invert-muted: #57534e;
+    --color-violet: #c79bf0;
+    --color-gold: #e2b455;
+    --color-red: #ff8a86;
+    --color-green: #5ac48f;
 
-    --color-accent: #d9a3f0;
-    --color-accent-hover: #efd4fa;
-    --color-accent-soft: #2a1c35;
-    --color-accent-cutes: #ff87ad;
-    --color-accent-cutes-soft: #33131f;
-    --color-alert: #ff8a80;
-
-    --color-line: #322a3d;
-    --color-line-strong: #4c4059;
-
-    --color-brand-gold-ink: #e9c85e;
+    /* --color-cutes-band is deliberately not redefined: white type sits on
+       it, and a lighter pink would drop that below 4.5:1. */
+    --color-cutes: #ff87ad;
   }
 }
-
-/* -------------------------------------------------------------------------
-   Base
-   ------------------------------------------------------------------------- */
 
 @layer base {
   :root {
     color-scheme: light dark;
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :root {
-      scroll-behavior: auto;
-    }
     *,
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
   }
 
   body {
-    background-color: var(--color-surface);
-    color: var(--color-content);
+    background: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 1rem;
-    line-height: 1.65;
-    text-rendering: optimizeLegibility;
+    line-height: 1.55;
+    font-synthesis: none;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -125,189 +117,199 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
-
   a {
-    color: var(--color-accent);
-    text-underline-offset: 0.2em;
-    text-decoration-thickness: from-font;
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
   }
 
   a:hover {
-    color: var(--color-accent-hover);
+    text-decoration-color: var(--season);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--season);
     outline-offset: 3px;
-    border-radius: 2px;
   }
 
   ::selection {
-    background: var(--color-brand-gold);
-    color: #1a1a1a;
-  }
-
-  hr {
-    border: 0;
-    border-top: 1px solid var(--color-line);
+    background: var(--season);
+    color: #fff;
   }
 
   table {
     border-collapse: collapse;
   }
+
+  /* Times, dates and counts line up in columns. */
+  time,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
 }
 
-/* -------------------------------------------------------------------------
-   Components
-   The logo is a rhombus split by a cross. The rotated-square motif below is
-   that shape, reused as a divider glyph and a list marker so the brand shows
-   up in the page furniture rather than only in the header image.
-   ------------------------------------------------------------------------- */
-
 @layer components {
-  .prose-page {
-    max-width: 68ch;
+  /* --- The timetable, the site's signature element --------------------- */
+  /* Size, tight tracking and tabular figures carry the timetable. An earlier
+     pass widened it on Archivo's width axis, which cost 50KB on first load of
+     every page for an effect nobody would name. */
+  .clock {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.035em;
   }
 
-  .prose-page > * + * {
-    margin-block-start: 1.1em;
+  /* --- Long-form reading ------------------------------------------------ */
+  .reading {
+    font-family: var(--font-serif);
+    font-size: 1.075rem;
+    line-height: 1.72;
+    max-width: 63ch;
   }
 
-  .prose-page h2 {
-    font-size: 1.6rem;
-    margin-block-start: 2.2em;
+  .reading > * + * {
+    margin-block-start: 1.15em;
+  }
+
+  .reading h2 {
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    margin-block-start: 2.4em;
+    margin-block-end: 0.3em;
+  }
+
+  .reading h3 {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    margin-block-start: 1.9em;
     margin-block-end: 0.2em;
   }
 
-  .prose-page h3 {
-    font-size: 1.2rem;
-    margin-block-start: 1.8em;
-    margin-block-end: 0.1em;
-  }
-
-  .prose-page ul,
-  .prose-page ol {
-    padding-inline-start: 1.4em;
-  }
-
-  .prose-page ul {
-    list-style: none;
+  .reading ul,
+  .reading ol {
     padding-inline-start: 1.3em;
   }
 
-  .prose-page ul > li {
-    position: relative;
+  .reading ul {
+    list-style: square;
   }
 
-  .prose-page ul > li::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: -1.15em;
-    inset-block-start: 0.62em;
-    width: 0.4em;
-    height: 0.4em;
-    background: var(--color-brand-gold);
-    transform: rotate(45deg);
+  .reading ul::marker {
+    color: var(--season);
   }
 
-  .prose-page ol {
-    list-style: decimal;
+  .reading li + li {
+    margin-block-start: 0.45em;
   }
 
-  .prose-page li + li {
-    margin-block-start: 0.4em;
-  }
-
-  .prose-page a {
+  .reading a {
     text-decoration: underline;
+    text-decoration-color: var(--season);
   }
 
-  .prose-page blockquote {
-    border-inline-start: 3px solid var(--color-brand-gold);
+  .reading blockquote {
+    border-inline-start: 2px solid var(--season);
     padding-inline-start: 1.1em;
-    font-style: italic;
-    color: var(--color-content-muted);
+    color: var(--color-ink-soft);
   }
 
-  .prose-page table {
+  .reading table {
     width: 100%;
-    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
   }
 
-  .prose-page th,
-  .prose-page td {
-    border-block-end: 1px solid var(--color-line);
-    padding: 0.5rem 0.75rem;
+  .reading th,
+  .reading td {
+    border-block-end: 1px solid var(--color-rule);
+    padding: 0.55rem 0.9rem 0.55rem 0;
     text-align: start;
+    vertical-align: top;
   }
 
-  /* Prayer texts. Responses are set in the accent colour and small caps so a
-     leader and an assembly can read the same page. */
-  .prose-prayer {
-    max-width: 46ch;
-    font-size: 1.075rem;
-    line-height: 1.8;
+  /* --- Prayers ---------------------------------------------------------- */
+  /* Narrower than ordinary reading, and the assembly's responses are set in
+     the season colour so a leader and a congregation can share the page. */
+  .prayer {
+    max-width: 44ch;
+    font-size: 1.125rem;
+    line-height: 1.85;
   }
 
-  .prose-prayer strong {
-    color: var(--color-accent);
+  .prayer blockquote {
+    border: 0;
+    padding: 0;
+    color: var(--season-ink);
     font-weight: 600;
   }
 
-  .prose-prayer blockquote {
+  .prayer strong {
+    color: var(--season-ink);
+    font-weight: 600;
+  }
+
+  /* --- Rules ------------------------------------------------------------ */
+  .rule-season {
     border: 0;
-    padding: 0;
-    font-style: normal;
-    color: var(--color-content);
-    font-weight: 500;
+    height: 3px;
+    background: var(--season);
   }
 
-  .prose-prayer blockquote::before {
-    content: 'R. ';
-    color: var(--color-brand-gold-ink);
-    font-variant: small-caps;
-    font-weight: 700;
-  }
-
-  .divider-diamond {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--color-line-strong);
-  }
-
-  .divider-diamond::before,
-  .divider-diamond::after {
-    content: '';
-    flex: 1;
+  .rule-hair {
+    border: 0;
     height: 1px;
-    background: currentColor;
+    background: var(--color-rule);
   }
 
-  .link-quiet {
-    color: inherit;
+  /* --- Links that behave like links ------------------------------------- */
+  .link {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule-strong);
+  }
+
+  .link:hover {
+    text-decoration-color: var(--season);
+  }
+
+  /* --- Buttons ---------------------------------------------------------- */
+  .button {
+    display: inline-block;
+    padding: 0.7rem 1.35rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    background: var(--color-ink);
+    color: var(--color-paper);
     text-decoration: none;
   }
 
-  .link-quiet:hover {
-    color: var(--color-accent);
+  .button:hover {
+    background: var(--season);
+    color: #fff;
+  }
+
+  .button-quiet {
+    display: inline-block;
+    padding: 0.7rem 1.35rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    box-shadow: inset 0 0 0 1px var(--color-rule-strong);
+    text-decoration: none;
+  }
+
+  .button-quiet:hover {
+    box-shadow: inset 0 0 0 2px var(--season);
+    color: var(--season-ink);
   }
 }
 
-/* -------------------------------------------------------------------------
-   Print — someone will print the prayers and the mass schedule.
-   ------------------------------------------------------------------------- */
-
+/* --- Print: the prayers and the schedule get printed ---------------------- */
 @media print {
   @page {
     margin: 18mm;
@@ -315,6 +317,8 @@
 
   :root {
     color-scheme: light;
+    --season: #000;
+    --season-ink: #000;
   }
 
   body {
@@ -328,15 +332,9 @@
     display: none !important;
   }
 
-  .prose-prayer,
-  .prose-page {
+  .reading,
+  .prayer {
     max-width: none;
-  }
-
-  a[href^='http']::after {
-    content: ' (' attr(href) ')';
-    font-size: 9pt;
-    color: #444;
   }
 
   h1,

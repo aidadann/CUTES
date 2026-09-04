@@ -2,8 +2,8 @@
 title: CUTES Family Day
 summary: The whole community in one place for a day — juniors, seniors, and the graduates who came back.
 order: 3
-startDate: 2026-07-18
-endDate: 2026-07-18
+startDate: 2027-07-17
+endDate: 2027-07-17
 location: TODO — venue
 gallery: family-day
 annual: true

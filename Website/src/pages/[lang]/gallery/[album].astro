@@ -38,12 +38,12 @@ const description = album.description?.[lang] ?? t('gallery.lead');
     lang={lang}
     title={title}
     lead={album.description?.[lang]}
-    kicker={`${photos.length} ${photos.length === 1 ? t('gallery.photoCountOne') : t('gallery.photoCount')}`}
+    note={`${photos.length} ${photos.length === 1 ? t('gallery.photoCountOne') : t('gallery.photoCount')}`}
     crumbs={[{ label: t('gallery.title'), href: localePath(lang, 'gallery') }]}
-    accent="magenta"
+    accent="cutes"
   />
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
+  <div class="mx-auto max-w-[80rem] px-gutter py-12">
     <PhotoGrid lang={lang} photos={photos} albumTitle={title} />
   </div>
 </BaseLayout>

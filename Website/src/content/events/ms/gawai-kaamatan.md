@@ -2,8 +2,8 @@
 title: Sambutan Gawai dan Kaamatan
 summary: Pesta menuai Dayak dan Kadazandusun, disambut oleh pelajar yang jauh dari kampung ketika itu.
 order: 2
-startDate: 2026-05-30
-endDate: 2026-05-30
+startDate: 2027-05-29
+endDate: 2027-05-29
 location: Dewan paroki, Gereja Most Holy Redeemer
 gallery: gawai-kaamatan
 annual: true

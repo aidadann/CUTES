@@ -22,53 +22,43 @@ const [latest, ...archive] = bulletins;
     crumbs={[{ label: t('nav.parish'), href: localePath(lang, 'parish') }]}
   />
 
-  <div class="mx-auto max-w-3xl px-gutter py-12">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
     {
       bulletins.length === 0 ? (
-        <p class="rounded-card border border-dashed border-line-strong px-5 py-12 text-center text-content-muted">
+        <p class="max-w-[52ch] border-t border-rule pt-6 font-serif text-lg text-ink-soft">
           {t('bulletin.empty')}
         </p>
       ) : (
         <>
+          {/* The current bulletin is the page's reason to exist, so it is set
+              at the size of a headline rather than filed as the first row of
+              a list. */}
           <a
             href={assetPath(latest!.href)}
-            class="group block rounded-card border border-line bg-surface-raised p-6 transition-shadow hover:shadow-md sm:p-8"
+            class="block border-t-[3px] border-ink pt-6 no-underline"
           >
-            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-accent-cutes">
+            <p class="text-[0.9375rem] font-semibold" style="color: var(--season-ink)">
               {t('bulletin.thisWeek')}
             </p>
-            <p class="mt-2 font-display text-2xl font-semibold group-hover:text-accent sm:text-3xl">
+            <p class="mt-2 text-[clamp(2rem,1.4rem+2.6vw,3.25rem)] font-semibold">
               <time datetime={latest!.iso}>{formatDate(latest!.date, lang)}</time>
             </p>
-            <p class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
-              {t('bulletin.download')}
-              <svg class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path
-                  d="M8 2v9m0 0 3.5-3.5M8 11 4.5 7.5M2.5 13.5h11"
-                  stroke="currentColor"
-                  stroke-width="1.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </p>
+            <p class="link mt-3 inline-block text-[0.9375rem]">{t('bulletin.download')}</p>
           </a>
 
           {archive.length > 0 && (
-            <section class="mt-12">
-              <h2 class="font-display text-lg font-semibold">{t('bulletin.archive')}</h2>
-              <ul class="mt-4 divide-y divide-line border-y border-line">
+            <section class="mt-16">
+              <h2 class="text-xl font-semibold">{t('bulletin.archive')}</h2>
+              <ul class="mt-4 max-w-[40rem] border-t border-rule">
                 {archive.map((bulletin) => (
                   <li>
                     <a
                       href={assetPath(bulletin.href)}
-                      class="link-quiet flex items-center justify-between gap-4 py-3.5 text-sm transition-colors hover:text-accent"
+                      class="flex items-baseline justify-between gap-4 border-b border-rule py-3.5 no-underline hover:underline"
                       aria-label={`${t('bulletin.open')} ${formatDate(bulletin.date, lang)}`}
                     >
-                      <time datetime={bulletin.iso} class="font-medium">
-                        {formatDate(bulletin.date, lang)}
-                      </time>
-                      <span class="text-xs uppercase tracking-wide text-content-muted">PDF</span>
+                      <time datetime={bulletin.iso}>{formatDate(bulletin.date, lang)}</time>
+                      <span class="text-sm text-ink-soft">PDF</span>
                     </a>
                   </li>
                 ))}
@@ -76,7 +66,7 @@ const [latest, ...archive] = bulletins;
             </section>
           )}
 
-          <p class="mt-8 text-xs text-content-muted">{t('bulletin.pdfNote')}</p>
+          <p class="mt-8 text-[0.875rem] text-ink-soft">{t('bulletin.pdfNote')}</p>
         </>
       )
     }

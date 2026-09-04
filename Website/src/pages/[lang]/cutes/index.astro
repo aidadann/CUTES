@@ -1,7 +1,6 @@
 ---
 import { render } from 'astro:content';
 
-import PageHeader from '../../../components/PageHeader.astro';
 import { site } from '../../../data/site';
 import { useTranslations, type Lang } from '../../../i18n/ui';
 import { localeParams, localePath } from '../../../i18n/utils';
@@ -30,31 +29,32 @@ const links = [
   description={about?.data.summary ?? t('home.cutesLead')}
   path="cutes"
 >
-  <PageHeader
-    lang={lang}
-    title={site.communityName}
-    kicker={site.communityFullName}
-    lead={about?.data.summary ?? t('home.cutesLead')}
-    accent="magenta"
-  />
+  {/* CUTES gets the community's own colour, full bleed, the same way it does
+      on the home page. It is a students' section inside a parish site and it
+      should feel like walking into a different room. */}
+  <div style="background: var(--color-cutes-band); color: #fff">
+    <div class="mx-auto max-w-[80rem] px-gutter pb-16 pt-14 sm:pb-20 sm:pt-20">
+      <h1 class="text-[clamp(3rem,2rem+5vw,6rem)] font-semibold leading-none">
+        {site.communityName}
+      </h1>
+      <p class="mt-4 text-lg text-white/80 sm:text-xl">{site.communityFullName}</p>
+      <p class="mt-6 max-w-[52ch] font-serif text-lg leading-relaxed text-white/90">
+        {about?.data.summary ?? t('home.cutesLead')}
+      </p>
+    </div>
+  </div>
 
-  <div class="mx-auto max-w-6xl px-gutter py-12">
-    <div class="prose-page">
-      {Content ? <Content /> : <p class="text-content-muted">{t('common.todo')}</p>}
+  <div class="mx-auto max-w-[80rem] px-gutter py-14">
+    <div class="reading">
+      {Content ? <Content /> : <p class="text-ink-soft">{t('common.todo')}</p>}
     </div>
 
-    <nav class="mt-14 border-t border-line pt-8" aria-label={t('common.moreIn')}>
-      <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-accent-cutes">
-        {t('common.moreIn')} {site.communityName}
-      </h2>
-      <ul class="mt-4 flex flex-wrap gap-2">
+    <nav class="mt-16 border-t border-ink pt-6" aria-label={t('common.moreIn')}>
+      <ul class="flex flex-wrap gap-x-8 gap-y-2 text-lg font-semibold">
         {
           links.map((link) => (
             <li>
-              <a
-                href={link.href}
-                class="link-quiet inline-block rounded-md border border-line px-4 py-2 text-sm transition-colors hover:border-accent-cutes hover:text-accent-cutes"
-              >
+              <a href={link.href} class="no-underline hover:underline">
                 {link.title}
               </a>
             </li>

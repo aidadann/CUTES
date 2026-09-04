@@ -8,7 +8,6 @@ import { slugOf } from '../lib/content';
 interface Props {
   lang: Lang;
   entry: CollectionEntry<'events'>;
-  /** Past events are shown desaturated so the upcoming list reads first. */
   past?: boolean;
 }
 
@@ -18,59 +17,42 @@ const href = localePath(lang, `events/${slugOf(entry.id)}`);
 const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
 ---
 
-<article
-  class:list={[
-    'group relative flex flex-col overflow-hidden rounded-card border border-line bg-surface-raised transition-shadow hover:shadow-md',
-    past && 'opacity-80',
-  ]}
->
-  <div class="aspect-[16/9] overflow-hidden bg-surface-sunken">
-    {
-      entry.data.cover ? (
-        <Image
-          src={entry.data.cover}
-          alt={entry.data.coverAlt ?? ''}
-          width={640}
-          height={360}
-          loading="lazy"
-          decoding="async"
-          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      ) : (
-        <div
-          class="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent-soft to-surface-sunken"
-          aria-hidden="true"
-        >
-          <span class="block h-8 w-8 rotate-45 border-2 border-brand-gold"></span>
-        </div>
-      )
-    }
-  </div>
+{/* A dated row, not a card. The date is the thing people scan for, so it gets
+    the left margin and the season's colour; the photograph, when there is one,
+    sits to the right rather than being a mandatory header image. */}
+<article class="border-b border-rule">
+  <a href={href} class="grid gap-x-8 gap-y-3 py-7 no-underline sm:grid-cols-[13rem_1fr]">
+    <time
+      datetime={entry.data.startDate.toISOString().slice(0, 10)}
+      class:list={['text-[0.9375rem] font-semibold', past && 'text-ink-soft']}
+      style={past ? undefined : 'color: var(--season-ink)'}
+    >
+      {when}
+    </time>
 
-  <div class="flex grow flex-col p-5">
-    <p class="text-xs font-semibold uppercase tracking-[0.12em] text-brand-gold-ink">
-      <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>{when}</time>
-    </p>
+    <div class="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-start">
+      <div>
+        <h3 class="text-xl font-semibold sm:text-2xl">{entry.data.title}</h3>
+        <p class="mt-1.5 max-w-[58ch] font-serif text-ink-soft">{entry.data.summary}</p>
+        <p class="mt-2 text-sm text-ink-soft">
+          <span class="sr-only">{t('events.where')}: </span>
+          {entry.data.location}
+        </p>
+      </div>
 
-    <h3 class="mt-2 font-display text-xl font-semibold leading-snug">
-      <a href={href} class="link-quiet after:absolute after:inset-0 after:content-['']">
-        {entry.data.title}
-      </a>
-    </h3>
-
-    <p class="mt-2 text-sm text-content-muted">{entry.data.summary}</p>
-
-    <p class="mt-4 flex items-center gap-1.5 text-xs text-content-muted">
-      <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path
-          d="M8 14s5-4.2 5-8A5 5 0 0 0 3 6c0 3.8 5 8 5 8Z"
-          stroke="currentColor"
-          stroke-width="1.3"
-        />
-        <circle cx="8" cy="6" r="1.7" stroke="currentColor" stroke-width="1.3" />
-      </svg>
-      <span class="sr-only">{t('events.where')}: </span>
-      {entry.data.location}
-    </p>
-  </div>
+      {
+        entry.data.cover && (
+          <Image
+            src={entry.data.cover}
+            alt={entry.data.coverAlt ?? ''}
+            width={320}
+            height={214}
+            loading="lazy"
+            decoding="async"
+            class="h-32 w-full object-cover sm:w-48"
+          />
+        )
+      }
+    </div>
+  </a>
 </article>

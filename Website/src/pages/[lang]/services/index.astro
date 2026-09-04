@@ -17,38 +17,37 @@ const services = await localized('services', lang);
 <BaseLayout lang={lang} title={t('services.title')} description={t('services.lead')} path="services">
   <PageHeader lang={lang} title={t('services.title')} lead={t('services.lead')} />
 
-  <div class="mx-auto max-w-4xl px-gutter py-12">
-    <ul class="divide-y divide-line border-y border-line">
+  <div class="mx-auto max-w-[80rem] px-gutter pb-16">
+    <ul class="border-t border-ink">
       {
         services.map((entry) => (
-          <li>
+          <li class="border-b border-rule">
             <a
               href={localePath(lang, `services/${slugOf(entry.id)}`)}
-              class="link-quiet group flex flex-col gap-1 py-6 sm:flex-row sm:items-baseline sm:gap-6"
+              class="grid gap-x-10 gap-y-1 py-6 no-underline sm:grid-cols-[18rem_1fr]"
             >
-              <h2 class="font-display text-xl font-semibold group-hover:text-accent sm:w-56 sm:shrink-0">
-                {entry.data.title}
-              </h2>
-              <span class="text-sm text-content-muted">
-                {entry.data.summary}
+              <div>
+                <h2 class="text-xl font-semibold sm:text-2xl">{entry.data.title}</h2>
+                {/* How much notice the parish needs is the single most useful
+                    fact on this page, so it sits with the title. */}
                 {entry.data.noticePeriod && (
-                  <span class="mt-1 block text-xs uppercase tracking-wide text-brand-gold-ink">
+                  <p class="mt-1 text-[0.9375rem]" style="color: var(--season-ink)">
                     {entry.data.noticePeriod}
-                  </span>
+                  </p>
                 )}
-              </span>
+              </div>
+              <p class="max-w-[58ch] font-serif text-ink-soft">{entry.data.summary}</p>
             </a>
           </li>
         ))
       }
     </ul>
 
-    <aside class="mt-10 rounded-card border border-line bg-surface-sunken p-5 text-sm">
-      <p class="text-content-muted">{t('services.contactFallback')}</p>
+    <aside class="mt-10 max-w-[52ch] text-ink-soft">
+      <p>{t('services.contactFallback')}</p>
       <p class="mt-2">
-        <a href={`mailto:${site.email}`} class="font-medium hover:underline">{site.email}</a>
-        <span class="text-content-muted"> &middot; </span>
-        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="font-medium hover:underline">
+        <a href={`mailto:${site.email}`} class="link text-ink">{site.email}</a><br />
+        <a href={`tel:${site.phone.replace(/\s/g, '')}`} class="link tabular text-ink">
           {site.phoneDisplay}
         </a>
       </p>
