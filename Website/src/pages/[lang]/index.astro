@@ -1,11 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import { render } from 'astro:content';
 
 import { site } from '../../data/site';
 import { useTranslations, type Lang } from '../../i18n/ui';
-import { formatDateRange, localeParams, localePath } from '../../i18n/utils';
-import { localized, localizedEntry, slugOf, splitEvents } from '../../lib/content';
+import { formatDateRange, localeParams, localePath, assetPath } from '../../i18n/utils';
+import { localized, slugOf, splitEvents } from '../../lib/content';
 import { listBulletins } from '../../lib/bulletin';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -14,543 +13,557 @@ export const getStaticPaths = localeParams;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 
-const dayNames: Record<string, { en: string; ms: string }> = {
-  monday: { en: 'Monday', ms: 'Isnin' },
-  tuesday: { en: 'Tuesday', ms: 'Selasa' },
-  wednesday: { en: 'Wednesday', ms: 'Rabu' },
-  thursday: { en: 'Thursday', ms: 'Khamis' },
-  friday: { en: 'Friday', ms: 'Jumaat' },
-  saturday: { en: 'Saturday', ms: 'Sabtu' },
-  sunday: { en: 'Sunday', ms: 'Ahad' },
-  'first-friday': { en: 'First Friday', ms: 'Jumaat Pertama' },
-  weekday: { en: 'Weekdays', ms: 'Hari biasa' },
-};
-
-/**
- * "8:30 am" -> { clock: "8:30", meridiem: "am" }, so the digits can be set
- * large and the meridiem small beside them. Times without a meridiem (a
- * 24-hour parish, or a range) pass through whole.
- */
-function splitTime(time: string): { clock: string; meridiem: string } {
-  const match = /^(.*?)\s*(am|pm|AM|PM)$/.exec(time.trim());
-  return match ? { clock: match[1]!, meridiem: match[2]!.toLowerCase() } : { clock: time, meridiem: '' };
-}
-
-const vision = await localizedEntry('pages', lang, 'vision-mission');
-const { Content: Vision } = vision ? await render(vision) : { Content: null };
-
 const masses = (await getCollection('massTimes'))
   .filter((entry) => entry.data.kind === 'mass')
   .sort((a, b) => a.data.order - b.data.order);
 
-const sunday = masses.filter((entry) => entry.data.day === 'sunday');
-const otherMasses = masses.filter((entry) => entry.data.day !== 'sunday');
-
+const sundayMasses = masses.filter((entry) => entry.data.day === 'sunday');
 const { upcoming } = splitEvents(await localized('events', lang));
 const nextEvents = upcoming.slice(0, 3);
 const latestBulletin = listBulletins()[0];
 ---
 
-<BaseLayout lang={lang} title={site.parishName} description={t('home.heroLead')} path="">
-  <!-- 1. HERO SECTION (Reverse-Engineered from Fellowship Church layout) -->
-  <section class="relative overflow-hidden bg-gradient-to-b from-paper via-paper-shade/50 to-paper pb-16 pt-8 sm:pb-24 sm:pt-16">
-    <!-- Subtle liturgical ambient glow -->
-    <div class="pointer-events-none absolute -top-24 left-1/2 -z-10 h-96 w-[45rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-gold/15 via-magenta/10 to-purple/15 blur-3xl"></div>
+<BaseLayout lang={lang} title={site.parishName} description={t('home.heroStatement')} path="">
+  <!-- 1. HERO SECTION (80-100vh on desktop, large photography, bold headline) -->
+  <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-paper-shade text-white">
+    <!-- Full-width photography with gentle contrast scrim -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src={assetPath('hero-community.jpg')}
+        alt="Church fellowship and worship community"
+        class="h-full w-full object-cover object-center filter brightness-[0.62] contrast-[1.05]"
+        loading="eager"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/30 to-transparent"></div>
+    </div>
 
+    <div class="relative z-10 mx-auto max-w-[84rem] w-full px-gutter py-24 sm:py-32 flex flex-col justify-end min-h-[85vh]">
+      <div class="max-w-4xl reveal-on-scroll">
+        <p class="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-gold-light mb-4">
+          {site.parishName} • {site.diocese}
+        </p>
+
+        <h1 class="font-heading text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white leading-[0.98] drop-shadow-sm">
+          {t('home.heroHeadline')}
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-lg sm:text-2xl font-normal text-white/90 leading-relaxed drop-shadow-xs">
+          {t('home.heroStatement')}
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center gap-4">
+          <a
+            href={localePath(lang, 'contact')}
+            class="btn-action btn-primary !bg-white !text-charcoal hover:!bg-paper-shade !border-white"
+          >
+            <span>{t('home.ctaPlanVisit')}</span>
+            <span>&rarr;</span>
+          </a>
+
+          <a
+            href="#about"
+            class="btn-action btn-secondary !border-white/60 !text-white hover:!bg-white/10"
+          >
+            <span>{t('home.ctaLearnMore')}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. INTRODUCTION SECTION (Spacious editorial two-column layout) -->
+  <section class="bg-paper py-24 sm:py-36 border-b border-rule" id="intro">
     <div class="mx-auto max-w-[84rem] px-gutter">
-      <div class="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-        <!-- Left Column: Editorial Welcome & CTAs -->
+      <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 items-start reveal-on-scroll">
         <div>
-          <div class="inline-flex items-center gap-2 rounded-full bg-gold/15 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-gold-hover border border-gold/30">
-            <span class="h-2 w-2 rounded-full bg-gold animate-pulse"></span>
-            <span>{site.diocese} • Tanjung Malim</span>
-          </div>
-
-          <h1 class="mt-6 font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-ink leading-[1.05]">
-            A Church for <span class="italic font-serif text-magenta">Real Faith</span> & <span class="bg-gradient-to-r from-purple to-magenta bg-clip-text text-transparent">Community</span>
-          </h1>
-
-          <p class="mt-6 max-w-[48ch] text-lg sm:text-xl font-normal leading-relaxed text-ink-soft">
-            Welcome to <strong class="font-bold text-ink">{site.parishName}</strong> and <strong class="font-bold text-magenta">CUTES</strong> (Catholic UPSI Students). We make room for every student, parishioner, and seeker to encounter God's living grace.
-          </p>
-
-          <!-- Fellowship Church Style Twin Action Buttons -->
-          <div class="mt-8 flex flex-wrap items-center gap-4">
-            <a href={localePath(lang, 'mass-schedule')} class="btn-action btn-primary">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{t('home.ctaMass')}</span>
-            </a>
-            <a href={localePath(lang, 'cutes')} class="btn-action btn-purple">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span>{t('home.cutesCta')}</span>
-            </a>
-            <a href={localePath(lang, 'bulletin')} class="btn-action btn-secondary">
-              <svg class="w-4 h-4 text-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span>{t('home.ctaBulletin')}</span>
-            </a>
-          </div>
-
-          <!-- Quick Service Location Callout -->
-          <div class="mt-8 flex items-center gap-3 pt-6 border-t border-rule text-sm text-ink-soft">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/20 text-gold-hover">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <div>
-              <p class="font-semibold text-ink">{site.address.line2}, {site.town}</p>
-              <p class="text-xs text-ink-muted">Join us for Sunday Mass • English & Bahasa Malaysia</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column: Hero Visual Feature (Curved frame with CUTES Identity) -->
-        <div class="relative">
-          <div class="relative overflow-hidden rounded-[28px] border-2 border-gold/30 bg-paper-card shadow-2xl transition-all duration-300 hover:shadow-gold/10">
-            <!-- Top Gradient Visual Frame -->
-            <div class="relative h-64 sm:h-80 w-full overflow-hidden bg-gradient-to-br from-purple-dark via-purple to-magenta p-6 flex flex-col justify-between text-white">
-              <div class="flex items-center justify-between z-10">
-                <span class="pill-badge bg-white/20 backdrop-blur-md text-white border border-white/30">
-                  UPSI Tertiary Campus
-                </span>
-                <img
-                  src="/logo.jpg"
-                  alt="CUTES Logo"
-                  class="h-14 w-14 rounded-full border-2 border-gold shadow-lg object-cover"
-                />
-              </div>
-
-              <!-- Visual Cross & Community Badge Overlay -->
-              <div class="z-10 mt-auto">
-                <p class="text-xs font-bold uppercase tracking-widest text-gold-light">
-                  Most Holy Redeemer Church
-                </p>
-                <h3 class="font-heading text-2xl sm:text-3xl font-bold leading-tight text-white">
-                  Centered on Christ, Empowered by the Spirit
-                </h3>
-              </div>
-
-              <!-- Decorative cross & flame watermark -->
-              <div class="absolute -right-8 -bottom-10 opacity-15 pointer-events-none">
-                <svg class="w-64 h-64 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M11 2v7H4v4h7v9h4v-9h7V9h-7V2h-4z" />
-                </svg>
-              </div>
-            </div>
-
-            <!-- Bottom Quick Schedule Summary inside Card -->
-            <div class="p-6 bg-paper-card">
-              <div class="flex items-center justify-between mb-4">
-                <h4 class="font-heading text-sm font-bold uppercase tracking-wider text-purple flex items-center gap-2">
-                  <svg class="w-4 h-4 text-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>{dayNames.sunday?.[lang]} Celebrations</span>
-                </h4>
-                <a href={localePath(lang, 'mass-schedule')} class="text-xs font-bold text-magenta hover:underline">
-                  {t('home.scheduleAll')} &rarr;
-                </a>
-              </div>
-
-              <div class="space-y-3">
-                {
-                  sunday.map((entry) => (
-                    <div class="flex items-center justify-between p-3 rounded-xl bg-paper-shade border border-rule/60 hover:border-gold/60 transition-colors">
-                      <div class="flex items-center gap-3">
-                        <div class="flex items-baseline gap-1 text-ink">
-                          <span class="clock text-xl text-purple">
-                            {splitTime(entry.data.time).clock}
-                          </span>
-                          <span class="text-xs font-bold uppercase text-ink-muted">
-                            {splitTime(entry.data.time).meridiem}
-                          </span>
-                        </div>
-                        <span class="h-4 w-px bg-rule"></span>
-                        <span class="text-sm font-semibold text-ink">
-                          {entry.data.language}
-                        </span>
-                      </div>
-                      {entry.data.note && (
-                        <span class="text-xs px-2.5 py-0.5 rounded-full bg-gold/15 text-gold-hover font-medium">
-                          {entry.data.note[lang]}
-                        </span>
-                      )}
-                    </div>
-                  ))
-                }
-              </div>
-
-              <!-- Other masses & latest bulletin footer inside hero card -->
-              <div class="mt-4 pt-3 border-t border-rule/60 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-soft">
-                <div class="flex items-center gap-2">
-                  <span class="font-bold text-ink">Weekday:</span>
-                  {otherMasses.slice(0, 1).map((m) => (
-                    <span>{m.data.time} ({dayNames[m.data.day]?.[lang] ?? m.data.day})</span>
-                  ))}
-                </div>
-                {latestBulletin && (
-                  <a href={localePath(lang, 'bulletin')} class="font-semibold text-magenta hover:underline">
-                    {t('bulletin.thisWeek')}: {latestBulletin.iso}
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. INFINITE MARQUEE BAND (Signature Fellowship Church element) -->
-  <section class="bg-gradient-to-r from-purple-dark via-purple to-magenta py-4 text-white shadow-inner overflow-hidden border-y border-gold/30" aria-hidden="true">
-    <div class="marquee-band">
-      <div class="marquee-track">
-        <span class="font-heading font-bold uppercase tracking-widest text-sm flex items-center gap-3">
-          <span>MOST HOLY REDEEMER CHURCH</span>
-          <span class="text-gold">•</span>
-          <span>CUTES STUDENT FELLOWSHIP</span>
-          <span class="text-gold">•</span>
-          <span>UPSI TANJUNG MALIM</span>
-          <span class="text-gold">•</span>
-          <span>FAITH, HOPE & CHARITY</span>
-          <span class="text-gold">•</span>
-          <span>ALL ARE WELCOME</span>
-          <span class="text-gold">•</span>
-        </span>
-        <span class="font-heading font-bold uppercase tracking-widest text-sm flex items-center gap-3">
-          <span>MOST HOLY REDEEMER CHURCH</span>
-          <span class="text-gold">•</span>
-          <span>CUTES STUDENT FELLOWSHIP</span>
-          <span class="text-gold">•</span>
-          <span>UPSI TANJUNG MALIM</span>
-          <span class="text-gold">•</span>
-          <span>FAITH, HOPE & CHARITY</span>
-          <span class="text-gold">•</span>
-          <span>ALL ARE WELCOME</span>
-          <span class="text-gold">•</span>
-        </span>
-      </div>
-      <div class="marquee-track" aria-hidden="true">
-        <span class="font-heading font-bold uppercase tracking-widest text-sm flex items-center gap-3">
-          <span>MOST HOLY REDEEMER CHURCH</span>
-          <span class="text-gold">•</span>
-          <span>CUTES STUDENT FELLOWSHIP</span>
-          <span class="text-gold">•</span>
-          <span>UPSI TANJUNG MALIM</span>
-          <span class="text-gold">•</span>
-          <span>FAITH, HOPE & CHARITY</span>
-          <span class="text-gold">•</span>
-          <span>ALL ARE WELCOME</span>
-          <span class="text-gold">•</span>
-        </span>
-        <span class="font-heading font-bold uppercase tracking-widest text-sm flex items-center gap-3">
-          <span>MOST HOLY REDEEMER CHURCH</span>
-          <span class="text-gold">•</span>
-          <span>CUTES STUDENT FELLOWSHIP</span>
-          <span class="text-gold">•</span>
-          <span>UPSI TANJUNG MALIM</span>
-          <span class="text-gold">•</span>
-          <span>FAITH, HOPE & CHARITY</span>
-          <span class="text-gold">•</span>
-          <span>ALL ARE WELCOME</span>
-          <span class="text-gold">•</span>
-        </span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. "WHY MOST HOLY REDEEMER & CUTES" (Reverse Engineered 3 Pillars from Fellowship Church) -->
-  <section class="mx-auto max-w-[84rem] px-gutter py-20 sm:py-28">
-    <div class="text-center max-w-2xl mx-auto">
-      <div class="inline-flex items-center gap-2 rounded-full bg-magenta/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-magenta">
-        <span class="h-1.5 w-1.5 rounded-full bg-magenta"></span>
-        <span>A Place To Belong</span>
-      </div>
-      <h2 class="mt-4 font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-ink">
-        <span class="italic font-serif text-magenta">Why</span> Most Holy Redeemer & CUTES
-      </h2>
-      <p class="mt-4 text-base sm:text-lg text-ink-soft">
-        Whether you are a university student at UPSI living away from home or a lifelong local parishioner, here is what anchors our community.
-      </p>
-    </div>
-
-    <!-- 3 Pillars Grid -->
-    <div class="mt-14 grid gap-8 md:grid-cols-3">
-      <!-- Pillar 1 -->
-      <div class="church-card group flex flex-col justify-between">
-        <div>
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/15 text-gold-hover mb-6 group-hover:scale-110 transition-transform">
-            <!-- Cross Icon -->
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 2v20m-7-14h14" />
-            </svg>
-          </div>
-          <span class="text-xs font-bold uppercase tracking-widest text-gold-hover">Pillar 01</span>
-          <h3 class="mt-2 font-heading text-2xl font-bold text-ink">
-            <span class="italic font-serif text-purple">Christ</span> Centered Faith
-          </h3>
-          <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-            Faith is not just for Sundays. Grounded in the Gospel, the Holy Eucharist, and sacraments, we provide spiritual anchorage for students and families facing daily university and work life.
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-rule/60">
-          <a href={localePath(lang, 'services')} class="text-xs font-bold text-purple hover:text-magenta transition-colors inline-flex items-center gap-1">
-            <span>Explore Sacraments</span> &rarr;
-          </a>
-        </div>
-      </div>
-
-      <!-- Pillar 2 -->
-      <div class="church-card group flex flex-col justify-between border-t-4 border-t-magenta">
-        <div>
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-magenta/15 text-magenta mb-6 group-hover:scale-110 transition-transform">
-            <!-- Fellowship / Hands Icon -->
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <span class="text-xs font-bold uppercase tracking-widest text-magenta">Pillar 02</span>
-          <h3 class="mt-2 font-heading text-2xl font-bold text-ink">
-            <span class="italic font-serif text-magenta">Active</span> Campus Fellowship
-          </h3>
-          <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-            No judgment, no pretensions. At CUTES, university life is lived together with choir, sports, retreats, Gawai Kaamatan, and family days. You will find friends who pray, study, and laugh with you.
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-rule/60">
-          <a href={localePath(lang, 'cutes')} class="text-xs font-bold text-magenta hover:underline inline-flex items-center gap-1">
-            <span>Life at CUTES</span> &rarr;
-          </a>
-        </div>
-      </div>
-
-      <!-- Pillar 3 -->
-      <div class="church-card group flex flex-col justify-between">
-        <div>
-          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple/15 text-purple mb-6 group-hover:scale-110 transition-transform">
-            <!-- Heart / Love Icon -->
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </div>
-          <span class="text-xs font-bold uppercase tracking-widest text-purple">Pillar 03</span>
-          <h3 class="mt-2 font-heading text-2xl font-bold text-ink">
-            <span class="italic font-serif text-gold-hover">Community</span> & Service
-          </h3>
-          <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-            Serving Tanjung Malim through seven ministries: Liturgy, Choir, Music, Multimedia, Transportation, Recreation & Spiritual, and Entrepreneurship. Everyone has a gift to share.
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-rule/60">
-          <a href={localePath(lang, 'cutes/committee')} class="text-xs font-bold text-purple hover:text-magenta transition-colors inline-flex items-center gap-1">
-            <span>Meet the Ministries</span> &rarr;
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. CUTES YOUTH SPOTLIGHT BANNER (Rich Gradient Banner inspired by Fellowship) -->
-  <section class="relative overflow-hidden bg-gradient-to-r from-purple-dark via-purple to-magenta text-white py-20 sm:py-28 my-8">
-    <div class="mx-auto max-w-[84rem] px-gutter relative z-10">
-      <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] items-center">
-        <div>
-          <div class="inline-flex items-center gap-2 rounded-full bg-gold/20 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-gold border border-gold/40">
-            <span>UPSI Tertiary Catholic Community</span>
-          </div>
-          <h2 class="mt-5 font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            {site.communityFullName}
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-4">
+            Welcome to Tanjung Malim
+          </span>
+          <h2 class="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight text-ink leading-[1.05]">
+            {t('home.introHeadline')}
           </h2>
-          <p class="mt-6 max-w-[54ch] text-base sm:text-lg leading-relaxed text-white/85">
-            {t('home.cutesLead')} Join our weekly fellowships, praise and worship, exam retreats, and vibrant parish celebrations.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-4">
-            <a href={localePath(lang, 'cutes')} class="btn-action btn-gold">
-              <span>{t('home.cutesCta')}</span>
-            </a>
-            <a href={localePath(lang, 'cutes/committee')} class="btn-action btn-white">
-              <span>{t('nav.committee')}</span>
-            </a>
-          </div>
         </div>
 
-        <!-- Right Quick Statistics / Identity Cards -->
-        <div class="grid grid-cols-2 gap-4">
-          <div class="rounded-2xl bg-white/10 p-5 backdrop-blur-md border border-white/20">
-            <div class="text-3xl font-extrabold font-heading text-gold">7+</div>
-            <p class="mt-1 text-xs font-bold uppercase tracking-wider text-white/75">Active Ministries</p>
-            <p class="mt-2 text-xs text-white/70">Choir, Liturgy, Transport, Media & more.</p>
-          </div>
-          <div class="rounded-2xl bg-white/10 p-5 backdrop-blur-md border border-white/20">
-            <div class="text-3xl font-extrabold font-heading text-gold">UPSI</div>
-            <p class="mt-1 text-xs font-bold uppercase tracking-wider text-white/75">Student Home</p>
-            <p class="mt-2 text-xs text-white/70">Transportation provided from campus hostels.</p>
-          </div>
-          <div class="rounded-2xl bg-white/10 p-5 backdrop-blur-md border border-white/20">
-            <div class="text-3xl font-extrabold font-heading text-gold">Weekly</div>
-            <p class="mt-1 text-xs font-bold uppercase tracking-wider text-white/75">Mass & Fellowship</p>
-            <p class="mt-2 text-xs text-white/70">Sunday gatherings and shared meals after Mass.</p>
-          </div>
-          <div class="rounded-2xl bg-white/10 p-5 backdrop-blur-md border border-white/20">
-            <div class="text-3xl font-extrabold font-heading text-gold">BEC</div>
-            <p class="mt-1 text-xs font-bold uppercase tracking-wider text-white/75">Basic Ecclesial</p>
-            <p class="mt-2 text-xs text-white/70">Small group prayer & neighborhood connection.</p>
+        <div class="space-y-6 text-lg sm:text-xl text-ink-soft leading-relaxed lg:pt-3">
+          <p>
+            {t('home.introMission')}
+          </p>
+          <div class="pt-2">
+            <a
+              href={localePath(lang, 'cutes')}
+              class="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-ink hover:text-accent border-b-2 border-ink pb-1 transition-colors"
+            >
+              <span>{t('home.cutesCta')}</span>
+              <span>&rarr;</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 5. UPCOMING EVENTS & BULLETIN SECTION -->
-  <section class="mx-auto max-w-[84rem] px-gutter py-20">
-    <div class="flex flex-wrap items-end justify-between gap-4 pb-8 border-b border-rule">
-      <div>
-        <span class="text-xs font-bold uppercase tracking-wider text-purple">Calendar & Community</span>
-        <h2 class="mt-1 font-heading text-3xl sm:text-4xl font-extrabold text-ink">
-          {t('home.eventsTitle')}
+  <!-- 3. ABOUT / CHURCH IDENTITY SECTION (Asymmetrical layout with large photo) -->
+  <section class="bg-paper-shade py-24 sm:py-36 border-b border-rule" id="about">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="grid gap-12 lg:grid-cols-12 items-center">
+        <!-- Asymmetrical Left: Large dominant photograph -->
+        <div class="lg:col-span-7 reveal-on-scroll">
+          <div class="relative overflow-hidden rounded-[4px] shadow-sm aspect-[4/3] bg-paper-muted">
+            <img
+              src={assetPath('fellowship-casual.jpg')}
+              alt="Community gathering and students fellowship"
+              class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Asymmetrical Right: Editorial Content -->
+        <div class="lg:col-span-5 lg:pl-6 reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-3">
+            {t('home.whoWeAre')}
+          </span>
+          <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink leading-[1.1]">
+            {t('home.whoWeAreLead')}
+          </h2>
+          <p class="mt-6 text-base sm:text-lg text-ink-soft leading-relaxed">
+            {t('home.whoWeAreBody')}
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href={localePath(lang, 'parish/parish-history')} class="btn-action btn-secondary">
+              <span>{t('nav.parishHistory')}</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. VALUES SECTION (Editorial magazine spread with horizontal rows) -->
+  <section class="bg-paper py-24 sm:py-36 border-b border-rule">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="reveal-on-scroll">
+        <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-3">
+          Our Foundation
+        </span>
+        <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-ink">
+          {t('home.valuesTitle')}
         </h2>
       </div>
-      <a href={localePath(lang, 'events')} class="btn-action btn-secondary !py-2 !px-4 !text-xs">
-        <span>{t('home.eventsAll')}</span> &rarr;
-      </a>
+
+      <div class="mt-16 divide-y divide-rule border-y border-rule">
+        <!-- Value 01 -->
+        <div class="py-10 sm:py-14 grid gap-4 lg:grid-cols-[120px_1fr_2fr] items-start reveal-on-scroll">
+          <span class="font-heading text-3xl sm:text-4xl font-black text-ink-muted">01</span>
+          <h3 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink">
+            {t('home.v1Title')}
+          </h3>
+          <p class="text-base sm:text-lg text-ink-soft leading-relaxed">
+            {t('home.v1Desc')}
+          </p>
+        </div>
+
+        <!-- Value 02 -->
+        <div class="py-10 sm:py-14 grid gap-4 lg:grid-cols-[120px_1fr_2fr] items-start reveal-on-scroll">
+          <span class="font-heading text-3xl sm:text-4xl font-black text-ink-muted">02</span>
+          <h3 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink">
+            {t('home.v2Title')}
+          </h3>
+          <p class="text-base sm:text-lg text-ink-soft leading-relaxed">
+            {t('home.v2Desc')}
+          </p>
+        </div>
+
+        <!-- Value 03 -->
+        <div class="py-10 sm:py-14 grid gap-4 lg:grid-cols-[120px_1fr_2fr] items-start reveal-on-scroll">
+          <span class="font-heading text-3xl sm:text-4xl font-black text-ink-muted">03</span>
+          <h3 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink">
+            {t('home.v3Title')}
+          </h3>
+          <p class="text-base sm:text-lg text-ink-soft leading-relaxed">
+            {t('home.v3Desc')}
+          </p>
+        </div>
+
+        <!-- Value 04 -->
+        <div class="py-10 sm:py-14 grid gap-4 lg:grid-cols-[120px_1fr_2fr] items-start reveal-on-scroll">
+          <span class="font-heading text-3xl sm:text-4xl font-black text-ink-muted">04</span>
+          <h3 class="font-heading text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink">
+            {t('home.v4Title')}
+          </h3>
+          <p class="text-base sm:text-lg text-ink-soft leading-relaxed">
+            {t('home.v4Desc')}
+          </p>
+        </div>
+      </div>
     </div>
-
-    {
-      nextEvents.length === 0 ? (
-        <div class="mt-10 rounded-2xl border border-rule bg-paper-shade p-8 text-center text-ink-soft">
-          <p>{t('home.eventsEmpty')}</p>
-        </div>
-      ) : (
-        <div class="mt-8 grid gap-6 md:grid-cols-3">
-          {nextEvents.map((entry) => (
-            <article class="church-card flex flex-col justify-between group">
-              <div>
-                <div class="flex items-center justify-between gap-2 text-xs font-bold text-magenta mb-4">
-                  <span class="pill-badge bg-magenta/10 text-magenta">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <span>{formatDateRange(entry.data.startDate, entry.data.endDate, lang)}</span>
-                  </span>
-                </div>
-                <h3 class="font-heading text-xl font-bold text-ink group-hover:text-magenta transition-colors">
-                  <a href={localePath(lang, `events/${slugOf(entry.id)}`)}>
-                    {entry.data.title}
-                  </a>
-                </h3>
-                <p class="mt-2.5 text-sm text-ink-soft line-clamp-3 leading-relaxed">
-                  {entry.data.summary}
-                </p>
-              </div>
-
-              <div class="mt-6 pt-4 border-t border-rule flex items-center justify-between text-xs text-ink-muted">
-                <span class="flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5 text-purple shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span class="truncate max-w-[18ch]">{entry.data.location}</span>
-                </span>
-                <a href={localePath(lang, `events/${slugOf(entry.id)}`)} class="font-bold text-purple group-hover:text-magenta transition-colors">
-                  Details &rarr;
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-      )
-    }
   </section>
 
-  <!-- 6. VISION & MISSION SECTION -->
-  {
-    Vision && (
-      <section class="bg-paper-shade border-y border-rule py-16 sm:py-24">
-        <div class="mx-auto max-w-[84rem] px-gutter">
-          <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] items-center">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-purple">Core Foundations</span>
-              <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-extrabold text-ink">
-                {t('home.visionTitle')}
-              </h2>
-              <p class="mt-4 text-base text-ink-soft leading-relaxed">
-                Guided by the Archdiocese of Kuala Lumpur, our parish fosters communal solidarity, liturgical life, and outreach for university students and parishioners alike.
-              </p>
-              <div class="mt-6">
-                <a href={localePath(lang, 'parish/parish-history')} class="btn-action btn-secondary !py-2.5 !px-5 !text-xs">
-                  <span>Read Parish History</span> &rarr;
-                </a>
+  <!-- 5. SERVICES / SUNDAY SECTION (Split image/text layout, practical visiting info) -->
+  <section class="bg-paper-shade py-24 sm:py-36 border-b border-rule" id="services">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="grid gap-12 lg:grid-cols-12 items-center">
+        <!-- Practical Info Column -->
+        <div class="lg:col-span-6 reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-3">
+            Gather With Us
+          </span>
+          <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-ink leading-[1.05]">
+            {t('home.sundayTitle')}
+          </h2>
+          <p class="mt-4 text-base sm:text-lg text-ink-soft">
+            {t('home.sundayLead')}
+          </p>
+
+          <div class="mt-10 space-y-6 border-y border-rule py-8">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">Day</span>
+                <span class="font-heading text-xl sm:text-2xl font-bold text-ink">Sunday</span>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">Time & Language</span>
+                {sundayMasses.map((m) => (
+                  <div class="font-heading text-lg sm:text-xl font-bold text-ink">
+                    {m.data.time} • {m.data.language}
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div class="church-card bg-paper-card">
-              <div class="reading">
-                <Vision />
-              </div>
+            <div class="pt-4 border-t border-rule/60">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">Location</span>
+              <p class="mt-1 font-heading text-lg font-bold text-ink">
+                {site.parishName}
+              </p>
+              <p class="text-sm text-ink-soft mt-0.5">
+                {site.address.line2}, {site.address.postcode} {site.address.city}, Perak
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href={localePath(lang, 'contact')} class="btn-action btn-primary">
+              <span>{t('home.ctaPlanVisit')}</span>
+              <span>&rarr;</span>
+            </a>
+            <a href={localePath(lang, 'mass-schedule')} class="btn-action btn-secondary">
+              <span>{t('home.scheduleAll')}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Sanctuary Atmosphere Image -->
+        <div class="lg:col-span-6 reveal-on-scroll">
+          <div class="relative overflow-hidden rounded-[4px] shadow-sm aspect-[16/10] bg-paper-muted">
+            <img
+              src={assetPath('sunday-worship.jpg')}
+              alt="Church sanctuary filled with natural light"
+              class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. MINISTRIES SECTION (Large visual editorial tiles with responsive grid) -->
+  <section class="bg-paper py-24 sm:py-36 border-b border-rule">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="flex flex-wrap items-end justify-between gap-6 pb-12 border-b border-rule reveal-on-scroll">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-2">
+            Get Involved
+          </span>
+          <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-ink">
+            {t('home.ministriesTitle')}
+          </h2>
+        </div>
+        <p class="max-w-md text-sm sm:text-base text-ink-soft">
+          {t('home.ministriesLead')}
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Tile 1: Liturgy & Altar Service -->
+        <div class="group block border border-rule bg-paper-card p-8 transition-all hover:border-ink reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted">01 / Ministry</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+            {t('ministry.liturgy')}
+          </h3>
+          <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+            Altar servers, lectors, and ministers assisting at the celebration of the Eucharist.
+          </p>
+          <a href={localePath(lang, 'cutes/committee')} class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink group-hover:text-accent transition-colors">
+            <span>Explore</span> &rarr;
+          </a>
+        </div>
+
+        <!-- Tile 2: Choir & Music -->
+        <div class="group block border border-rule bg-paper-card p-8 transition-all hover:border-ink reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted">02 / Ministry</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+            {t('ministry.choir')}
+          </h3>
+          <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+            Leading the assembly in choral harmony and praise across Sunday Masses and festive solemnities.
+          </p>
+          <a href={localePath(lang, 'cutes/committee')} class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink group-hover:text-accent transition-colors">
+            <span>Explore</span> &rarr;
+          </a>
+        </div>
+
+        <!-- Tile 3: Multimedia & Outreach -->
+        <div class="group block border border-rule bg-paper-card p-8 transition-all hover:border-ink reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted">03 / Ministry</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+            {t('ministry.multimedia')}
+          </h3>
+          <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+            Capturing parish memories, publishing bulletins, and managing audio-visual equipment.
+          </p>
+          <a href={localePath(lang, 'cutes/committee')} class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink group-hover:text-accent transition-colors">
+            <span>Explore</span> &rarr;
+          </a>
+        </div>
+
+        <!-- Tile 4: Transportation -->
+        <div class="group block border border-rule bg-paper-card p-8 transition-all hover:border-ink reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted">04 / Ministry</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+            {t('ministry.transportation')}
+          </h3>
+          <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+            Providing transit coordination for university students between UPSI residential colleges and church.
+          </p>
+          <a href={localePath(lang, 'cutes/committee')} class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink group-hover:text-accent transition-colors">
+            <span>Explore</span> &rarr;
+          </a>
+        </div>
+
+        <!-- Tile 5: Recreation & Spiritual -->
+        <div class="group block border border-rule bg-paper-card p-8 transition-all hover:border-ink reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted">05 / Ministry</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+            {t('ministry.recreation')}
+          </h3>
+          <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+            Organizing retreats, Taizé prayer evenings, sports days, and student family gatherings.
+          </p>
+          <a href={localePath(lang, 'cutes/committee')} class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink group-hover:text-accent transition-colors">
+            <span>Explore</span> &rarr;
+          </a>
+        </div>
+
+        <!-- Tile 6: BEC / Small Groups -->
+        <div class="group block border border-rule bg-paper-card p-8 transition-all hover:border-ink reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted">06 / Fellowship</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+            {t('cutes.becTitle')}
+          </h3>
+          <p class="mt-3 text-sm text-ink-soft leading-relaxed">
+            Basic Ecclesial Communities meeting in neighborhood homes for Scripture reflection and mutual support.
+          </p>
+          <a href={localePath(lang, 'cutes')} class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-ink group-hover:text-accent transition-colors">
+            <span>Explore</span> &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. SERMONS / MESSAGES SECTION (Modern clean media section) -->
+  <section class="bg-paper-shade py-24 sm:py-36 border-b border-rule">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="flex flex-wrap items-end justify-between gap-6 pb-12 border-b border-rule reveal-on-scroll">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-2">
+            Spiritual Nourishment
+          </span>
+          <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-ink">
+            {t('home.latestMessageTitle')}
+          </h2>
+        </div>
+        <a href={localePath(lang, 'bulletin')} class="btn-action btn-secondary !py-2.5 !px-5 !text-xs">
+          <span>{t('bulletin.title')}</span> &rarr;
+        </a>
+      </div>
+
+      <!-- Featured Bulletin & Reflection Layout -->
+      <div class="mt-12 grid gap-12 lg:grid-cols-12 items-center reveal-on-scroll">
+        <div class="lg:col-span-7">
+          <div class="border border-rule bg-paper-card p-8 sm:p-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-accent block mb-2">
+              Sunday Reflections & Bulletin
+            </span>
+            <h3 class="font-heading text-2xl sm:text-3xl font-bold text-ink leading-snug">
+              {latestBulletin ? `${t('bulletin.thisWeek')} — ${latestBulletin.iso}` : t('site.tagline')}
+            </h3>
+            <p class="mt-4 text-base text-ink-soft leading-relaxed">
+              {t('bulletin.lead')} Access pastoral reflections from our parish priest, weekly announcements, Mass intentions, and parish diary.
+            </p>
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              {latestBulletin && (
+                <a
+                  href={assetPath(latestBulletin.href)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-action btn-primary"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  <span>{t('bulletin.download')}</span>
+                </a>
+              )}
+              <a href={localePath(lang, 'resources')} class="btn-action btn-secondary">
+                <span>{t('resources.title')}</span>
+              </a>
             </div>
           </div>
         </div>
-      </section>
-    )
-  }
 
-  <!-- 7. THREE ACTION NAVIGATION BLOCKS (Like Fellowship's bottom 3-column feature) -->
-  <section class="mx-auto max-w-[84rem] px-gutter py-20">
-    <div class="grid gap-6 sm:grid-cols-3">
-      <a
-        href={localePath(lang, 'services')}
-        class="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-purple to-purple-dark p-8 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-      >
-        <div class="text-xs font-bold uppercase tracking-widest text-gold-light">Parish Services</div>
-        <h3 class="mt-3 font-heading text-2xl font-bold text-white group-hover:text-gold transition-colors">
-          Sacraments & RCIA
-        </h3>
-        <p class="mt-2 text-sm text-white/80">
-          Baptism, First Holy Communion, Confirmation, Marriage, and pastoral blessings.
-        </p>
-        <span class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-gold uppercase tracking-wider">
-          <span>Learn More</span> &rarr;
-        </span>
-      </a>
+        <div class="lg:col-span-5 space-y-4">
+          <div class="border border-rule bg-paper-card p-6">
+            <span class="text-xs font-semibold text-ink-muted">Daily Readings & Prayers</span>
+            <h4 class="font-heading text-lg font-bold text-ink mt-1">Order of Mass & Common Prayers</h4>
+            <p class="text-xs text-ink-soft mt-1">Available in English and Bahasa Malaysia for personal devotion.</p>
+            <a href={localePath(lang, 'resources')} class="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase text-ink hover:text-accent">
+              <span>View Prayers</span> &rarr;
+            </a>
+          </div>
 
-      <a
-        href={localePath(lang, 'cutes/committee')}
-        class="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-magenta to-magenta-hover p-8 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-      >
-        <div class="text-xs font-bold uppercase tracking-widest text-white/80">Student Leadership</div>
-        <h3 class="mt-3 font-heading text-2xl font-bold text-white group-hover:text-gold transition-colors">
-          Ministries & Roster
-        </h3>
-        <p class="mt-2 text-sm text-white/80">
-          Connect with coordinators and ministry heads across Choir, Liturgy, and Publicity.
-        </p>
-        <span class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-wider">
-          <span>Meet the Team</span> &rarr;
-        </span>
-      </a>
+          <div class="border border-rule bg-paper-card p-6">
+            <span class="text-xs font-semibold text-ink-muted">Sacraments</span>
+            <h4 class="font-heading text-lg font-bold text-ink mt-1">Baptism, Confession & Marriage</h4>
+            <p class="text-xs text-ink-soft mt-1">Arrangements, guidelines, and pastoral preparation steps.</p>
+            <a href={localePath(lang, 'services')} class="mt-3 inline-flex items-center gap-1 text-xs font-bold uppercase text-ink hover:text-accent">
+              <span>Learn More</span> &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <a
-        href={localePath(lang, 'resources')}
-        class="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-zinc-800 to-zinc-950 p-8 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-      >
-        <div class="text-xs font-bold uppercase tracking-widest text-gold">Spiritual Resources</div>
-        <h3 class="mt-3 font-heading text-2xl font-bold text-white group-hover:text-gold transition-colors">
-          Prayers & Rosary
-        </h3>
-        <p class="mt-2 text-sm text-white/80">
-          Holy Rosary, Divine Mercy Chaplet, Basic Catholic Prayers in English and BM.
-        </p>
-        <span class="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-gold uppercase tracking-wider">
-          <span>Pray Together</span> &rarr;
-        </span>
-      </a>
+  <!-- 8. EVENTS SECTION (Clean horizontal dated rows with arrows) -->
+  <section class="bg-paper py-24 sm:py-36 border-b border-rule">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="flex flex-wrap items-end justify-between gap-6 pb-12 border-b border-rule reveal-on-scroll">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-2">
+            Calendar & Community
+          </span>
+          <h2 class="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-ink">
+            {t('home.eventsTitle')}
+          </h2>
+        </div>
+        <a href={localePath(lang, 'events')} class="btn-action btn-secondary !py-2.5 !px-5 !text-xs">
+          <span>{t('home.eventsAll')}</span> &rarr;
+        </a>
+      </div>
+
+      {nextEvents.length === 0 ? (
+        <div class="mt-12 border border-rule bg-paper-shade p-12 text-center text-ink-soft reveal-on-scroll">
+          <p class="text-lg">{t('home.eventsEmpty')}</p>
+        </div>
+      ) : (
+        <div class="divide-y divide-rule border-b border-rule">
+          {nextEvents.map((event) => (
+            <a
+              href={localePath(lang, `events/${slugOf(event.id)}`)}
+              class="group py-8 sm:py-10 grid gap-4 sm:grid-cols-[200px_1fr_auto] items-center transition-colors hover:bg-paper-shade/40 px-2 reveal-on-scroll"
+            >
+              <div class="text-sm font-bold uppercase tracking-wider text-accent">
+                {formatDateRange(event.data.startDate, event.data.endDate, lang)}
+              </div>
+              <div>
+                <h3 class="font-heading text-xl sm:text-2xl font-bold text-ink group-hover:text-accent transition-colors">
+                  {event.data.title}
+                </h3>
+                <p class="mt-1 text-sm text-ink-soft line-clamp-1">
+                  {event.data.summary}
+                </p>
+              </div>
+              <div class="hidden sm:flex items-center text-ink-muted group-hover:text-ink transition-colors">
+                <span class="text-xl">&rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- 9. COMMUNITY / STORIES SECTION (Editorial magazine quote with authentic photo) -->
+  <section class="bg-paper-shade py-24 sm:py-36 border-b border-rule">
+    <div class="mx-auto max-w-[84rem] px-gutter">
+      <div class="grid gap-12 lg:grid-cols-12 items-center">
+        <!-- Student Story Portrait -->
+        <div class="lg:col-span-5 reveal-on-scroll">
+          <div class="relative overflow-hidden rounded-[4px] aspect-[4/5] bg-paper-muted shadow-sm">
+            <img
+              src={assetPath('person-story.jpg')}
+              alt="Community member portrait"
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Big Editorial Quotation -->
+        <div class="lg:col-span-7 lg:pl-10 reveal-on-scroll">
+          <span class="text-xs font-bold uppercase tracking-widest text-ink-muted block mb-6">
+            {t('home.storiesTitle')}
+          </span>
+          <blockquote class="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight text-ink leading-[1.08]">
+            {t('home.storiesQuote')}
+          </blockquote>
+          <p class="mt-8 text-base sm:text-lg font-medium text-ink-soft">
+            {t('home.storiesAuthor')}
+          </p>
+          <div class="mt-10">
+            <a href={localePath(lang, 'gallery')} class="btn-action btn-secondary">
+              <span>{t('gallery.title')}</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. CALL TO ACTION SECTION (Dark Charcoal Section: "THERE'S A PLACE FOR YOU HERE") -->
+  <section class="bg-charcoal text-white py-24 sm:py-36">
+    <div class="mx-auto max-w-[84rem] px-gutter text-center reveal-on-scroll">
+      <span class="text-xs font-bold uppercase tracking-[0.25em] text-white/60 block mb-6">
+        Most Holy Redeemer Church • Tanjung Malim
+      </span>
+      <h2 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-tight max-w-4xl mx-auto">
+        {t('home.bottomCtaTitle')}
+      </h2>
+      <p class="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-normal">
+        {t('home.bottomCtaDesc')}
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-5">
+        <a
+          href={localePath(lang, 'contact')}
+          class="btn-action btn-primary !bg-white !text-charcoal hover:!bg-paper-shade !border-white"
+        >
+          <span>{t('home.ctaPlanVisit')}</span>
+          <span>&rarr;</span>
+        </a>
+
+        <a
+          href={localePath(lang, 'contact')}
+          class="btn-action btn-secondary !border-white/40 !text-white hover:!bg-white/10"
+        >
+          <span>{t('home.contactUs')}</span>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
