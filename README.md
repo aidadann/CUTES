@@ -12,127 +12,148 @@ Students.
 
 | Folder | What is in it |
 |---|---|
-| `Website/` | The site itself — an Astro project. This is what gets deployed. |
-| `Requirement/` | The original brief, the technology decision record, and the implementation plan. Background reading, not code. |
-| `.github/` | The build and deploy automation, and the issue templates. |
+| `Website/` | The site itself — an Astro 5 + Tailwind CSS project. This is what gets built and deployed. |
+| `Requirement/` | The original brief, the technology decision record, and implementation plans. |
+| `.github/` | Automated build & deploy workflows (`deploy.yml`) and issue templates. |
 
-The site is **static**. There is no database, no admin login, and no server to
-maintain. Every page is generated from files in this repository, and the whole
-thing is served as plain HTML from a CDN. If nobody touches it for two years, it
-still works.
-
-Read `Requirement/TECH_STACK.md` for why it was built this way, and
-`Requirement/IMPLEMENTATION_PLAN.md` for how it is structured.
+The site is **static**. There is no database, no complex server, and no CMS logins to secure. Every page is automatically compiled from Markdown, YAML, and TypeScript files directly upon pushing to the `main` branch.
 
 ---
 
-## The one rule
+## Technical Guide: Updating Content & Assets
 
-**A bulletin file must be named `YYYY-MM-DD.pdf`.**
+This section provides clear, step-by-step instructions for the church technical team, multimedia ministry, and student webmasters.
 
-That is the entire publishing specification. Upload
-`Website/public/bulletin/2026-09-06.pdf` and it appears at the top of the
-bulletin page about a minute later. Sorting, dates and the "Latest" label all
-fall out of the filename.
+### 1. Updating Texts & Copy
+
+Content is divided into three distinct categories based on where it lives:
+
+#### A. Parish & CUTES Core Articles (Markdown)
+Articles, histories, sacrament guides, and prayers live under `Website/src/content/`. Each page exists in both **English (`en/`)** and **Bahasa Malaysia (`ms/`)**:
+
+| Section / Content | English Path | Bahasa Malaysia Path |
+|---|---|---|
+| **Vision & Mission** | `Website/src/content/pages/en/vision-mission.md` | `Website/src/content/pages/ms/vision-mission.md` |
+| **Parish Priest Message** | `Website/src/content/pages/en/parish-priest.md` | `Website/src/content/pages/ms/parish-priest.md` |
+| **Parish History** | `Website/src/content/pages/en/parish-history.md` | `Website/src/content/pages/ms/parish-history.md` |
+| **About CUTES & Life** | `Website/src/content/pages/en/about-cutes.md` | `Website/src/content/pages/ms/about-cutes.md` |
+| **BEC (Basic Ecclesial)** | `Website/src/content/pages/en/bec.md` | `Website/src/content/pages/ms/bec.md` |
+| **Sacraments** (RCIA, Baptism, Marriage, etc.) | `Website/src/content/services/en/*.md` | `Website/src/content/services/ms/*.md` |
+| **Prayers & Devotions** | `Website/src/content/resources/en/*.md` | `Website/src/content/resources/ms/*.md` |
+
+> **Rule for Markdown**: Keep the frontmatter header (the block between `---` at the top) intact (`title:`, `order:`, etc.). Write or edit the body text in standard Markdown below the second `---`. Always update **both** language files so neither version is out of date.
+
+#### B. UI Strings, Buttons, and Homepage Headings (Bilingual)
+All navigation menus, buttons, table labels, homepage slogans, and values live in:
+- **`Website/src/i18n/ui.ts`**
+  - Edit `ui.en` for English text.
+  - Edit `ui.ms` for Bahasa Malaysia text.
+  - *Example:* Change `'home.heroHeadline': 'COME AS YOU ARE.'` or `'home.ctaPlanVisit': 'Plan Your Visit'`.
+
+#### C. Parish Coordinates & Contact Information
+Address, phone numbers, contact emails, social links, and Google Maps URL are kept in a single configuration file:
+- **`Website/src/data/site.ts`**
+  - Update `site.address`, `site.phoneDisplay`, `site.email`, and `site.social`.
+
+#### D. Mass Schedule & Committee Roster
+- **Mass & Confession Times**: `Website/src/content/schedule/mass.yaml`
+  - Edit days, times, languages, and notes.
+- **Committee Roster**: `Website/src/content/committee/roster.yaml`
+  - Grouped by ministry (`liturgy`, `choir`, `multimedia`, `transportation`, etc.). Simply add or edit `- name: "Student Name"` under the respective role.
 
 ---
 
-## Running it on your own computer
+### 2. Updating Logo & Branding Graphics
 
-You need [Node.js](https://nodejs.org/) 22 or newer.
+The church and community logo is referenced across the header, footer, favicon, and social metadata:
+
+1. **Replace the Main Logo File**:
+   - Location: **`Website/public/logo.jpg`**
+   - Also update: **`Website/src/assets/logo.jpg`**
+   - **Recommended specs**: Square aspect ratio (1:1), at least `400 x 400px` or `512 x 512px`, clean high-resolution JPG or PNG format.
+2. **Replace the Favicon (Browser Tab Icon)**:
+   - Location: **`Website/public/favicon.svg`** (or replace with SVG/PNG of the parish emblem).
+3. **Commit & Push**:
+   - Committing the new `logo.jpg` file automatically updates the navigation bar, footer avatar, and Open Graph social sharing thumbnails on the next build.
+
+---
+
+### 3. Uploading Photos & Managing the Gallery
+
+Photo management is organized into two areas: **Homepage Editorial Photos** and **Community Gallery Albums**.
+
+#### A. Homepage Editorial Photography
+The homepage uses large documentary-style photography:
+- `Website/public/hero-community.jpg`: The full-width hero background image (`16:9` ratio, recommended `1920 x 1080px`, warm lighting, candid worship).
+- `Website/public/fellowship-casual.jpg`: The "Who We Are" community image (`4:3` ratio, recommended `1200 x 900px`, outdoor student interaction).
+- `Website/public/sunday-worship.jpg`: The "Join Us This Sunday" sanctuary image (`16:10` or `16:9`, bright natural light).
+- `Website/public/person-story.jpg`: The "Real Stories" testimonial portrait (`4:5` vertical ratio, authentic smiling portrait).
+
+To replace any of these images, overwrite the corresponding file in `Website/public/` keeping the exact same filename.
+
+#### B. Gallery Albums (`Website/src/assets/gallery/`)
+Photos in the community gallery do not require database entries or coding:
+1. Open the target album folder under `Website/src/assets/gallery/` (e.g. `mass/`, `fellowship/`, `retreat/`, `sport/`, `family-day/`).
+2. Upload the images. Photos are displayed in alphabetical filename order.
+   - *Tip:* Prefix filenames to set display order: `01-opening.jpg`, `02-procession.jpg`, `03-communion.jpg`.
+3. **Photo Optimization Rule**: Downscale photos before uploading to **under 2000px** on the long edge (aim for 500KB - 1.5MB per image). Raw mobile photos (10MB+) will slow down GitHub Actions builds unnecessarily.
+
+#### C. Creating a New Gallery Album
+1. Create a new folder in `Website/src/assets/gallery/<album-id>/` and add photos to it.
+2. Register the album in `Website/src/content/gallery/albums.yaml` by adding:
+   ```yaml
+   - id: your-album-id        # MUST match the folder name exactly
+     order: 10
+     title:
+       en: Album Title in English
+       ms: Tajuk Album dalam BM
+     description:
+       en: Brief one-sentence summary.
+       ms: Ringkasan satu ayat.
+   ```
+
+---
+
+### 4. Publishing the Weekly Bulletin
+
+The publishing system requires **zero code**:
+1. Save the weekly bulletin as a PDF.
+2. **Name the file strictly `YYYY-MM-DD.pdf`** (e.g., `2026-09-06.pdf`).
+3. Upload the file to **`Website/public/bulletin/`**.
+4. Commit. The website will automatically feature this bulletin as **"Latest"** on both the homepage and bulletin page, and archive previous editions chronologically.
+
+---
+
+## Local Development & Testing
+
+For local work on a developer workstation:
 
 ```bash
 cd Website
 npm install
-npm run dev      # http://localhost:4321
+npm run dev        # Starts local server at http://localhost:4321
 ```
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Local preview, updates as you save |
-| `npm run build` | Type-check and build into `Website/dist/` |
-| `npm run preview` | Serve the built site exactly as it will be deployed |
-| `npm test` | Run the unit tests |
-
-You do **not** need any of this to publish a bulletin or edit a page — that is
-done on github.com in a web browser. See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-### If `npm run build` fails
-
-Read the error message. It names the file and the field. A missing required
-field in a Markdown or YAML file stops the build on purpose — a build that fails
-is better than a blank page in front of the parish.
-
-> **On Windows**, a build occasionally ends with `EBUSY: resource busy or
-> locked` while clearing `dist/`. The site has already been built correctly at
-> that point; delete `Website/dist` and run it again. This does not happen on
-> the deploy server.
-
----
-
-## Where things live
-
-```
-Website/src/
-  content/          Everything the committee edits
-    pages/en|ms/      Vision, parish priest, deacon, history, CUTES pages
-    events/en|ms/     Retreat, Gawai and Kaamatan, Family Day
-    services/en|ms/   RCIA, baptism, marriage, funeral, blessings
-    resources/en|ms/  Prayers
-    committee/        roster.yaml — the whole committee, one file
-    schedule/         mass.yaml — mass and confession times
-    gallery/          albums.yaml — album names and order
-  assets/gallery/   The photos themselves, one folder per album
-  data/site.ts      Address, email, phone, committee year
-  i18n/ui.ts        Every button and label, in both languages
-Website/public/
-  bulletin/         The weekly PDFs
+### Verification Commands
+Before pushing substantial changes, run:
+```bash
+npm test           # Runs Vitest unit tests (i18n routing & liturgical engine)
+npm run build      # Runs type-checks (astro check) and static site compilation
 ```
 
 ---
 
-## Deployment
+## Deployment & Automated GitHub Actions
 
-The site deploys to two places from the same repository, and both are free.
-
-**GitHub Pages** — automatic. `.github/workflows/deploy.yml` builds and
-publishes on every push to `main`. Enable it once under *Settings → Pages →
-Build and deployment → Source: GitHub Actions*.
-
-**Cloudflare Pages** — optional, and the better option once the parish has its
-own domain. Connect the repository in the Cloudflare dashboard with:
-
-| Setting | Value |
-|---|---|
-| Framework preset | Astro |
-| Build command | `npm run build` |
-| Build output directory | `dist` |
-| Root directory | `Website` |
-
-Leave `BASE_PATH` unset there. GitHub Pages serves the site from `/CUTES/` and
-needs that prefix; a custom domain on Cloudflare serves from the root and does
-not.
+Deployment runs automatically via **GitHub Actions** upon any commit to `main`:
+1. Check progress under the repository's **Actions** tab on GitHub.
+2. If a build fails, GitHub displays a red indicator with the file and line number causing the error (e.g., missing YAML property or malformed Markdown frontmatter).
+3. The live site will remain on the last successful version until the issue is fixed.
 
 ---
 
-## Handing this over
+## Technical Handover & Governance
 
-Every year the committee changes. Two things matter more than anything else in
-this file:
-
-1. **The repository should be owned by the parish**, or by a GitHub organisation
-   the parish controls — not by a student account. A student graduates; an
-   organisation does not.
-2. **At least two people should have admin access**, and one of them should not
-   be a student.
-
-Everything else in here can be relearned from [CONTRIBUTING.md](CONTRIBUTING.md)
-in an afternoon. Access cannot.
-
----
-
-## Before launch
-
-The site is complete and working, but several pages contain placeholder text
-marked `TODO`. Search the repository for `TODO` to find every one. The list is
-also in [CONTRIBUTING.md](CONTRIBUTING.md#before-launch).
+1. **Repository Ownership**: Keep this repository under an organization account managed by the parish rather than personal student accounts.
+2. **Maintain Admin Access**: Ensure at least two individuals (e.g., parish administrator and multimedia head) retain admin privileges.
+3. For general editorial workflows, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
