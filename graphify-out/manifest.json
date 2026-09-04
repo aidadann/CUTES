@@ -1,0 +1,656 @@
+{
+  "Website/astro.config.mjs": {
+    "mtime": 1788498318.1896713,
+    "seen": 1788506733.5091803,
+    "ast_hash": "0da9f15f136bd7c812586a7751f1f247",
+    "semantic_hash": "0da9f15f136bd7c812586a7751f1f247"
+  },
+  "Website/package.json": {
+    "mtime": 1788500370.2098525,
+    "seen": 1788506733.5091856,
+    "ast_hash": "22948101c1612ded45b6cf36889eec8b",
+    "semantic_hash": "22948101c1612ded45b6cf36889eec8b"
+  },
+  "Website/src/components/EventCard.astro": {
+    "mtime": 1788500625.2602284,
+    "seen": 1788506733.5091877,
+    "ast_hash": "7bd57b3310a97a6ac1279facbff74ecd",
+    "semantic_hash": "7bd57b3310a97a6ac1279facbff74ecd"
+  },
+  "Website/src/components/Footer.astro": {
+    "mtime": 1788500604.8385417,
+    "seen": 1788506733.5091887,
+    "ast_hash": "e0646bf526c480171f0bc4e87cde33e8",
+    "semantic_hash": "e0646bf526c480171f0bc4e87cde33e8"
+  },
+  "Website/src/components/Header.astro": {
+    "mtime": 1788501020.823619,
+    "seen": 1788506733.5091896,
+    "ast_hash": "8dd7f35c2ed5319dd5a989ceb16934d3",
+    "semantic_hash": "8dd7f35c2ed5319dd5a989ceb16934d3"
+  },
+  "Website/src/components/MassScheduleTable.astro": {
+    "mtime": 1788500615.2073016,
+    "seen": 1788506733.5091906,
+    "ast_hash": "3d0008c33799366c2b96fb866d4ce087",
+    "semantic_hash": "3d0008c33799366c2b96fb866d4ce087"
+  },
+  "Website/src/components/MinistryRoster.astro": {
+    "mtime": 1788500636.0580924,
+    "seen": 1788506733.5091918,
+    "ast_hash": "8f22f421f72d38cdcb0929994337e0bb",
+    "semantic_hash": "8f22f421f72d38cdcb0929994337e0bb"
+  },
+  "Website/src/components/PageHeader.astro": {
+    "mtime": 1788500585.530024,
+    "seen": 1788506733.5091927,
+    "ast_hash": "650cf7af375f8a02ce5c8ed5dfc20a10",
+    "semantic_hash": "650cf7af375f8a02ce5c8ed5dfc20a10"
+  },
+  "Website/src/components/PhotoGrid.astro": {
+    "mtime": 1788500846.5295677,
+    "seen": 1788506733.5091934,
+    "ast_hash": "c2983b68b74b5a41bb70f12635029c01",
+    "semantic_hash": "c2983b68b74b5a41bb70f12635029c01"
+  },
+  "Website/src/components/Seo.astro": {
+    "mtime": 1788479640.6982367,
+    "seen": 1788506733.509194,
+    "ast_hash": "957ca39243fbbd1c8af0d77b757e86c5",
+    "semantic_hash": "957ca39243fbbd1c8af0d77b757e86c5"
+  },
+  "Website/src/content.config.ts": {
+    "mtime": 1788479582.9274495,
+    "seen": 1788506733.509195,
+    "ast_hash": "ca27dab949503c1ee2743e16e3a606d8",
+    "semantic_hash": "ca27dab949503c1ee2743e16e3a606d8"
+  },
+  "Website/src/data/site.ts": {
+    "mtime": 1788479391.4673343,
+    "seen": 1788506733.509196,
+    "ast_hash": "49a2984f92743e11196260ef9122556a",
+    "semantic_hash": "49a2984f92743e11196260ef9122556a"
+  },
+  "Website/src/i18n/nav.ts": {
+    "mtime": 1788479631.0628142,
+    "seen": 1788506733.509197,
+    "ast_hash": "470aedf11803eaad7e1e7e69b3da53d1",
+    "semantic_hash": "470aedf11803eaad7e1e7e69b3da53d1"
+  },
+  "Website/src/i18n/ui.ts": {
+    "mtime": 1788497623.4313421,
+    "seen": 1788506733.5091977,
+    "ast_hash": "7b8d26b296bd2621f3c632f7576af6c1",
+    "semantic_hash": "7b8d26b296bd2621f3c632f7576af6c1"
+  },
+  "Website/src/i18n/utils.test.ts": {
+    "mtime": 1788498400.9016142,
+    "seen": 1788506733.5091987,
+    "ast_hash": "ed874070283c161f26182fa6cadd09f4",
+    "semantic_hash": "ed874070283c161f26182fa6cadd09f4"
+  },
+  "Website/src/i18n/utils.ts": {
+    "mtime": 1788479523.2135272,
+    "seen": 1788506733.5091996,
+    "ast_hash": "8487838af4671cadff610d05a85d572d",
+    "semantic_hash": "8487838af4671cadff610d05a85d572d"
+  },
+  "Website/src/layouts/BaseLayout.astro": {
+    "mtime": 1788501111.0353677,
+    "seen": 1788506733.5092003,
+    "ast_hash": "a026dc4eab038a6884920c098be250b7",
+    "semantic_hash": "a026dc4eab038a6884920c098be250b7"
+  },
+  "Website/src/layouts/ProseLayout.astro": {
+    "mtime": 1788500646.7059915,
+    "seen": 1788506733.5092015,
+    "ast_hash": "271f55f7a5902538ee26ce1d151d587f",
+    "semantic_hash": "271f55f7a5902538ee26ce1d151d587f"
+  },
+  "Website/src/lib/bulletin.ts": {
+    "mtime": 1788479537.6552618,
+    "seen": 1788506733.5092022,
+    "ast_hash": "7ea3beb2b55d550083331c3a584df77a",
+    "semantic_hash": "7ea3beb2b55d550083331c3a584df77a"
+  },
+  "Website/src/lib/content.ts": {
+    "mtime": 1788497872.2921433,
+    "seen": 1788506733.509203,
+    "ast_hash": "0f82cf09d0db1cdee104bcc84e748b59",
+    "semantic_hash": "0f82cf09d0db1cdee104bcc84e748b59"
+  },
+  "Website/src/lib/gallery.ts": {
+    "mtime": 1788479551.698358,
+    "seen": 1788506733.5092037,
+    "ast_hash": "02392c763191be129e538f09c0990ba6",
+    "semantic_hash": "02392c763191be129e538f09c0990ba6"
+  },
+  "Website/src/lib/liturgical.test.ts": {
+    "mtime": 1788500405.4527705,
+    "seen": 1788506733.5092044,
+    "ast_hash": "a672c3e185ec72c1c00e846fd6b3550b",
+    "semantic_hash": "a672c3e185ec72c1c00e846fd6b3550b"
+  },
+  "Website/src/lib/liturgical.ts": {
+    "mtime": 1788500428.3477151,
+    "seen": 1788506733.5092058,
+    "ast_hash": "cd2a66253fff0958cbca35623ddfd0f2",
+    "semantic_hash": "cd2a66253fff0958cbca35623ddfd0f2"
+  },
+  "Website/src/pages/404.astro": {
+    "mtime": 1788500779.8897765,
+    "seen": 1788506733.5092065,
+    "ast_hash": "0705b6d551f650542899addcf89b8aa2",
+    "semantic_hash": "0705b6d551f650542899addcf89b8aa2"
+  },
+  "Website/src/pages/[lang]/bulletin.astro": {
+    "mtime": 1788500681.1192262,
+    "seen": 1788506733.5092072,
+    "ast_hash": "476be308333f39d3ed5b2b6fde0885bc",
+    "semantic_hash": "476be308333f39d3ed5b2b6fde0885bc"
+  },
+  "Website/src/pages/[lang]/contact.astro": {
+    "mtime": 1788500771.6826127,
+    "seen": 1788506733.5092082,
+    "ast_hash": "b10b5f16dd7fce9e31f7ca216e78edda",
+    "semantic_hash": "b10b5f16dd7fce9e31f7ca216e78edda"
+  },
+  "Website/src/pages/[lang]/cutes/[slug].astro": {
+    "mtime": 1788500655.334633,
+    "seen": 1788506733.5092092,
+    "ast_hash": "f8120059a689d61fc93c36815f38875b",
+    "semantic_hash": "f8120059a689d61fc93c36815f38875b"
+  },
+  "Website/src/pages/[lang]/cutes/committee.astro": {
+    "mtime": 1788500720.9601269,
+    "seen": 1788506733.5092099,
+    "ast_hash": "3e93a73beb63d1ff1e169300f4e4027e",
+    "semantic_hash": "3e93a73beb63d1ff1e169300f4e4027e"
+  },
+  "Website/src/pages/[lang]/cutes/index.astro": {
+    "mtime": 1788501007.2691472,
+    "seen": 1788506733.5092106,
+    "ast_hash": "97d458ba8c42f1352d8dbf2943e57619",
+    "semantic_hash": "97d458ba8c42f1352d8dbf2943e57619"
+  },
+  "Website/src/pages/[lang]/events/[slug].astro": {
+    "mtime": 1788500814.284355,
+    "seen": 1788506733.5092113,
+    "ast_hash": "fde0455c170e3ef8f536c90a16882670",
+    "semantic_hash": "fde0455c170e3ef8f536c90a16882670"
+  },
+  "Website/src/pages/[lang]/events/index.astro": {
+    "mtime": 1788500728.1030383,
+    "seen": 1788506733.5092125,
+    "ast_hash": "d5b349449af51dfda1982c2308748662",
+    "semantic_hash": "d5b349449af51dfda1982c2308748662"
+  },
+  "Website/src/pages/[lang]/gallery/[album].astro": {
+    "mtime": 1788500846.5346386,
+    "seen": 1788506733.5092132,
+    "ast_hash": "62d33ef3a874c5b5bfe568a7f6fd24ed",
+    "semantic_hash": "62d33ef3a874c5b5bfe568a7f6fd24ed"
+  },
+  "Website/src/pages/[lang]/gallery/index.astro": {
+    "mtime": 1788500740.1205277,
+    "seen": 1788506733.509214,
+    "ast_hash": "2ae226c062dc3548ef61f3815ca97f4b",
+    "semantic_hash": "2ae226c062dc3548ef61f3815ca97f4b"
+  },
+  "Website/src/pages/[lang]/index.astro": {
+    "mtime": 1788501007.268141,
+    "seen": 1788506733.5092146,
+    "ast_hash": "742a541773884fb20d71eb0b87b1061f",
+    "semantic_hash": "742a541773884fb20d71eb0b87b1061f"
+  },
+  "Website/src/pages/[lang]/mass-schedule.astro": {
+    "mtime": 1788500690.1561465,
+    "seen": 1788506733.5092156,
+    "ast_hash": "9b7ba2cbfed7afd753bf5a242e89af45",
+    "semantic_hash": "9b7ba2cbfed7afd753bf5a242e89af45"
+  },
+  "Website/src/pages/[lang]/parish/[slug].astro": {
+    "mtime": 1788500655.341627,
+    "seen": 1788506733.5092163,
+    "ast_hash": "0ad16fe88715705e65297dc3392d4e3b",
+    "semantic_hash": "0ad16fe88715705e65297dc3392d4e3b"
+  },
+  "Website/src/pages/[lang]/parish/index.astro": {
+    "mtime": 1788500698.4370902,
+    "seen": 1788506733.509217,
+    "ast_hash": "ba19dc7610b8123fa243879fed8a23ec",
+    "semantic_hash": "ba19dc7610b8123fa243879fed8a23ec"
+  },
+  "Website/src/pages/[lang]/resources/[slug].astro": {
+    "mtime": 1788500655.3436284,
+    "seen": 1788506733.5092177,
+    "ast_hash": "cbfd35f19563e234ea0299c9f8e0d18b",
+    "semantic_hash": "cbfd35f19563e234ea0299c9f8e0d18b"
+  },
+  "Website/src/pages/[lang]/resources/index.astro": {
+    "mtime": 1788500757.1914222,
+    "seen": 1788506733.509219,
+    "ast_hash": "6d388335c52dd5552ccec075e57c2ce5",
+    "semantic_hash": "6d388335c52dd5552ccec075e57c2ce5"
+  },
+  "Website/src/pages/[lang]/services/[slug].astro": {
+    "mtime": 1788500836.6962998,
+    "seen": 1788506733.5092196,
+    "ast_hash": "f7c56762a97ede4be5ec608d52359fe4",
+    "semantic_hash": "f7c56762a97ede4be5ec608d52359fe4"
+  },
+  "Website/src/pages/[lang]/services/index.astro": {
+    "mtime": 1788500749.577429,
+    "seen": 1788506733.5092204,
+    "ast_hash": "ef22d8708a7571a58124046552cbded2",
+    "semantic_hash": "ef22d8708a7571a58124046552cbded2"
+  },
+  "Website/src/pages/index.astro": {
+    "mtime": 1788501206.1490636,
+    "seen": 1788506733.509221,
+    "ast_hash": "17617d0ddfd886922ba88bbf0899800a",
+    "semantic_hash": "17617d0ddfd886922ba88bbf0899800a"
+  },
+  "Website/tsconfig.json": {
+    "mtime": 1788479332.8747003,
+    "seen": 1788506733.5092218,
+    "ast_hash": "076092735ea4b63fe25407039cc46011",
+    "semantic_hash": "076092735ea4b63fe25407039cc46011"
+  },
+  ".github/ISSUE_TEMPLATE/bug-report.yml": {
+    "mtime": 1788498650.1159725,
+    "seen": 1788506733.5092235,
+    "ast_hash": "66d0c8032787b26f74e3d0ba29053e86",
+    "semantic_hash": "66d0c8032787b26f74e3d0ba29053e86"
+  },
+  ".github/ISSUE_TEMPLATE/config.yml": {
+    "mtime": 1788498649.9918244,
+    "seen": 1788506733.5092242,
+    "ast_hash": "79b9cf97c971cac49422d88d871c718c",
+    "semantic_hash": "79b9cf97c971cac49422d88d871c718c"
+  },
+  ".github/ISSUE_TEMPLATE/content-update.yml": {
+    "mtime": 1788498650.050164,
+    "seen": 1788506733.5092251,
+    "ast_hash": "b763e0de6b68a7437b0154fa0087ff8e",
+    "semantic_hash": "b763e0de6b68a7437b0154fa0087ff8e"
+  },
+  ".github/PULL_REQUEST_TEMPLATE.md": {
+    "mtime": 1788498650.1718268,
+    "seen": 1788506733.509226,
+    "ast_hash": "29320ac18e4dcb956bf789acbd13e223",
+    "semantic_hash": "29320ac18e4dcb956bf789acbd13e223"
+  },
+  ".github/dependabot.yml": {
+    "mtime": 1788498631.5290117,
+    "seen": 1788506733.5092268,
+    "ast_hash": "e9993f1c0185d1d44933279e1577146f",
+    "semantic_hash": "e9993f1c0185d1d44933279e1577146f"
+  },
+  ".github/workflows/deploy.yml": {
+    "mtime": 1788498620.970123,
+    "seen": 1788506733.5092275,
+    "ast_hash": "aa0cc14914c5c2baf3b4c9a2a1ab690b",
+    "semantic_hash": "aa0cc14914c5c2baf3b4c9a2a1ab690b"
+  },
+  "CONTRIBUTING.md": {
+    "mtime": 1788498713.101288,
+    "seen": 1788506733.5092282,
+    "ast_hash": "e36d09ff35547b02f934f81b5dcb9ee0",
+    "semantic_hash": "e36d09ff35547b02f934f81b5dcb9ee0"
+  },
+  "README.md": {
+    "mtime": 1788498675.870344,
+    "seen": 1788506733.509229,
+    "ast_hash": "5568f0df3b4d4a951b7a38cf86d43ccd",
+    "semantic_hash": "5568f0df3b4d4a951b7a38cf86d43ccd"
+  },
+  "Requirement/IMPLEMENTATION_PLAN.md": {
+    "mtime": 1788478063.150218,
+    "seen": 1788506733.50923,
+    "ast_hash": "34ca16a5e02f4288d88eb59518885018",
+    "semantic_hash": "34ca16a5e02f4288d88eb59518885018"
+  },
+  "Requirement/MOST HOLY REDEEMER CHURCH, TANJUNG MALIM WEBSITE.md": {
+    "mtime": 1788439238.810985,
+    "seen": 1788506733.5092306,
+    "ast_hash": "6896af8863da34a78ecd8d9167577f08",
+    "semantic_hash": "6896af8863da34a78ecd8d9167577f08"
+  },
+  "Requirement/TECH_STACK.md": {
+    "mtime": 1788441112.6565993,
+    "seen": 1788506733.5092316,
+    "ast_hash": "41a31baf6852157720e952eb4e78c579",
+    "semantic_hash": "41a31baf6852157720e952eb4e78c579"
+  },
+  "Requirement/logo.md": {
+    "mtime": 1788439834.440597,
+    "seen": 1788506733.5092323,
+    "ast_hash": "bf62df60818a7ca2f3afcd38269c6abd",
+    "semantic_hash": "bf62df60818a7ca2f3afcd38269c6abd"
+  },
+  "Website/public/bulletin/README.md": {
+    "mtime": 1788498727.313666,
+    "seen": 1788506733.5092332,
+    "ast_hash": "223d17f55c0132fb5f1ad43b6c6ae72b",
+    "semantic_hash": "223d17f55c0132fb5f1ad43b6c6ae72b"
+  },
+  "Website/src/assets/gallery/after-mass/README.md": {
+    "mtime": 1788498727.219221,
+    "seen": 1788506733.509234,
+    "ast_hash": "a610e62891eebcfcb41e6454de06b091",
+    "semantic_hash": "a610e62891eebcfcb41e6454de06b091"
+  },
+  "Website/src/assets/gallery/chilling/README.md": {
+    "mtime": 1788498727.2724838,
+    "seen": 1788506733.509235,
+    "ast_hash": "331a029034ad5bb51ef40b52f4b334ef",
+    "semantic_hash": "331a029034ad5bb51ef40b52f4b334ef"
+  },
+  "Website/src/assets/gallery/family-day/README.md": {
+    "mtime": 1788498727.170065,
+    "seen": 1788506733.5092359,
+    "ast_hash": "d393ca0590c4f17cf4b49752f5cb6d24",
+    "semantic_hash": "d393ca0590c4f17cf4b49752f5cb6d24"
+  },
+  "Website/src/assets/gallery/fellowship/README.md": {
+    "mtime": 1788498726.9277365,
+    "seen": 1788506733.5092368,
+    "ast_hash": "147685db4d3fca3c0f6425b1a386744f",
+    "semantic_hash": "147685db4d3fca3c0f6425b1a386744f"
+  },
+  "Website/src/assets/gallery/gawai-kaamatan/README.md": {
+    "mtime": 1788498727.1003723,
+    "seen": 1788506733.5092375,
+    "ast_hash": "c450311e0d5ba1502693fdafd701d86f",
+    "semantic_hash": "c450311e0d5ba1502693fdafd701d86f"
+  },
+  "Website/src/assets/gallery/mass/README.md": {
+    "mtime": 1788498726.866211,
+    "seen": 1788506733.5092382,
+    "ast_hash": "9df4f50ac71caa4b91df5edc242948b5",
+    "semantic_hash": "9df4f50ac71caa4b91df5edc242948b5"
+  },
+  "Website/src/assets/gallery/retreat/README.md": {
+    "mtime": 1788498727.0302284,
+    "seen": 1788506733.509239,
+    "ast_hash": "9e393483779c8183839afb9bd36c9373",
+    "semantic_hash": "9e393483779c8183839afb9bd36c9373"
+  },
+  "Website/src/assets/gallery/sport/README.md": {
+    "mtime": 1788498726.9802175,
+    "seen": 1788506733.5092402,
+    "ast_hash": "7ae122c08cfd2a21078993bd9b911060",
+    "semantic_hash": "7ae122c08cfd2a21078993bd9b911060"
+  },
+  "Website/src/assets/gallery/taize/README.md": {
+    "mtime": 1788498727.313666,
+    "seen": 1788506733.5092409,
+    "ast_hash": "897b0ecd335bb89a5bbb4ccf76e99fb3",
+    "semantic_hash": "897b0ecd335bb89a5bbb4ccf76e99fb3"
+  },
+  "Website/src/content/committee/roster.yaml": {
+    "mtime": 1788479841.1505396,
+    "seen": 1788506733.5092416,
+    "ast_hash": "aec247d85a25b089f508e614516bef99",
+    "semantic_hash": "aec247d85a25b089f508e614516bef99"
+  },
+  "Website/src/content/events/en/family-day.md": {
+    "mtime": 1788501020.807605,
+    "seen": 1788506733.5092425,
+    "ast_hash": "b226a0fe2363ca548e6456076f19aaf4",
+    "semantic_hash": "b226a0fe2363ca548e6456076f19aaf4"
+  },
+  "Website/src/content/events/en/gawai-kaamatan.md": {
+    "mtime": 1788501020.8040714,
+    "seen": 1788506733.5092435,
+    "ast_hash": "74ede0819d21379724a2a94eb9029663",
+    "semantic_hash": "74ede0819d21379724a2a94eb9029663"
+  },
+  "Website/src/content/events/en/retreat.md": {
+    "mtime": 1788501020.7990577,
+    "seen": 1788506733.509244,
+    "ast_hash": "59af007b106aec7c4246f129bd742903",
+    "semantic_hash": "59af007b106aec7c4246f129bd742903"
+  },
+  "Website/src/content/events/ms/family-day.md": {
+    "mtime": 1788501020.8196068,
+    "seen": 1788506733.509245,
+    "ast_hash": "e7101437ce777866f0e97a1d919b22f9",
+    "semantic_hash": "e7101437ce777866f0e97a1d919b22f9"
+  },
+  "Website/src/content/events/ms/gawai-kaamatan.md": {
+    "mtime": 1788501020.8146074,
+    "seen": 1788506733.5092456,
+    "ast_hash": "69036c05fdc94c978b71b9012ce018ec",
+    "semantic_hash": "69036c05fdc94c978b71b9012ce018ec"
+  },
+  "Website/src/content/events/ms/retreat.md": {
+    "mtime": 1788501020.812604,
+    "seen": 1788506733.5092463,
+    "ast_hash": "bf2bd227628e291161ab25194533a5c4",
+    "semantic_hash": "bf2bd227628e291161ab25194533a5c4"
+  },
+  "Website/src/content/gallery/albums.yaml": {
+    "mtime": 1788479872.2203145,
+    "seen": 1788506733.5092473,
+    "ast_hash": "355be4a1e19bb9180c446a85119055c6",
+    "semantic_hash": "355be4a1e19bb9180c446a85119055c6"
+  },
+  "Website/src/content/pages/en/about-cutes.md": {
+    "mtime": 1788479933.6043367,
+    "seen": 1788506733.5092483,
+    "ast_hash": "969246164a95517899bb1e790fd80185",
+    "semantic_hash": "969246164a95517899bb1e790fd80185"
+  },
+  "Website/src/content/pages/en/bec.md": {
+    "mtime": 1788479933.76634,
+    "seen": 1788506733.509249,
+    "ast_hash": "2ba87b858159d82d8002a4326461fa2a",
+    "semantic_hash": "2ba87b858159d82d8002a4326461fa2a"
+  },
+  "Website/src/content/pages/en/deacon.md": {
+    "mtime": 1788479903.995051,
+    "seen": 1788506733.5092497,
+    "ast_hash": "71e1ce9b6aa2feaae618ad5ad6b8da1c",
+    "semantic_hash": "71e1ce9b6aa2feaae618ad5ad6b8da1c"
+  },
+  "Website/src/content/pages/en/life.md": {
+    "mtime": 1788479933.674932,
+    "seen": 1788506733.5092509,
+    "ast_hash": "f7e8e0192dabad73b37b9594adf144ba",
+    "semantic_hash": "f7e8e0192dabad73b37b9594adf144ba"
+  },
+  "Website/src/content/pages/en/parish-history.md": {
+    "mtime": 1788479904.0765388,
+    "seen": 1788506733.5092516,
+    "ast_hash": "e59354925428b2e73f0dbe0c1fcf89a5",
+    "semantic_hash": "e59354925428b2e73f0dbe0c1fcf89a5"
+  },
+  "Website/src/content/pages/en/parish-priest.md": {
+    "mtime": 1788479903.9453897,
+    "seen": 1788506733.5092523,
+    "ast_hash": "76f0abfe23fa65eed600d5b816edb449",
+    "semantic_hash": "76f0abfe23fa65eed600d5b816edb449"
+  },
+  "Website/src/content/pages/en/vision-mission.md": {
+    "mtime": 1788479903.8756998,
+    "seen": 1788506733.509253,
+    "ast_hash": "3baa94c2c16d6486ec5f443123a30ace",
+    "semantic_hash": "3baa94c2c16d6486ec5f443123a30ace"
+  },
+  "Website/src/content/pages/ms/about-cutes.md": {
+    "mtime": 1788498052.8776724,
+    "seen": 1788506733.509254,
+    "ast_hash": "d5332e64b50d7ebbef9741fc1fc25879",
+    "semantic_hash": "d5332e64b50d7ebbef9741fc1fc25879"
+  },
+  "Website/src/content/pages/ms/bec.md": {
+    "mtime": 1788498053.0216994,
+    "seen": 1788506733.5092547,
+    "ast_hash": "fc0a014705efd909a2e25980fa99d751",
+    "semantic_hash": "fc0a014705efd909a2e25980fa99d751"
+  },
+  "Website/src/content/pages/ms/deacon.md": {
+    "mtime": 1788498015.353078,
+    "seen": 1788506733.5092554,
+    "ast_hash": "f9929441f19699bc0c66edfa00b4a42d",
+    "semantic_hash": "f9929441f19699bc0c66edfa00b4a42d"
+  },
+  "Website/src/content/pages/ms/life.md": {
+    "mtime": 1788498052.9524043,
+    "seen": 1788506733.5092561,
+    "ast_hash": "09036854df1e05aaef1a47bd49c0d47c",
+    "semantic_hash": "09036854df1e05aaef1a47bd49c0d47c"
+  },
+  "Website/src/content/pages/ms/parish-history.md": {
+    "mtime": 1788498015.4470537,
+    "seen": 1788506733.5092573,
+    "ast_hash": "a0b117d427529ba5f8c0fb5beb433610",
+    "semantic_hash": "a0b117d427529ba5f8c0fb5beb433610"
+  },
+  "Website/src/content/pages/ms/parish-priest.md": {
+    "mtime": 1788498015.2973056,
+    "seen": 1788506733.509258,
+    "ast_hash": "de3d6d40558d07d4359daf28dc56cdca",
+    "semantic_hash": "de3d6d40558d07d4359daf28dc56cdca"
+  },
+  "Website/src/content/pages/ms/vision-mission.md": {
+    "mtime": 1788498015.2421508,
+    "seen": 1788506733.5092607,
+    "ast_hash": "de6cff6a16de1bfa359560579d8ec7cc",
+    "semantic_hash": "de6cff6a16de1bfa359560579d8ec7cc"
+  },
+  "Website/src/content/resources/en/basic-prayers.md": {
+    "mtime": 1788497514.3433268,
+    "seen": 1788506733.5092616,
+    "ast_hash": "05c8b37002b9302935c606d0fe079630",
+    "semantic_hash": "05c8b37002b9302935c606d0fe079630"
+  },
+  "Website/src/content/resources/en/divine-mercy-chaplet.md": {
+    "mtime": 1788497543.168918,
+    "seen": 1788506733.5092623,
+    "ast_hash": "068ea461e98db8f839fa9d13254611e6",
+    "semantic_hash": "068ea461e98db8f839fa9d13254611e6"
+  },
+  "Website/src/content/resources/en/rosary.md": {
+    "mtime": 1788497531.0013268,
+    "seen": 1788506733.509263,
+    "ast_hash": "a335652775957a230275788c52f89648",
+    "semantic_hash": "a335652775957a230275788c52f89648"
+  },
+  "Website/src/content/resources/ms/basic-prayers.md": {
+    "mtime": 1788498174.0566487,
+    "seen": 1788506733.5092642,
+    "ast_hash": "7d00323726eaa584458c3b0c9ea60ce3",
+    "semantic_hash": "7d00323726eaa584458c3b0c9ea60ce3"
+  },
+  "Website/src/content/resources/ms/divine-mercy-chaplet.md": {
+    "mtime": 1788498213.2239738,
+    "seen": 1788506733.509265,
+    "ast_hash": "a8098a90ab98150ae36ccc10c034081b",
+    "semantic_hash": "a8098a90ab98150ae36ccc10c034081b"
+  },
+  "Website/src/content/resources/ms/rosary.md": {
+    "mtime": 1788498198.2880964,
+    "seen": 1788506733.509266,
+    "ast_hash": "9812b66583465c0f2b029896a788bbd8",
+    "semantic_hash": "9812b66583465c0f2b029896a788bbd8"
+  },
+  "Website/src/content/schedule/mass.yaml": {
+    "mtime": 1788479855.7829225,
+    "seen": 1788506733.5092666,
+    "ast_hash": "f04107f212117c11308116885a6f8baa",
+    "semantic_hash": "f04107f212117c11308116885a6f8baa"
+  },
+  "Website/src/content/services/en/baptism.md": {
+    "mtime": 1788479955.328586,
+    "seen": 1788506733.5092678,
+    "ast_hash": "d0fd6062ac56b9bc31844dd42e1de96c",
+    "semantic_hash": "d0fd6062ac56b9bc31844dd42e1de96c"
+  },
+  "Website/src/content/services/en/blessing.md": {
+    "mtime": 1788479985.2301514,
+    "seen": 1788506733.5092685,
+    "ast_hash": "5ea49e1a08c5b6e1031530cfd6d327d2",
+    "semantic_hash": "5ea49e1a08c5b6e1031530cfd6d327d2"
+  },
+  "Website/src/content/services/en/funeral.md": {
+    "mtime": 1788479985.1863062,
+    "seen": 1788506733.5092692,
+    "ast_hash": "e84dc0bbb3a7bdd3d81163f2e06a9121",
+    "semantic_hash": "e84dc0bbb3a7bdd3d81163f2e06a9121"
+  },
+  "Website/src/content/services/en/marriage.md": {
+    "mtime": 1788479985.1317158,
+    "seen": 1788506733.50927,
+    "ast_hash": "09985c542fc1bed096548fa9e8299113",
+    "semantic_hash": "09985c542fc1bed096548fa9e8299113"
+  },
+  "Website/src/content/services/en/rcia.md": {
+    "mtime": 1788479955.2671273,
+    "seen": 1788506733.5092711,
+    "ast_hash": "6e6e1c6a973000e3c99e5858515dd3a6",
+    "semantic_hash": "6e6e1c6a973000e3c99e5858515dd3a6"
+  },
+  "Website/src/content/services/ms/baptism.md": {
+    "mtime": 1788498113.0823622,
+    "seen": 1788506733.5092719,
+    "ast_hash": "9a193f6c4e0eaf51a9f4379d4c78f511",
+    "semantic_hash": "9a193f6c4e0eaf51a9f4379d4c78f511"
+  },
+  "Website/src/content/services/ms/blessing.md": {
+    "mtime": 1788498151.3822997,
+    "seen": 1788506733.5092726,
+    "ast_hash": "852ef48c44b9a3a558fae06b9e3efdd9",
+    "semantic_hash": "852ef48c44b9a3a558fae06b9e3efdd9"
+  },
+  "Website/src/content/services/ms/funeral.md": {
+    "mtime": 1788498151.3321147,
+    "seen": 1788506733.5092733,
+    "ast_hash": "849d3e01b6d0cfa6a069a89a500d9601",
+    "semantic_hash": "849d3e01b6d0cfa6a069a89a500d9601"
+  },
+  "Website/src/content/services/ms/marriage.md": {
+    "mtime": 1788498151.2718592,
+    "seen": 1788506733.509274,
+    "ast_hash": "7317816056050c8ec91a30c9ea7138ac",
+    "semantic_hash": "7317816056050c8ec91a30c9ea7138ac"
+  },
+  "Website/src/content/services/ms/rcia.md": {
+    "mtime": 1788498112.9998999,
+    "seen": 1788506733.509275,
+    "ast_hash": "06daa858da8e17189d1e77c6232d9346",
+    "semantic_hash": "06daa858da8e17189d1e77c6232d9346"
+  },
+  "Requirement/MOST HOLY REDEEMER CHURCH, TANJUNG MALIM WEBSITE.pdf": {
+    "mtime": 1788435135.5458722,
+    "seen": 1788506733.509276,
+    "ast_hash": "37d51ed4b2d3db97fa064087dc797e6b",
+    "semantic_hash": "37d51ed4b2d3db97fa064087dc797e6b"
+  },
+  "Requirement/logo.jpg": {
+    "mtime": 1788439750.8411198,
+    "seen": 1788506733.5092766,
+    "ast_hash": "cf3b601bcb8fffc60ef5e5f7717b515c",
+    "semantic_hash": "cf3b601bcb8fffc60ef5e5f7717b515c"
+  },
+  "Website/public/favicon.svg": {
+    "mtime": 1788479707.0803652,
+    "seen": 1788506733.5092776,
+    "ast_hash": "117f149d946a41b763d79251ea5daccc",
+    "semantic_hash": "117f149d946a41b763d79251ea5daccc"
+  },
+  "Website/public/logo.jpg": {
+    "mtime": 1788479307.4501832,
+    "seen": 1788506733.5092783,
+    "ast_hash": "cf3b601bcb8fffc60ef5e5f7717b515c",
+    "semantic_hash": "cf3b601bcb8fffc60ef5e5f7717b515c"
+  },
+  "Website/src/assets/logo.jpg": {
+    "mtime": 1788479307.3905869,
+    "seen": 1788506733.509279,
+    "ast_hash": "cf3b601bcb8fffc60ef5e5f7717b515c",
+    "semantic_hash": "cf3b601bcb8fffc60ef5e5f7717b515c"
+  }
+}

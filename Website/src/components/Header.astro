@@ -79,19 +79,30 @@ const isActive = (item: Resolved) => {
 };
 ---
 
-<header data-print="hide">
-  <div class="mx-auto flex max-w-[80rem] items-center gap-6 px-gutter py-4">
-    <a href={localePath(lang, '')} class="flex shrink-0 items-baseline gap-2.5 no-underline">
-      <span class="text-[1.0625rem] font-semibold leading-none tracking-tight sm:text-lg">
-        {site.parishShortName}
-      </span>
-      <span class="hidden text-sm text-ink-soft sm:inline">{site.town}</span>
+<header data-print="hide" class="sticky top-0 z-50 bg-paper/95 backdrop-blur-md transition-all duration-200 border-b border-rule/60 shadow-xs">
+  <div class="mx-auto flex max-w-[84rem] items-center justify-between gap-4 px-gutter py-3.5">
+    <!-- Brand & Logo -->
+    <a href={localePath(lang, '')} class="group flex shrink-0 items-center gap-3 no-underline">
+      <img
+        src="/logo.jpg"
+        alt="CUTES Most Holy Redeemer Logo"
+        class="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover shadow-sm ring-2 ring-gold/40 transition-transform group-hover:scale-105"
+        width="44"
+        height="44"
+      />
+      <div class="flex flex-col">
+        <span class="font-heading text-lg sm:text-xl font-bold leading-tight tracking-tight text-ink group-hover:text-magenta transition-colors">
+          {site.parishShortName}
+        </span>
+        <span class="text-xs font-semibold tracking-wider text-purple uppercase">
+          CUTES • {site.town}
+        </span>
+      </div>
     </a>
 
-    <div class="grow"></div>
-
+    <!-- Desktop Navigation -->
     <nav class="hidden lg:block" aria-label={t('site.menu')}>
-      <ul class="flex items-center gap-6 text-[0.9375rem]">
+      <ul class="flex items-center gap-7 text-[0.9375rem] font-medium text-ink">
         {
           items.map((item) => (
             <li class="relative">
@@ -99,33 +110,46 @@ const isActive = (item: Resolved) => {
                 <a
                   href={item.href}
                   class:list={[
-                    'py-2 no-underline decoration-2 underline-offset-[6px] hover:underline',
-                    isActive(item) && 'underline',
+                    'relative py-2.5 font-semibold transition-colors duration-200 hover:text-magenta',
+                    isActive(item) ? 'text-magenta font-bold' : 'text-ink-soft',
                   ]}
-                  style={isActive(item) ? 'text-decoration-color: var(--season)' : undefined}
                   aria-current={isActive(item) ? 'page' : undefined}
                 >
                   {item.label}
+                  {isActive(item) && (
+                    <span class="absolute bottom-0 left-0 h-[2.5px] w-full rounded-full bg-magenta" />
+                  )}
                 </a>
               ) : (
-                <details data-nav-dropdown>
+                <details data-nav-dropdown class="group">
                   <summary
                     class:list={[
-                      'cursor-pointer list-none py-2 decoration-2 underline-offset-[6px] hover:underline',
-                      isActive(item) && 'underline',
+                      'flex items-center gap-1.5 cursor-pointer list-none py-2.5 font-semibold transition-colors duration-200 hover:text-magenta',
+                      isActive(item) ? 'text-magenta font-bold' : 'text-ink-soft',
                     ]}
-                    style={isActive(item) ? 'text-decoration-color: var(--season)' : undefined}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
+                    <svg
+                      class="h-3.5 w-3.5 transition-transform duration-200 group-open:rotate-180 opacity-70"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
                   </summary>
-                  <ul class="absolute start-0 z-50 mt-2 min-w-60 bg-paper py-2 shadow-[0_0_0_1px_var(--color-rule)]">
+                  <ul class="absolute start-0 z-50 mt-1 min-w-64 rounded-2xl bg-paper-card p-2 shadow-xl ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 duration-150">
                     {item.children.map((child) => (
                       <li>
                         <a
                           href={child.href}
                           class:list={[
-                            'block px-4 py-2 no-underline hover:bg-paper-shade',
-                            path === child.path && 'font-semibold',
+                            'block rounded-xl px-3.5 py-2 text-sm font-medium transition-colors hover:bg-paper-shade hover:text-magenta',
+                            path === child.path ? 'bg-paper-shade font-semibold text-magenta' : 'text-ink-soft',
                           ]}
                           aria-current={path === child.path ? 'page' : undefined}
                         >
@@ -142,71 +166,116 @@ const isActive = (item: Resolved) => {
       </ul>
     </nav>
 
-    {/* Both languages sit side by side rather than behind a toggle: in this
-        parish neither one is the translation of the other. */}
-    <p class="flex shrink-0 items-center gap-1.5 text-[0.9375rem]">
-      <span class="font-semibold" aria-current="true">{languageShort[lang]}</span>
-      <span class="text-rule-strong" aria-hidden="true">/</span>
+    <!-- Header Actions (Language switcher + CTA button) -->
+    <div class="hidden sm:flex items-center gap-4">
+      <div class="flex items-center gap-1.5 rounded-full bg-paper-shade px-3 py-1 text-xs font-bold tracking-wide text-ink-soft border border-rule">
+        <span class={lang === 'en' ? 'text-magenta' : ''} aria-current={lang === 'en' ? 'true' : undefined}>
+          EN
+        </span>
+        <span class="text-rule-strong" aria-hidden="true">/</span>
+        <a
+          href={switchLangPath(Astro.url.pathname, other)}
+          hreflang={other}
+          lang={other}
+          rel="alternate"
+          class:list={['hover:text-magenta transition-colors', lang === 'ms' ? 'text-magenta' : '']}
+          title={t('site.switchTo')}
+        >
+          BM
+        </a>
+      </div>
+
+      <!-- Fellowship Church Style Pill CTA -->
       <a
-        href={switchLangPath(Astro.url.pathname, other)}
-        hreflang={other}
-        lang={other}
-        rel="alternate"
-        class="text-ink-soft no-underline hover:underline"
-        title={t('site.switchTo')}
+        href={localePath(lang, 'mass-schedule')}
+        class="btn-action btn-primary !py-2 !px-5 !text-xs"
       >
-        {languageShort[other]}
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{t('home.ctaMass')}</span>
       </a>
-    </p>
+    </div>
 
-    <details class="lg:hidden" data-mobile-menu>
-      <summary
-        class="cursor-pointer list-none px-1 py-1.5 text-[0.9375rem] font-semibold"
-        aria-label={t('site.menu')}
-      >
-        {t('site.menu')}
-      </summary>
+    <!-- Mobile Hamburger Toggle -->
+    <div class="flex items-center gap-3 lg:hidden">
+      <div class="flex items-center gap-1 rounded-full bg-paper-shade px-2.5 py-1 text-xs font-bold border border-rule sm:hidden">
+        <a
+          href={switchLangPath(Astro.url.pathname, other)}
+          class="text-magenta font-semibold"
+        >
+          {languageShort[other]}
+        </a>
+      </div>
 
-      <nav
-        class="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-rule bg-paper px-gutter pb-10 pt-4"
-        aria-label={t('site.menu')}
-      >
-        <ul class="mx-auto max-w-[80rem]">
-          {
-            items.map((item) => (
-              <li class="border-b border-rule py-3 last:border-0">
-                <a
-                  href={item.href}
-                  class:list={['block text-xl font-semibold no-underline', isActive(item) && 'underline']}
-                  style={isActive(item) ? 'text-decoration-color: var(--season)' : undefined}
-                >
-                  {item.label}
-                </a>
-                {item.children.length > 0 && (
-                  <ul class="mt-1.5 flex flex-wrap gap-x-5 gap-y-1 text-[0.9375rem] text-ink-soft">
-                    {item.children.map((child) => (
-                      <li>
-                        <a href={child.href} class="no-underline hover:underline">
-                          {child.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-    </details>
+      <details class="lg:hidden relative" data-mobile-menu>
+        <summary
+          class="cursor-pointer list-none rounded-full p-2.5 text-ink hover:bg-paper-shade transition-colors"
+          aria-label={t('site.menu')}
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </summary>
+
+        <nav
+          class="absolute end-0 top-full mt-3 w-80 max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-3xl border border-rule bg-paper-card p-5 shadow-2xl z-50"
+          aria-label={t('site.menu')}
+        >
+          <div class="mb-4 pb-3 border-b border-rule flex items-center justify-between">
+            <span class="font-heading text-sm font-bold uppercase tracking-wider text-ink-muted">
+              {t('site.menu')}
+            </span>
+            <a
+              href={localePath(lang, 'mass-schedule')}
+              class="btn-action btn-primary !py-1.5 !px-3.5 !text-[11px]"
+            >
+              {t('home.ctaMass')}
+            </a>
+          </div>
+
+          <ul class="space-y-1">
+            {
+              items.map((item) => (
+                <li class="py-1">
+                  <a
+                    href={item.href}
+                    class:list={[
+                      'block rounded-xl px-3 py-2 text-base font-semibold transition-colors',
+                      isActive(item) ? 'bg-magenta/10 text-magenta' : 'text-ink hover:bg-paper-shade',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                  {item.children.length > 0 && (
+                    <ul class="mt-1 ms-3 space-y-1 border-s-2 border-rule/80 ps-2 text-sm text-ink-soft">
+                      {item.children.map((child) => (
+                        <li>
+                          <a
+                            href={child.href}
+                            class="block rounded-lg px-2 py-1.5 hover:text-magenta hover:bg-paper-shade"
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 
-  {/* The season's colour, stated plainly. It is the only ornament on the page
-      and it is also a fact: this is what colour the vestments are today. */}
-  <div class="rule-season"></div>
-  <p class="mx-auto max-w-[80rem] px-gutter pb-1 pt-1.5 text-[0.8125rem] text-ink-soft">
-    {season.name[lang]}
-  </p>
+  <!-- Liturgical Season ribbon banner -->
+  <div class="h-[3px] bg-gradient-to-r from-gold via-magenta to-purple"></div>
+  <div class="bg-paper-shade/80 py-1 px-gutter text-center text-[11px] font-bold tracking-wider uppercase text-ink-soft border-b border-rule/40">
+    <span class="inline-block w-2 h-2 rounded-full mr-1.5" style="background-color: var(--season);"></span>
+    {season.name[lang]} • Most Holy Redeemer Church & CUTES
+  </div>
 </header>
 
 <style>

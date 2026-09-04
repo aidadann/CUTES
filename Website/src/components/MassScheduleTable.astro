@@ -33,22 +33,41 @@ const rows = all
 
 {
   rows.length === 0 ? (
-    <p class="text-ink-soft">{t('schedule.empty')}</p>
+    <div class="rounded-2xl border border-rule bg-paper-shade p-8 text-center text-ink-soft">
+      <p>{t('schedule.empty')}</p>
+    </div>
   ) : (
-    /* A list rather than a table: the day, the time and the language are one
-       statement, and on a phone a three-column table either scrolls sideways
-       or drops a column. */
-    <ul class="border-t border-rule">
+    <div class="space-y-3">
       {rows.map((row) => (
-        <li class="grid gap-x-8 gap-y-1 border-b border-rule py-4 sm:grid-cols-[10rem_7rem_1fr]">
-          <span class="font-semibold">{dayNames[row.data.day]?.[lang] ?? row.data.day}</span>
-          <span class="clock tabular text-lg leading-tight">{row.data.time}</span>
-          <span class="text-ink-soft">
-            {row.data.language}
-            {row.data.note && <span class="block text-sm">{row.data.note[lang]}</span>}
-          </span>
-        </li>
+        <div class="church-card !p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-rule/70 hover:border-gold/80 transition-all">
+          <div class="flex items-center gap-4">
+            <!-- Day indicator badge -->
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-purple/10 text-purple font-heading font-bold text-sm uppercase">
+              {dayNames[row.data.day]?.[lang]?.slice(0, 3) ?? row.data.day.slice(0, 3)}
+            </div>
+            <div>
+              <p class="font-heading text-lg font-bold text-ink">
+                {dayNames[row.data.day]?.[lang] ?? row.data.day}
+              </p>
+              <p class="text-xs text-ink-soft flex items-center gap-1.5 mt-0.5">
+                <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold"></span>
+                <span>{row.data.language}</span>
+                {row.data.note && <span class="text-ink-muted">({row.data.note[lang]})</span>}
+              </p>
+            </div>
+          </div>
+
+          <!-- Time & Icon Pill -->
+          <div class="flex items-center gap-2 self-start sm:self-auto">
+            <span class="pill-badge bg-paper-shade border border-rule text-purple font-heading text-base px-4 py-2">
+              <svg class="w-4 h-4 text-magenta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="clock">{row.data.time}</span>
+            </span>
+          </div>
+        </div>
       ))}
-    </ul>
+    </div>
   )
 }

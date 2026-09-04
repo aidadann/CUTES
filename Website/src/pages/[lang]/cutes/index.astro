@@ -29,38 +29,64 @@ const links = [
   description={about?.data.summary ?? t('home.cutesLead')}
   path="cutes"
 >
-  {/* CUTES gets the community's own colour, full bleed, the same way it does
-      on the home page. It is a students' section inside a parish site and it
-      should feel like walking into a different room. */}
-  <div style="background: var(--color-cutes-band); color: #fff">
-    <div class="mx-auto max-w-[80rem] px-gutter pb-16 pt-14 sm:pb-20 sm:pt-20">
-      <h1 class="text-[clamp(3rem,2rem+5vw,6rem)] font-semibold leading-none">
-        {site.communityName}
-      </h1>
-      <p class="mt-4 text-lg text-white/80 sm:text-xl">{site.communityFullName}</p>
-      <p class="mt-6 max-w-[52ch] font-serif text-lg leading-relaxed text-white/90">
-        {about?.data.summary ?? t('home.cutesLead')}
-      </p>
+  <!-- CUTES Banner with logo palette -->
+  <div class="relative overflow-hidden bg-gradient-to-br from-purple-dark via-purple to-magenta text-white py-16 sm:py-24">
+    <div class="mx-auto max-w-[84rem] px-gutter relative z-10">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+          <span class="inline-flex items-center gap-2 rounded-full bg-gold/25 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-gold border border-gold/40">
+            UPSI Tertiary Campus Community
+          </span>
+          <h1 class="mt-4 font-heading text-5xl sm:text-7xl font-extrabold tracking-tight leading-none text-white">
+            {site.communityName}
+          </h1>
+          <p class="mt-2 text-lg text-white/85 font-medium">{site.communityFullName}</p>
+          <p class="mt-4 max-w-[54ch] text-base sm:text-lg leading-relaxed text-white/90">
+            {about?.data.summary ?? t('home.cutesLead')}
+          </p>
+        </div>
+
+        <img
+          src="/logo.jpg"
+          alt="CUTES Emblem"
+          class="h-28 w-28 sm:h-36 sm:w-36 rounded-3xl object-cover border-4 border-gold/60 shadow-2xl shrink-0"
+        />
+      </div>
     </div>
   </div>
 
-  <div class="mx-auto max-w-[80rem] px-gutter py-14">
-    <div class="reading">
-      {Content ? <Content /> : <p class="text-ink-soft">{t('common.todo')}</p>}
+  <div class="mx-auto max-w-[84rem] px-gutter py-16">
+    <div class="church-card bg-paper-card max-w-4xl">
+      <div class="reading">
+        {Content ? <Content /> : <p class="text-ink-soft">{t('common.todo')}</p>}
+      </div>
     </div>
 
-    <nav class="mt-16 border-t border-ink pt-6" aria-label={t('common.moreIn')}>
-      <ul class="flex flex-wrap gap-x-8 gap-y-2 text-lg font-semibold">
+    <!-- Quick Navigation Cards -->
+    <div class="mt-14">
+      <h3 class="font-heading text-xl font-bold uppercase tracking-wider text-purple mb-6">
+        {t('common.moreIn')} {site.communityName}
+      </h3>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {
           links.map((link) => (
-            <li>
-              <a href={link.href} class="no-underline hover:underline">
-                {link.title}
-              </a>
-            </li>
+            <a
+              href={link.href}
+              class="church-card !p-6 flex flex-col justify-between group hover:border-magenta"
+            >
+              <div>
+                <h4 class="font-heading text-lg font-bold text-ink group-hover:text-magenta transition-colors">
+                  {link.title}
+                </h4>
+              </div>
+              <div class="mt-4 flex items-center justify-between text-xs font-bold text-purple group-hover:text-magenta transition-colors">
+                <span>View</span>
+                <span>&rarr;</span>
+              </div>
+            </a>
           ))
         }
-      </ul>
-    </nav>
+      </div>
+    </div>
   </div>
 </BaseLayout>
