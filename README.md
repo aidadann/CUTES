@@ -3,7 +3,7 @@
 The website for the parish and for **CUTES** — Catholic UPSI Tertiary Education
 Students.
 
-- **Live site:** *TODO — add the URL once the domain is attached*
+- **Live site:** https://aidadann.github.io/CUTES/ms/
 - **Publishing the bulletin, editing the roster, adding photos:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
