@@ -1,10 +1,10 @@
 ---
-title: CUTES Family Day
-summary: The whole community in one place for a day — juniors, seniors, and the graduates who came back.
-order: 3
-startDate: 2027-07-17
-endDate: 2027-07-17
-location: TODO — venue
+title: CUTES Family Day & Parish Feast Day
+summary: Gathering as one community to worship, connect through activities and talks, and enjoy a full day of fun
+order: 1
+startDate: 2026-10-24
+endDate: 2026-10-24
+location: Most Holy Redeemer Church, Tanjung Malim
 gallery: family-day
 annual: true
 ---

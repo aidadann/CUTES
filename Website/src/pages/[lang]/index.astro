@@ -21,7 +21,7 @@ const weekend = (['saturday', 'sunday'] as const).map((day) => ({
   rows: schedule.filter((entry) => entry.data.day === day),
 }));
 const { upcoming } = splitEvents(await localized('events', lang));
-const nextEvents = upcoming.slice(0, 3);
+const nextEvents = upcoming.slice(0, 2);
 
 // Council portraits are still being collected. Until a photo path is filled in
 // for a member, their initials stand in — a missing face should look deliberate,
@@ -507,69 +507,6 @@ const initials = (name: string) =>
     </div>
   </section>
 
-  <!-- 9. COMMUNITY / STORIES SECTION (Editorial magazine quote with authentic photo) -->
-  <section class="bg-paper-shade py-24 sm:py-36 border-b border-rule">
-    <div class="mx-auto max-w-[84rem] px-gutter">
-      <div class="grid gap-12 lg:grid-cols-12 items-center">
-        <!-- Student Story Portrait -->
-        <div class="lg:col-span-5">
-          <div class="reveal-image relative overflow-hidden rounded-[4px] aspect-[4/5] bg-paper-muted shadow-sm">
-            <img
-              src={assetPath('person-story.jpg')}
-              alt="Community member portrait"
-              class="h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-        </div>
-
-        <!-- Big Editorial Quotation -->
-        <div class="lg:col-span-7 lg:pl-10 reveal-on-scroll">
-          <blockquote class="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase tracking-[-0.04em] text-ink leading-[1.08]">
-            {t('home.storiesQuote')}
-          </blockquote>
-          <p class="mt-8 text-base sm:text-lg font-medium text-ink-soft">
-            {t('home.storiesAuthor')}
-          </p>
-          <div class="mt-10">
-            <a href={localePath(lang, 'gallery')} class="btn-action btn-secondary">
-              <span>{t('gallery.title')}</span>
-              <span>&rarr;</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 10. CALL TO ACTION SECTION (Dark Charcoal Section: "THERE'S A PLACE FOR YOU HERE") -->
-  <section class="on-dark bg-charcoal text-white py-24 sm:py-36">
-    <div class="mx-auto max-w-[84rem] px-gutter text-center reveal-on-scroll">
-      <h2 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-[-0.04em] text-white leading-tight max-w-4xl mx-auto">
-        {t('home.bottomCtaTitle')}
-      </h2>
-      <p class="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto font-normal">
-        {t('home.bottomCtaDesc')}
-      </p>
-
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-5">
-        <a
-          href={localePath(lang, 'contact')}
-          class="btn-action btn-primary !bg-white !text-charcoal hover:!bg-paper-shade !border-white"
-        >
-          <span>{t('home.ctaPlanVisit')}</span>
-          <span>&rarr;</span>
-        </a>
-
-        <a
-          href={localePath(lang, 'contact')}
-          class="btn-action btn-secondary !border-white/40 !text-white hover:!bg-white/10"
-        >
-          <span>{t('home.contactUs')}</span>
-        </a>
-      </div>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>

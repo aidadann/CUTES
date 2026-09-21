@@ -1,10 +1,10 @@
 ---
-title: Hari Keluarga CUTES
-summary: Seluruh komuniti berkumpul untuk sehari — junior, senior, dan graduan yang pulang.
-order: 3
-startDate: 2027-07-17
-endDate: 2027-07-17
-location: TODO — tempat
+title: Hari Keluarga CUTES & Pesta Paroki
+summary: Berhimpun sebagai satu komuniti untuk beribadat, beramah mesra melalui aktiviti dan ceramah, serta menikmati hari yang penuh keseronokan
+order: 1
+startDate: 2026-10-24
+endDate: 2026-10-24
+location: Gereja Most Holy Redeemer, Tanjung Malim
 gallery: family-day
 annual: true
 ---
