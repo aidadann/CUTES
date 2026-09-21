@@ -2,7 +2,7 @@
 import MassScheduleTable from '../../components/MassScheduleTable.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import { site } from '../../data/site';
-import { useTranslations, type Lang } from '../../i18n/ui';
+import { useTranslations, type Lang, type UiKey } from '../../i18n/ui';
 import { localeParams } from '../../i18n/utils';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -11,8 +11,7 @@ export const getStaticPaths = localeParams;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 
-const socials = Object.entries(site.social).filter(([, url]) => url !== '');
-const tel = site.phone.replace(/\s/g, '');
+const socials = [site.social.instagram, site.social.facebook, site.social.tiktok];
 ---
 
 <BaseLayout lang={lang} title={t('contact.title')} description={t('contact.lead')} path="contact">
@@ -23,6 +22,7 @@ const tel = site.phone.replace(/\s/g, '');
       <div>
         <address class="not-italic">
           <p class="text-[clamp(1.5rem,1.2rem+1.2vw,2.25rem)] font-semibold leading-tight">
+            {site.address.line1}<br />
             {site.address.line2}<br />
             <span class="tabular">{site.address.postcode}</span>
             {site.address.city}
@@ -41,35 +41,42 @@ const tel = site.phone.replace(/\s/g, '');
             <dt class="w-32 shrink-0 text-ink-soft">{t('contact.email')}</dt>
             <dd><a href={`mailto:${site.email}`} class="link">{site.email}</a></dd>
           </div>
-          <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
-            <dt class="w-32 shrink-0 text-ink-soft">{t('contact.phone')}</dt>
-            <dd><a href={`tel:${tel}`} class="link tabular">{site.phoneDisplay}</a></dd>
-          </div>
+          {
+            site.council.map((member) => (
+              <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
+                <dt class="w-32 shrink-0 text-ink-soft">{t(member.roleKey as UiKey)}</dt>
+                <dd>
+                  <a href={`tel:${member.phone}`} class="link tabular">{member.phoneDisplay}</a>
+                  <span class="block text-sm text-ink-soft">{member.name}</span>
+                </dd>
+              </div>
+            ))
+          }
           <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
             <dt class="w-32 shrink-0 text-ink-soft">{t('contact.hours')}</dt>
             <dd class="max-w-[32ch]">{t('contact.hoursValue')}</dd>
           </div>
-          {
-            socials.length > 0 && (
-              <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
-                <dt class="w-32 shrink-0 text-ink-soft">{t('contact.follow')}</dt>
-                <dd class="flex gap-5">
-                  {socials.map(([name, url]) => (
-                    <a href={url} target="_blank" rel="noopener noreferrer" class="link capitalize">
-                      {name}
-                    </a>
-                  ))}
-                </dd>
-              </div>
-            )
-          }
+          <div class="flex flex-wrap gap-x-6 border-b border-rule py-3.5">
+            <dt class="w-32 shrink-0 text-ink-soft">{t('contact.social')}</dt>
+            <dd class="flex flex-wrap gap-x-5 gap-y-1">
+              {socials.map((account) =>
+                account.url ? (
+                  <a href={account.url} target="_blank" rel="noopener noreferrer" class="link">
+                    {account.handle}
+                  </a>
+                ) : (
+                  <span>{account.handle}</span>
+                ),
+              )}
+            </dd>
+          </div>
         </dl>
 
         <section class="mt-12" style="border-top: 3px solid var(--color-cutes)">
           <h2 class="mt-5 text-xl font-semibold">{t('contact.cutesHeading')}</h2>
           <p class="mt-1.5 max-w-[48ch] font-serif text-ink-soft">{t('contact.cutesLead')}</p>
           <p class="mt-3">
-            <a href={`mailto:${site.cutesEmail}`} class="link">{site.cutesEmail}</a>
+            <a href={`mailto:${site.email}`} class="link">{site.email}</a>
           </p>
         </section>
       </div>
