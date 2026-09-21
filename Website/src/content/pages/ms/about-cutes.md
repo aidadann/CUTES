@@ -29,6 +29,8 @@ Malaysia Timur di kampus.
 
 ## Makna logo kami
 
+![Lambang CUTES](../../../assets/cutes-logo.jpg)
+
 - **Salib** — Lambang penyelamatan kita sebagai pelajar/umat Katolik.
 - **Tangan** — Melambangkan pelayanan kita sebagai seorang pelajar/pendidik.
 - **Api** — Api merah membara membawa semangat kita untuk terus mewarta/menginjil.

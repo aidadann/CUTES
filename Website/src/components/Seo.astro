@@ -22,7 +22,7 @@ const fullTitle =
 
 const canonical = new URL(localePath(lang, path), Astro.site ?? Astro.url).toString();
 const alternate = new URL(localePath(otherLang(lang), path), Astro.site ?? Astro.url).toString();
-const ogImage = new URL(image ?? assetPath('logo.jpg'), Astro.site ?? Astro.url).toString();
+const ogImage = new URL(image ?? assetPath('church-logo.jpg'), Astro.site ?? Astro.url).toString();
 ---
 
 <title>{fullTitle}</title>

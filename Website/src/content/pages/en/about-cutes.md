@@ -28,6 +28,8 @@ Malaysian traditions strong on campus.
 
 ## What the logo means
 
+![The CUTES emblem](../../../assets/cutes-logo.jpg)
+
 - **The cross** — the sign of our salvation as Catholic students and as God's people.
 - **The hands** — our service as students and as teachers.
 - **The flame** — the burning red fire that carries our zeal to keep proclaiming the Gospel.
