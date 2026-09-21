@@ -25,7 +25,7 @@ it leaked, and everyone remembers it fondly.
 ## Becoming a parish
 
 Most Holy Redeemer was raised to a parish in [year] under the Archdiocese of
-Kuala Lumpur, with Father [Name] as its first parish priest.
+Penang, with Father [Name] as its first parish priest.
 
 ## The students
 
@@ -37,5 +37,6 @@ grew out of that — a community within the parish, run by students, for student
 ## Today
 
 The parish serves the town, the estates around it, and the university. On a
-Sunday evening the church is full of people in their twenties, and on a Sunday
-morning it is full of the families who built the place. Both are the parish.
+Saturday evening, at the Sunset Mass, the church is full of people in their
+twenties, and on a Sunday morning it is full of the families who built the
+place. Both are the parish.

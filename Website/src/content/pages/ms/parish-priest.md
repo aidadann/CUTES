@@ -11,11 +11,11 @@ paroki, berserta gambar jika beliau bersetuju.**
 ## Reverend Father [Nama]
 
 Father [Nama] berkhidmat sebagai paderi paroki Most Holy Redeemer sejak [tahun].
-Beliau ditahbiskan untuk Keuskupan Agung Kuala Lumpur pada [tahun], dan sebelum
+Beliau ditahbiskan untuk Keuskupan Agung Pulau Pinang pada [tahun], dan sebelum
 datang ke Tanjung Malim beliau berkhidmat di [paroki sebelumnya].
 
 Selain menjaga paroki, beliau mendampingi CUTES, komuniti pelajar Katolik di
-UPSI, dan merayakan Misa pelajar pada petang Ahad.
+UPSI, dan merayakan Misa pelajar pada petang Sabtu, iaitu Misa Sunset.
 
 ## Berjumpa Father
 

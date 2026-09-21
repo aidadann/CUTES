@@ -10,7 +10,6 @@ export const site = {
   churchName: 'Church Of The Most Holy Redeemer',
   /** Conversational name, used in page titles, SEO and the hero tag. */
   parishName: 'Most Holy Redeemer Church',
-  parishShortName: 'Most Holy Redeemer',
   town: 'Tanjung Malim',
   state: 'Perak',
   country: 'Malaysia',
@@ -18,7 +17,6 @@ export const site = {
   /** The student community this site also serves. */
   communityName: 'CUTES',
   communityFullName: "Catholic Undergraduate Teachers’ Society",
-  communityTagline: 'The Catholic UPSI Student Community at Most Holy Redeemer Church',
 
   /** Academic year the published committee roster belongs to. */
   committeeYear: '2025/2026',
@@ -88,9 +86,6 @@ export const site = {
     facebook: { handle: "Catholic Undergraduate Teachers' Society (CUTES) UPSI", url: '' },
     tiktok: { handle: 'cutesfamily_', url: 'https://www.tiktok.com/@cutesfamily_' },
   },
-
-  /** Used for canonical URLs and Open Graph tags. */
-  defaultOgImage: '/church-logo.jpg',
 
   /** Diocese, shown in the hero and the footer. */
   diocese: 'Archdiocese of Penang',

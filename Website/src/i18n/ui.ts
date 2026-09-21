@@ -56,7 +56,6 @@ export const ui = {
     'nav.bec': 'BEC',
 
     // --- Home ------------------------------------------------------------
-    'home.kicker': 'Archdiocese of Penang',
     'home.heroLead':
       'A Catholic parish serving Tanjung Malim and the students of UPSI. Everyone is welcome at the table.',
     'home.ctaMass': 'Mass times',
@@ -128,9 +127,6 @@ export const ui = {
     'schedule.language': 'Language',
     'schedule.note': 'Notes',
     'schedule.empty': 'The schedule has not been published yet.',
-    'schedule.holyDays': 'Holy days of obligation are announced in the bulletin.',
-    'schedule.confession': 'Confession',
-    'schedule.devotions': 'Adoration and devotions',
 
     // --- Mass schedule (added by FIXES V1) -------------------------------
     'schedule.mass': 'Mass',
@@ -151,7 +147,6 @@ export const ui = {
     'cutes.committeeLead':
       'The students who serve the community this academic year, by ministry.',
     'cutes.year': 'Academic year',
-    'cutes.becTitle': 'Basic Ecclesial Community',
     'cutes.ministries': 'Ministries',
     'cutes.noPhoto': 'No photo',
 
@@ -220,7 +215,7 @@ export const ui = {
       'How to arrange a sacrament at Most Holy Redeemer, and who to speak to.',
     'services.requirements': 'What to prepare',
     'services.contactHeading': 'Arranging this',
-    'services.contactFallback': 'Please contact the parish office.',
+    'services.contactFallback': 'Please contact the parish priest.',
     'services.all': 'All sacraments and services',
 
     // --- Resources -------------------------------------------------------
@@ -234,18 +229,15 @@ export const ui = {
 
     // --- Contact ---------------------------------------------------------
     'contact.title': 'Contact Us',
-    'contact.lead': 'Visit, write or call. The parish office answers during office hours.',
+    'contact.lead':
+      'Visit, write or call — the parish priest, the deacon and the CUTES coordinator are all reachable directly.',
     'contact.address': 'Address',
     'contact.email': 'Email',
-    'contact.phone': 'Phone',
-    'contact.hours': 'Office hours',
-    'contact.hoursValue': 'Tuesday to Friday, 9:00 am – 4:00 pm. Closed on Mondays.',
     'contact.map': 'Find us',
     'contact.openMaps': 'Open in Google Maps',
     'contact.cutesHeading': 'Contacting CUTES',
     'contact.cutesLead':
       'Students looking for the campus community can write to the CUTES coordinator directly.',
-    'contact.follow': 'Follow us',
 
     // --- Contact (added by FIXES V1) -------------------------------------
     'contact.social': 'Social media',
@@ -304,7 +296,6 @@ export const ui = {
     'nav.bec': 'KKA',
 
     // --- Home ------------------------------------------------------------
-    'home.kicker': 'Keuskupan Agung Pulau Pinang',
     'home.heroLead':
       'Paroki Katolik yang melayani Tanjung Malim dan pelajar UPSI. Semua dialu-alukan.',
     'home.ctaMass': 'Waktu Misa',
@@ -376,9 +367,6 @@ export const ui = {
     'schedule.language': 'Bahasa',
     'schedule.note': 'Catatan',
     'schedule.empty': 'Jadual belum diterbitkan.',
-    'schedule.holyDays': 'Hari raya wajib akan diumumkan dalam buletin.',
-    'schedule.confession': 'Pengakuan Dosa',
-    'schedule.devotions': 'Adorasi dan devosi',
 
     // --- Mass schedule (added by FIXES V1) -------------------------------
     'schedule.mass': 'Misa',
@@ -399,7 +387,6 @@ export const ui = {
     'cutes.committeeLead':
       'Pelajar yang berkhidmat untuk komuniti pada sesi akademik ini, mengikut kementerian.',
     'cutes.year': 'Sesi akademik',
-    'cutes.becTitle': 'Komuniti Kristian Asas',
     'cutes.ministries': 'Kementerian',
     'cutes.noPhoto': 'Tiada gambar',
 
@@ -468,7 +455,7 @@ export const ui = {
       'Cara mengaturkan sakramen di Most Holy Redeemer, dan siapa yang perlu dihubungi.',
     'services.requirements': 'Apa yang perlu disediakan',
     'services.contactHeading': 'Cara mengaturkannya',
-    'services.contactFallback': 'Sila hubungi pejabat paroki.',
+    'services.contactFallback': 'Sila hubungi paderi paroki.',
     'services.all': 'Semua sakramen dan perkhidmatan',
 
     // --- Resources -------------------------------------------------------
@@ -482,18 +469,15 @@ export const ui = {
 
     // --- Contact ---------------------------------------------------------
     'contact.title': 'Hubungi Kami',
-    'contact.lead': 'Datang, tulis atau telefon. Pejabat paroki menjawab pada waktu pejabat.',
+    'contact.lead':
+      'Datang, tulis atau telefon — paderi paroki, diakon dan koordinator CUTES semuanya boleh dihubungi terus.',
     'contact.address': 'Alamat',
     'contact.email': 'E-mel',
-    'contact.phone': 'Telefon',
-    'contact.hours': 'Waktu pejabat',
-    'contact.hoursValue': 'Selasa hingga Jumaat, 9:00 pagi – 4:00 petang. Tutup pada hari Isnin.',
     'contact.map': 'Lokasi kami',
     'contact.openMaps': 'Buka dalam Google Maps',
     'contact.cutesHeading': 'Menghubungi CUTES',
     'contact.cutesLead':
       'Pelajar yang mencari komuniti kampus boleh menulis terus kepada koordinator CUTES.',
-    'contact.follow': 'Ikuti kami',
 
     // --- Contact (added by FIXES V1) -------------------------------------
     'contact.social': 'Media sosial',

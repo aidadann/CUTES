@@ -30,7 +30,7 @@ Malaysian traditions strong on campus.
 
 ![The CUTES emblem](../../../assets/cutes-logo.jpg)
 
-- **The cross** — the sign of our salvation as Catholic students and as God's people.
+- **The cross** — the sign of our salvation as Catholic students and as God’s people.
 - **The hands** — our service as students and as teachers.
 - **The flame** — the burning red fire that carries our zeal to keep proclaiming the Gospel.
 - **The colours, yellow, pink and purple** — the colours of festivity in the Liturgy.

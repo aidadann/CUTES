@@ -24,7 +24,7 @@ apabila hujan, dan semua orang mengingatinya dengan penuh kasih.
 ## Menjadi paroki
 
 Most Holy Redeemer diangkat menjadi paroki pada [tahun] di bawah Keuskupan Agung
-Kuala Lumpur, dengan Father [Nama] sebagai paderi paroki pertama.
+Pulau Pinang, dengan Father [Nama] sebagai paderi paroki pertama.
 
 ## Para pelajar
 
@@ -35,6 +35,7 @@ itu — sebuah komuniti dalam paroki, diuruskan pelajar, untuk pelajar.
 
 ## Hari ini
 
-Paroki melayani bandar, ladang di sekitarnya, dan universiti. Pada petang Ahad
-gereja dipenuhi anak muda dalam lingkungan dua puluhan, dan pada pagi Ahad ia
-dipenuhi keluarga yang membina tempat ini. Kedua-duanya adalah paroki.
+Paroki melayani bandar, ladang di sekitarnya, dan universiti. Pada petang Sabtu,
+semasa Misa Sunset, gereja dipenuhi anak muda dalam lingkungan dua puluhan, dan
+pada pagi Ahad ia dipenuhi keluarga yang membina tempat ini. Kedua-duanya
+adalah paroki.
