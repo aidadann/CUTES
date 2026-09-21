@@ -13,8 +13,7 @@ const t = useTranslations(lang);
 
 const sections = [
   { kind: 'mass' as const, heading: t('schedule.title') },
-  { kind: 'confession' as const, heading: t('schedule.confession') },
-  { kind: 'adoration' as const, heading: t('schedule.devotions') },
+  { kind: 'devotion' as const, heading: t('schedule.rosary') },
 ];
 ---
 
@@ -42,12 +41,14 @@ const sections = [
     }
 
     <aside class="max-w-[52ch] border-t border-rule pt-6 text-ink-soft" data-print="hide">
-      <p>{t('schedule.holyDays')}</p>
+      <p>{t('schedule.confessionNote')}</p>
+      <p class="mt-3">{t('schedule.feastNote')}</p>
       <p class="mt-3">
         <a href={localePath(lang, 'bulletin')} class="link text-ink">{t('nav.bulletin')}</a>
       </p>
       <p class="mt-4">
-        {site.address.line2}, {site.address.postcode} {site.address.city}, {site.address.state}
+        {site.address.line1}, {site.address.line2}, {site.address.postcode} {site.address.city},
+        {site.address.state}
       </p>
     </aside>
   </div>

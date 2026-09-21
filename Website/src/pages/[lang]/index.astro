@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 import { site } from '../../data/site';
-import { useTranslations, type Lang } from '../../i18n/ui';
+import { useTranslations, type Lang, type UiKey } from '../../i18n/ui';
 import { formatDateRange, localeParams, localePath, assetPath } from '../../i18n/utils';
 import { localized, slugOf, splitEvents } from '../../lib/content';
 import { listBulletins } from '../../lib/bulletin';
@@ -13,11 +13,14 @@ export const getStaticPaths = localeParams;
 const lang = Astro.params.lang as Lang;
 const t = useTranslations(lang);
 
-const masses = (await getCollection('massTimes'))
-  .filter((entry) => entry.data.kind === 'mass')
-  .sort((a, b) => a.data.order - b.data.order);
+const schedule = (await getCollection('massTimes')).sort((a, b) => a.data.order - b.data.order);
 
-const sundayMasses = masses.filter((entry) => entry.data.day === 'sunday');
+// Saturday's Rosary and sunset Mass, then Sunday's. Two blocks, each listing
+// its devotion above the Mass it precedes.
+const weekend = (['saturday', 'sunday'] as const).map((day) => ({
+  day,
+  rows: schedule.filter((entry) => entry.data.day === day),
+}));
 const { upcoming } = splitEvents(await localized('events', lang));
 const nextEvents = upcoming.slice(0, 3);
 const latestBulletin = listBulletins()[0];
@@ -230,39 +233,51 @@ const latestBulletin = listBulletins()[0];
           </p>
 
           <div class="mt-10 space-y-6 border-y border-rule py-8">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">Day</span>
-                <span class="font-heading text-xl sm:text-2xl font-bold text-ink">Sunday</span>
+            {weekend.map(({ day, rows }) => (
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">
+                    {t('schedule.day')}
+                  </span>
+                  <span class="font-heading text-xl sm:text-2xl font-bold text-ink">
+                    {t(`day.${day}` as UiKey)}
+                  </span>
+                </div>
+                <div class="text-right">
+                  <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">
+                    {t('schedule.time')}
+                  </span>
+                  {rows.map((row) => (
+                    <div class="font-heading text-lg sm:text-xl font-bold text-ink">
+                      {row.data.time} • {row.data.kind === 'mass' ? t('schedule.mass') : t('schedule.rosary')}
+                      <span class="block text-xs font-semibold uppercase tracking-wider text-ink-muted">
+                        {row.data.language}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div class="text-right">
-                <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">Time & Language</span>
-                {sundayMasses.map((m) => (
-                  <div class="font-heading text-lg sm:text-xl font-bold text-ink">
-                    {m.data.time} • {m.data.language}
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
 
             <div class="pt-4 border-t border-rule/60">
-              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">Location</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-ink-muted block">
+                {t('schedule.location')}
+              </span>
               <p class="mt-1 font-heading text-lg font-bold text-ink">
                 {site.parishName}
               </p>
               <p class="text-sm text-ink-soft mt-0.5">
-                {site.address.line2}, {site.address.postcode} {site.address.city}, Perak
+                {site.address.line2}, {site.address.postcode} {site.address.city}, {site.address.state}
               </p>
             </div>
+
+            <p class="text-sm text-ink-soft">{t('schedule.confessionNote')}</p>
           </div>
 
           <div class="mt-8 flex flex-wrap items-center gap-4">
-            <a href={localePath(lang, 'contact')} class="btn-action btn-primary">
-              <span>{t('home.ctaPlanVisit')}</span>
+            <a href={localePath(lang, 'bulletin')} class="btn-action btn-primary">
+              <span>{t('nav.bulletin')}</span>
               <span>&rarr;</span>
-            </a>
-            <a href={localePath(lang, 'mass-schedule')} class="btn-action btn-secondary">
-              <span>{t('home.scheduleAll')}</span>
             </a>
           </div>
         </div>

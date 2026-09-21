@@ -1,7 +1,6 @@
 # Mass and devotion schedule
 # =============================================================================
-# TODO (parish office): every time below is a PLACEHOLDER. Confirm the real
-# schedule with the parish priest before launch, then delete this notice.
+# Confirmed by the committee in FIXES V1 (2026-09-21).
 #
 # HOW TO EDIT THIS FILE
 #
@@ -9,89 +8,46 @@
 #     saturday, sunday, first-friday, weekday.
 #   - `time` is free text and is printed exactly as written. Keep one format.
 #   - `language` is a proper noun and is NOT translated.
-#   - `kind` is mass, confession, adoration or devotion.
-#   - `highlight: true` puts the row on the home page. Keep that list short —
-#     three or four rows, the ones a visitor actually needs.
-#   - `order` controls the order of the table. Lower comes first.
+#   - `kind` is mass, confession, adoration or devotion. The Rosary is a
+#     devotion.
+#   - `highlight: true` puts the row on the contact page summary.
+#   - `order` controls the order everywhere. Lower comes first, and the home
+#     page relies on it to print the Rosary above the Mass it precedes.
+#
+# Confession ("30 minutes before Mass") and feast day Masses ("refer to the
+# bulletin") are notes rather than rows — see `schedule.confessionNote` and
+# `schedule.feastNote` in src/i18n/ui.ts.
 # =============================================================================
 
-- id: sunday-morning-en
+- id: saturday-rosary
   order: 1
-  day: sunday
-  time: 8:30 am
-  language: English
-  kind: mass
-  highlight: true
+  day: saturday
+  time: 6:50 pm
+  language: Bahasa Malaysia
+  kind: devotion
 
-- id: sunday-morning-bm
+- id: saturday-sunset-mass
   order: 2
-  day: sunday
-  time: 10:30 am
+  day: saturday
+  time: 7:30 pm
   language: Bahasa Malaysia
   kind: mass
   highlight: true
   note:
-    en: Children's liturgy during term time.
-    ms: Liturgi kanak-kanak semasa penggal persekolahan.
+    en: Sunset Mass, served by CUTES.
+    ms: Misa Sunset, dilayani oleh CUTES.
 
-- id: sunday-evening-cutes
+- id: sunday-rosary
   order: 3
   day: sunday
-  time: 6:00 pm
-  language: English
-  kind: mass
-  highlight: true
-  note:
-    en: Student Mass, followed by fellowship in the parish hall.
-    ms: Misa pelajar, diikuti perhimpunan di dewan paroki.
+  time: 8:00 am
+  language: English and Tamil
+  kind: devotion
 
-- id: saturday-vigil
+- id: sunday-morning-mass
   order: 4
-  day: saturday
-  time: 6:00 pm
-  language: English
+  day: sunday
+  time: 8:30 am
+  language: English and Tamil
   kind: mass
   highlight: true
-  note:
-    en: Sunday obligation is fulfilled at this Mass.
-    ms: Kewajipan Misa Ahad dipenuhi pada Misa ini.
-
-- id: weekday-mass
-  order: 5
-  day: weekday
-  time: 6:30 am
-  language: English
-  kind: mass
-  note:
-    en: Tuesday to Friday. No weekday Mass on Mondays.
-    ms: Selasa hingga Jumaat. Tiada Misa harian pada hari Isnin.
-
-- id: first-friday
-  order: 6
-  day: first-friday
-  time: 8:00 pm
-  language: English
-  kind: mass
-  note:
-    en: Sacred Heart devotion follows the Mass.
-    ms: Devosi Hati Kudus diadakan selepas Misa.
-
-- id: confession
-  order: 7
-  day: saturday
-  time: 5:00 pm – 5:45 pm
-  language: English / Bahasa Malaysia
-  kind: confession
-  note:
-    en: Also by appointment with the parish priest.
-    ms: Juga melalui temu janji dengan paderi paroki.
-
-- id: adoration
-  order: 8
-  day: thursday
-  time: 8:00 pm – 9:00 pm
-  language: English
-  kind: adoration
-  note:
-    en: Exposition of the Blessed Sacrament, led by CUTES on the last Thursday.
-    ms: Pentakhtaan Sakramen Mahakudus, dipimpin CUTES pada Khamis terakhir.
