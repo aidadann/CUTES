@@ -1,42 +1,37 @@
 ---
 title: Life at CUTES
-summary: What a year in the community actually looks like, week by week.
+summary: What a week and a year in the community actually look like.
 section: cutes
 order: 2
 ---
 
-## The week
+## Weekly life
 
-**Sunday, 6:00 pm — Student Mass.** The centre of the week. The liturgy,
-choir and music ministries prepare it; everyone else turns up. Afterwards we eat
-together in the parish hall, and nobody is in a hurry to leave.
+**Friday evening — Liturgy and choir practice.** The readings are assigned, the
+hymns are chosen, and the choir runs through them before the weekend.
 
-**Thursday, 8:00 pm — Adoration and Taize.** An hour of quiet in front of the
-Blessed Sacrament, with candles and chant. On the last Thursday of the month
-CUTES leads it.
+**Saturday morning — Church cleaning.** The church is swept, the sanctuary is
+set, and the flowers are changed.
 
-**Between times.** Futsal when someone books the court. Study nights before
-finals. Lifts to the clinic. The transportation ministry's group chat, which
-never sleeps.
+**Saturday evening — Sunset Mass.** The centre of the week. Rosary at 6:50 pm,
+Mass at 7:30 pm, and food afterwards that nobody is in a hurry to leave.
 
-## The year
+**Sports and recreation.** Volleyball, badminton and football; walks, hiking,
+and a swim in the river when the weather allows.
 
-**Semester one** opens with orientation: finding the new first-years, getting
-them to Mass, and getting them fed. The committee is elected, ministries are
-formed, and the retreat is planned.
+**Prayer meetings and fellowship.** Taizé prayer and praise and worship
+evenings, held through the semester.
 
-**The retreat** is the turning point of the year for most people — two or three
-days away, phones down, with talks, confession, adoration and a lot of walking.
+## Beyond the parish, and the year's major events
 
-**Gawai and Kaamatan** in late May and early June belong to the students from
-Sarawak and Sabah, and by now to everyone else too. Costume, food, dancing, and
-a Mass of thanksgiving for the harvest.
+**Outreach and pilgrimages.** Missions and visits across the Penang Diocese and
+Kuala Lumpur.
 
-**Family Day** closes the year. Seniors who have graduated come back. The
-juniors realise they are now the seniors.
+**CUTES Retreat.** The turning point of the year — days away from campus for
+talks, silence, confession and adoration.
 
-## What it costs
+**Gawai and Kaamatan celebrations.** The Dayak and Kadazandusun harvest
+festivals, kept here by the students who are far from home for them.
 
-Nothing to join. Retreats and events are subsidised by the entrepreneurship
-ministry's fundraising, and nobody is ever left out over money — speak to the
-treasurer quietly and it will be handled quietly.
+**CUTES Family Day.** The whole community in one place, with the graduates who
+came back for it.

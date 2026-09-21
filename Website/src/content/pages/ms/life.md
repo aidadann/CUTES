@@ -1,43 +1,38 @@
 ---
-title: Kehidupan di CUTES
-summary: Bagaimana rupa setahun dalam komuniti ini, minggu demi minggu.
+title: Kehidupan CUTES
+summary: Rupa sebenar satu minggu dan satu tahun dalam komuniti ini.
 section: cutes
 order: 2
 ---
 
-## Sepanjang minggu
+## Kehidupan mingguan
 
-**Ahad, 6:00 petang — Misa pelajar.** Pusat kepada minggu kami. Kementerian
-liturgi, koir dan muzik menyiapkannya; yang lain datang. Selepas itu kami makan
-bersama di dewan paroki, dan tiada siapa yang tergesa-gesa untuk pulang.
+**Jumaat malam — Latihan liturgi dan koir.** Bacaan diagihkan, lagu dipilih, dan
+koir berlatih sebelum hujung minggu.
 
-**Khamis, 8:00 malam — Adorasi dan Taize.** Sejam keheningan di hadapan Sakramen
-Mahakudus, dengan lilin dan nyanyian. Pada Khamis terakhir setiap bulan, CUTES
-yang memimpin.
+**Sabtu pagi — Gotong-royong gereja.** Gereja disapu, ruang altar disiapkan, dan
+bunga ditukar.
 
-**Waktu lain.** Futsal apabila ada yang menempah gelanggang. Malam ulang kaji
-sebelum peperiksaan. Tumpangan ke klinik. Kumpulan sembang kementerian
-pengangkutan yang tidak pernah tidur.
+**Sabtu petang — Misa Sunset.** Pusat minggu kami. Rosari pukul 6:50 petang, Misa
+pukul 7:30 malam, dan makan bersama selepasnya yang tiada siapa tergesa-gesa
+meninggalkannya.
 
-## Sepanjang tahun
+**Sukan dan rekreasi.** Bola tampar, badminton dan bola sepak; berjalan kaki,
+mendaki, dan mandi sungai apabila cuaca mengizinkan.
 
-**Semester pertama** bermula dengan orientasi: mencari pelajar tahun satu,
-membawa mereka ke Misa, dan memberi mereka makan. Jawatankuasa dipilih,
-kementerian dibentuk, dan retret dirancang.
+**Pertemuan doa dan persaudaraan.** Doa Taizé serta malam pujian dan penyembahan,
+diadakan sepanjang semester.
 
-**Retret** menjadi titik perubahan tahun itu bagi kebanyakan orang — dua atau
-tiga hari di luar kampus, telefon disimpan, dengan ceramah, pengakuan dosa,
-adorasi dan banyak berjalan kaki.
+## Di luar paroki, dan acara besar sepanjang tahun
 
-**Gawai dan Kaamatan** pada hujung Mei dan awal Jun adalah milik pelajar Sarawak
-dan Sabah, dan kini milik semua orang. Pakaian tradisional, makanan, tarian, dan
-Misa kesyukuran menuai.
+**Jangkauan dan ziarah.** Misi dan lawatan di seluruh Keuskupan Pulau Pinang dan
+Kuala Lumpur.
 
-**Hari Keluarga** menutup tahun. Senior yang telah bergraduat pulang. Junior
-sedar bahawa merekalah senior sekarang.
+**Retret CUTES.** Titik perubahan tahun ini — beberapa hari di luar kampus untuk
+ceramah, keheningan, pengakuan dosa dan adorasi.
 
-## Kosnya
+**Sambutan Gawai dan Kaamatan.** Perayaan menuai Dayak dan Kadazandusun, disambut
+di sini oleh pelajar yang jauh dari kampung halaman.
 
-Percuma untuk menyertai. Retret dan acara disubsidi hasil kutipan dana
-kementerian keusahawanan, dan tiada siapa pernah ditinggalkan kerana wang —
-berbincanglah dengan bendahari secara peribadi, dan ia kekal peribadi.
+**Hari Keluarga CUTES.** Seluruh komuniti di satu tempat, bersama graduan yang
+pulang untuknya.
