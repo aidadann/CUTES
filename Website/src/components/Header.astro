@@ -2,7 +2,7 @@
 import { site } from '../data/site';
 import { nav, type NavItem } from '../i18n/nav';
 import { languageShort, useTranslations, type Lang, type UiKey } from '../i18n/ui';
-import { localePath, otherLang, switchLangPath } from '../i18n/utils';
+import { assetPath, localePath, otherLang, switchLangPath } from '../i18n/utils';
 import { localized, slugOf } from '../lib/content';
 import type { LiturgicalDay } from '../lib/liturgical';
 
@@ -84,7 +84,7 @@ const isActive = (item: Resolved) => {
     <!-- LEFT: Church Logo / Church Name -->
     <a href={localePath(lang, '')} class="group flex shrink-0 items-center gap-3.5 no-underline">
       <img
-        src="/church-logo.jpg"
+        src={assetPath('church-logo.jpg')}
         alt={site.churchName}
         class="h-10 w-10 rounded-full object-cover border border-rule transition-transform group-hover:scale-105"
         width="40"

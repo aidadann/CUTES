@@ -1,7 +1,7 @@
 ---
 import { site } from '../data/site';
 import { useTranslations, type Lang, type UiKey } from '../i18n/ui';
-import { localePath } from '../i18n/utils';
+import { assetPath, localePath } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -53,7 +53,7 @@ const columns = [
       <div>
         <div class="flex items-center gap-3">
           <img
-            src="/church-logo.jpg"
+            src={assetPath('church-logo.jpg')}
             alt={site.churchName}
             class="h-12 w-12 rounded-full object-cover shadow-sm ring-2 ring-gold/40"
             width="48"

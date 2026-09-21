@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 
 import { site } from '../../../data/site';
 import { useTranslations, type Lang } from '../../../i18n/ui';
-import { localeParams, localePath } from '../../../i18n/utils';
+import { assetPath, localeParams, localePath } from '../../../i18n/utils';
 import { localizedEntry } from '../../../lib/content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
@@ -47,7 +47,7 @@ const links = [
         </div>
 
         <img
-          src="/cutes-logo.jpg"
+          src={assetPath('cutes-logo.jpg')}
           alt={`${site.communityName} — ${site.communityFullName}`}
           class="h-28 w-28 sm:h-36 sm:w-36 rounded-3xl object-cover border-4 border-gold/60 shadow-2xl shrink-0"
         />
