@@ -29,7 +29,7 @@ describe('site facts from FIXES V1', () => {
   });
 
   it('expands CUTES without "Tertiary Education"', () => {
-    expect(site.communityFullName).toBe("Catholic Undergraduate Teachers' Society");
+    expect(site.communityFullName).toBe("Catholic Undergraduate Teachers’ Society");
     expect(site.communityFullName).not.toMatch(/Tertiary/);
   });
 
@@ -47,6 +47,6 @@ describe('site facts from FIXES V1', () => {
   it('points at the CUTES social accounts', () => {
     expect(site.social.instagram.handle).toBe('cutes_family');
     expect(site.social.tiktok.handle).toBe('cutesfamily_');
-    expect(site.social.facebook.handle).toBe("Catholic Undergraduate Teachers' Society (CUTES) UPSI");
+    expect(site.social.facebook.handle).toBe("Catholic Undergraduate Teachers’ Society (CUTES) UPSI");
   });
 });

@@ -17,7 +17,7 @@ export const site = {
 
   /** The student community this site also serves. */
   communityName: 'CUTES',
-  communityFullName: "Catholic Undergraduate Teachers' Society",
+  communityFullName: "Catholic Undergraduate Teachers’ Society",
   communityTagline: 'The Catholic UPSI Student Community at Most Holy Redeemer Church',
 
   /** Academic year the published committee roster belongs to. */
@@ -85,7 +85,7 @@ export const site = {
    */
   social: {
     instagram: { handle: 'cutes_family', url: 'https://www.instagram.com/cutes_family/' },
-    facebook: { handle: "Catholic Undergraduate Teachers' Society (CUTES) UPSI", url: '' },
+    facebook: { handle: "Catholic Undergraduate Teachers’ Society (CUTES) UPSI", url: '' },
     tiktok: { handle: 'cutesfamily_', url: 'https://www.tiktok.com/@cutesfamily_' },
   },
 
