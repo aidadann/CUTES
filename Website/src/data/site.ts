@@ -85,7 +85,7 @@ export const site = {
    */
   social: {
     instagram: { handle: 'cutes_family', url: 'https://www.instagram.com/cutes_family/' },
-    facebook: { handle: "Catholic Undergraduate Teachers’ Society (CUTES) UPSI", url: '' },
+    facebook: { handle: "Catholic Undergraduate Teachers' Society (CUTES) UPSI", url: '' },
     tiktok: { handle: 'cutesfamily_', url: 'https://www.tiktok.com/@cutesfamily_' },
   },
 
