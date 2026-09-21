@@ -43,9 +43,12 @@ export const nav: NavItem[] = [
       { key: 'nav.aboutCutes', path: 'cutes' },
       { key: 'nav.lifeAtCutes', path: 'cutes/life' },
       { key: 'nav.committee', path: 'cutes/committee' },
-      { key: 'nav.bec', path: 'cutes/bec' },
     ],
   },
+  // BEC is the parish's neighbourhood communities, not a CUTES activity, so it
+  // stands beside CUTES in the menu rather than under it. The page itself stays
+  // at /cutes/bec — only its place in the menu moved.
+  { key: 'nav.bec', path: 'cutes/bec' },
   { key: 'nav.events', path: 'events' },
   { key: 'nav.gallery', path: 'gallery' },
   { key: 'nav.services', path: 'services', dynamic: 'services' },

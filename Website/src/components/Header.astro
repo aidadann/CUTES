@@ -91,11 +91,11 @@ const isActive = (item: Resolved) => {
         height="40"
       />
       <div class="flex flex-col">
-        <span class="font-heading text-lg sm:text-xl font-bold leading-none tracking-tight text-ink group-hover:text-ink-soft transition-colors">
-          {site.parishShortName}
+        <span class="font-heading text-base sm:text-lg font-bold leading-tight tracking-tight text-ink group-hover:text-ink-soft transition-colors max-w-[18ch]">
+          {site.churchName}
         </span>
         <span class="text-[11px] font-semibold tracking-widest text-ink-muted uppercase mt-1">
-          Tanjung Malim • CUTES
+          {site.town}
         </span>
       </div>
     </a>
@@ -195,7 +195,7 @@ const isActive = (item: Resolved) => {
         href={localePath(lang, 'contact')}
         class="btn-action btn-primary shrink-0 whitespace-nowrap !py-2.5 !px-4 !text-[0.6875rem]"
       >
-        <span>{t('home.ctaPlanVisit')}</span>
+        <span>{t('home.contactUs')}</span>
         <span>&rarr;</span>
       </a>
     </div>
