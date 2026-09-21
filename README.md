@@ -1,7 +1,8 @@
 # Most Holy Redeemer Church, Tanjung Malim
 
-The website for the parish and for **CUTES** — Catholic UPSI Tertiary Education
-Students.
+The website for the Church Of The Most Holy Redeemer (Archdiocese of Penang) and
+for **CUTES** — the Catholic Undergraduate Teachers' Society, the Catholic UPSI
+student community at the parish.
 
 - **Live site:** https://aidadann.github.io/CUTES/ms/
 - **Publishing the bulletin, editing the roster, adding photos:** [CONTRIBUTING.md](CONTRIBUTING.md)
@@ -13,7 +14,8 @@ Students.
 | Folder | What is in it |
 |---|---|
 | `Website/` | The site itself — an Astro 5 + Tailwind CSS project. This is what gets built and deployed. |
-| `Requirement/` | The original brief, the technology decision record, and implementation plans. |
+| `Requirement/` | The original brief from the parish, the technology decision record, and the committee's revision documents. |
+| `docs/` | Specs and implementation plans for changes made to the site. |
 | `.github/` | Automated build & deploy workflows (`deploy.yml`) and issue templates. |
 
 The site is **static**. There is no database, no complex server, and no CMS logins to secure. Every page is automatically compiled from Markdown, YAML, and TypeScript files directly upon pushing to the `main` branch.
@@ -36,7 +38,8 @@ Articles, histories, sacrament guides, and prayers live under `Website/src/conte
 | **Vision & Mission** | `Website/src/content/pages/en/vision-mission.md` | `Website/src/content/pages/ms/vision-mission.md` |
 | **Parish Priest Message** | `Website/src/content/pages/en/parish-priest.md` | `Website/src/content/pages/ms/parish-priest.md` |
 | **Parish History** | `Website/src/content/pages/en/parish-history.md` | `Website/src/content/pages/ms/parish-history.md` |
-| **About CUTES & Life** | `Website/src/content/pages/en/about-cutes.md` | `Website/src/content/pages/ms/about-cutes.md` |
+| **About CUTES** | `Website/src/content/pages/en/about-cutes.md` | `Website/src/content/pages/ms/about-cutes.md` |
+| **Life at CUTES** | `Website/src/content/pages/en/life.md` | `Website/src/content/pages/ms/life.md` |
 | **BEC (Basic Ecclesial)** | `Website/src/content/pages/en/bec.md` | `Website/src/content/pages/ms/bec.md` |
 | **Sacraments** (RCIA, Baptism, Marriage, etc.) | `Website/src/content/services/en/*.md` | `Website/src/content/services/ms/*.md` |
 | **Prayers & Devotions** | `Website/src/content/resources/en/*.md` | `Website/src/content/resources/ms/*.md` |
@@ -48,16 +51,21 @@ All navigation menus, buttons, table labels, homepage slogans, and values live i
 - **`Website/src/i18n/ui.ts`**
   - Edit `ui.en` for English text.
   - Edit `ui.ms` for Bahasa Malaysia text.
-  - *Example:* Change `'home.heroHeadline': 'COME AS YOU ARE.'` or `'home.ctaPlanVisit': 'Plan Your Visit'`.
+  - *Example:* Change `'home.heroHeadline': 'WELCOME TO MOST HOLY REDEEMER CHURCH'` or `'home.ctaLocation': 'Our Location'`.
+  - **Rule:** every key must exist in **both** `ui.en` and `ui.ms`. A key missing from `ui.ms` silently falls back to English, so the gap is invisible until a reader finds it.
 
 #### C. Parish Coordinates & Contact Information
-Address, phone numbers, contact emails, social links, and Google Maps URL are kept in a single configuration file:
+Address, contact email, social accounts, and the Google Maps URL are kept in a single configuration file:
 - **`Website/src/data/site.ts`**
-  - Update `site.address`, `site.phoneDisplay`, `site.email`, and `site.social`.
+  - Update `site.address`, `site.email`, `site.social`, `site.mapsUrl`.
+  - **`site.council`** holds the three Parish Pastoral Council contacts (name, role key, dial number, display number, photo). This one array feeds the home page cards, the footer phone list, and the contact page — correct a number here and it changes in all three.
+  - Each council member's `photo` is an empty string until a portrait is added to `Website/public/council/`; an initials monogram renders in the meantime.
+  - `site.data.ts` values are asserted by `Website/src/data/site.test.ts`, so a typo in a phone number or the address fails `npm test`.
 
 #### D. Mass Schedule & Committee Roster
-- **Mass & Confession Times**: `Website/src/content/schedule/mass.yaml`
-  - Edit days, times, languages, and notes.
+- **Mass & Rosary Times**: `Website/src/content/schedule/mass.yaml`
+  - Edit days, times, languages, and notes. `kind: mass` for a Mass, `kind: devotion` for the Rosary.
+  - Confession ("30 minutes before Mass") and feast days ("refer to the bulletin") are **notes**, not rows — they live as `schedule.confessionNote` and `schedule.feastNote` in `ui.ts`.
 - **Committee Roster**: `Website/src/content/committee/roster.yaml`
   - Grouped by ministry (`liturgy`, `choir`, `multimedia`, `transportation`, etc.). Simply add or edit `- name: "Student Name"` under the respective role.
 
@@ -65,16 +73,21 @@ Address, phone numbers, contact emails, social links, and Google Maps URL are ke
 
 ### 2. Updating Logo & Branding Graphics
 
-The church and community logo is referenced across the header, footer, favicon, and social metadata:
+There are **two** marks, and they are not interchangeable:
 
-1. **Replace the Main Logo File**:
-   - Location: **`Website/public/logo.jpg`**
-   - Also update: **`Website/src/assets/logo.jpg`**
-   - **Recommended specs**: Square aspect ratio (1:1), at least `400 x 400px` or `512 x 512px`, clean high-resolution JPG or PNG format.
+| File | Used by | Replace when |
+|---|---|---|
+| `Website/public/church-logo.jpg` | Header brand, footer brand, apple-touch-icon, Open Graph thumbnails | The **church's** mark changes |
+| `Website/public/cutes-logo.jpg` | The CUTES page banner | The **CUTES** emblem changes |
+| `Website/src/assets/cutes-logo.jpg` | The emblem shown beside its explanation on the About CUTES pages | Same as above — **keep these two CUTES files identical** |
+
+1. **Replace a logo**: overwrite the file keeping the exact same filename. **Recommended specs**: square aspect ratio (1:1), at least `400 x 400px`, clean high-resolution JPG or PNG.
+   - The CUTES emblem exists twice on purpose. The `public/` copy is served directly; the `src/assets/` copy goes through Astro's image pipeline, which is what makes it resolve correctly on the GitHub Pages deploy. Update both together.
 2. **Replace the Favicon (Browser Tab Icon)**:
    - Location: **`Website/public/favicon.svg`** (or replace with SVG/PNG of the parish emblem).
-3. **Commit & Push**:
-   - Committing the new `logo.jpg` file automatically updates the navigation bar, footer avatar, and Open Graph social sharing thumbnails on the next build.
+3. **Commit & Push**: the navigation bar, footer, and social sharing thumbnails update on the next build.
+
+> **Never hand-write an image or link path with a leading slash** in a template (`src="/church-logo.jpg"`). The site deploys both at `/` and at `/CUTES/`; a hand-written path works on the first and 404s on the second **with no build error**. Use `assetPath('church-logo.jpg')` for `public/` files and `localePath(lang, 'contact')` for internal links.
 
 ---
 
@@ -86,8 +99,8 @@ Photo management is organized into two areas: **Homepage Editorial Photos** and 
 The homepage uses large documentary-style photography:
 - `Website/public/hero-community.jpg`: The full-width hero background image (`16:9` ratio, recommended `1920 x 1080px`, warm lighting, candid worship).
 - `Website/public/fellowship-casual.jpg`: The "Who We Are" community image (`4:3` ratio, recommended `1200 x 900px`, outdoor student interaction).
-- `Website/public/sunday-worship.jpg`: The "Join Us This Sunday" sanctuary image (`16:10` or `16:9`, bright natural light).
-- `Website/public/person-story.jpg`: The "Real Stories" testimonial portrait (`4:5` vertical ratio, authentic smiling portrait).
+- `Website/public/sunday-worship.jpg`: The "Join us this weekend" sanctuary image (`16:10` or `16:9`, bright natural light).
+- `Website/public/council/*.jpg`: Parish Pastoral Council portraits (square, ~`400 x 400px`). Drop a file in, then point that member's `photo` field in `Website/src/data/site.ts` at it (e.g. `'council/fr-vincent-paul.jpg'`). Until then the card shows the member's initials.
 
 To replace any of these images, overwrite the corresponding file in `Website/public/` keeping the exact same filename.
 
