@@ -71,8 +71,8 @@
 - id: choir
   order: 3
   description:
-    en: Leads the assembly in song at Sunday Mass and at community celebrations.
-    ms: Memimpin umat dalam nyanyian pada Misa Ahad dan perayaan komuniti.
+    en: Leads the assembly in song at the sunset Mass and at community celebrations.
+    ms: Memimpin umat dalam nyanyian pada Misa sunset dan perayaan komuniti.
   members:
     - name: Agnes Anak Rentap
       role: leader
