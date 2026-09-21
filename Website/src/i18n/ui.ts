@@ -56,19 +56,17 @@ export const ui = {
     'nav.bec': 'BEC',
 
     // --- Home ------------------------------------------------------------
-    'home.kicker': 'Archdiocese of Kuala Lumpur',
+    'home.kicker': 'Archdiocese of Penang',
     'home.heroLead':
       'A Catholic parish serving Tanjung Malim and the students of UPSI. Everyone is welcome at the table.',
     'home.ctaMass': 'Mass times',
     'home.ctaBulletin': 'This week’s bulletin',
-    'home.ctaPlanVisit': 'Plan Your Visit',
-    'home.ctaLearnMore': 'Learn More',
-    'home.heroHeadline': 'COME AS YOU ARE.',
+    'home.heroHeadline': 'WELCOME TO MOST HOLY REDEEMER CHURCH',
     'home.heroStatement':
-      'A welcoming community where people can discover faith, build meaningful relationships, and grow together.',
-    'home.introHeadline': 'YOU DON’T HAVE TO DO LIFE ALONE.',
+      'Welcoming local parishioners, UPSI students, and visitors to grow together in Christ',
+    'home.introHeadline': 'JOIN US AS ONE FAMILY',
     'home.introMission':
-      'We believe church is about people, not perfection. Whether you are searching for answers, returning to faith, or looking for a community to call home in Tanjung Malim, you are welcome here.',
+      'Join us as we grow together in faith, friendship, and community. Whether you are an undergraduate starting your student life at UPSI or a local family in Tanjung Malim, our doors and hearts are open to you.',
     'home.whoWeAre': 'WHO WE ARE',
     'home.whoWeAreLead':
       'We are a community of people learning to follow Jesus, build genuine relationships, and serve our city.',
@@ -83,30 +81,34 @@ export const ui = {
     'home.v3Desc': 'We exist to make a difference in our community and serve those in need around us.',
     'home.v4Title': 'GENEROSITY',
     'home.v4Desc': 'We believe everything we have can be used to bless others and honor God.',
-    'home.sundayTitle': 'JOIN US THIS SUNDAY',
-    'home.sundayLead': 'Join us in worship this Sunday at Most Holy Redeemer Church.',
-    'home.ministriesTitle': 'MINISTRIES & GROUPS',
-    'home.ministriesLead': 'From campus choirs to community outreach, find your place to serve and thrive.',
-    'home.latestMessageTitle': 'LATEST MESSAGE',
-    'home.latestMessageDesc': 'Reflections on the Sunday Gospel, homilies, and campus spiritual encouragement.',
-    'home.storiesTitle': 'REAL STORIES. REAL PEOPLE.',
-    'home.storiesQuote': '“I came looking for answers. I found a community.”',
-    'home.storiesAuthor': 'Grace Tan — UPSI Undergraduate & CUTES Member',
-    'home.bottomCtaTitle': 'THERE’S A PLACE FOR YOU HERE.',
-    'home.bottomCtaDesc': 'Come as you are. Meet some people. Discover what we’re about.',
+    'home.sundayTitle': 'JOIN US THIS WEEKEND',
+    'home.sundayLead': 'Join us in Mass this weekend at Most Holy Redeemer Church.',
+    'home.ministriesTitle': 'CUTES MINISTRIES',
+    'home.ministriesLead':
+      'From liturgy and choir to transport and outreach, find your place to serve and thrive.',
     'home.contactUs': 'Contact Us',
     'home.visionTitle': 'Our Vision and Mission',
     'home.scheduleTitle': 'Mass Schedule',
     'home.scheduleLead': 'Regular celebrations at Most Holy Redeemer Church.',
-    'home.scheduleAll': 'Full schedule and holy days',
     'home.eventsTitle': 'Upcoming Events',
     'home.eventsAll': 'All events',
     'home.eventsEmpty':
       'Nothing on the calendar right now. Check the bulletin for the week’s announcements.',
     'home.cutesTitle': 'CUTES',
     'home.cutesLead':
-      'Catholic UPSI Tertiary Education Students — the campus community that gathers, serves and grows in faith at Most Holy Redeemer.',
-    'home.cutesCta': 'Meet the community',
+      'Catholic Undergraduate Teachers’ Society — the campus community that gathers, serves and grows in faith at Most Holy Redeemer.',
+
+    // --- Home (added by FIXES V1) ---------------------------------------
+    'home.ctaLocation': 'Our Location',
+    'home.meetCutesLabel': 'CUTES',
+    'home.meetCutesLead': 'Catholic Undergraduate Teachers’ Society',
+    'home.meetBecLabel': 'BEC',
+    'home.meetBecLead': 'Basic Ecclesial Community',
+    'home.moreMinistries': 'Click to explore more CUTES ministry',
+    'home.councilTitle': 'PARISH PASTORAL COUNCIL',
+    'home.councilLead':
+      'The priest, deacon and coordinator who serve the parish and the student community. Call any of them directly.',
+    'home.councilCall': 'Call',
 
     // --- Bulletin --------------------------------------------------------
     'bulletin.title': 'Parish Bulletin',
@@ -130,6 +132,15 @@ export const ui = {
     'schedule.confession': 'Confession',
     'schedule.devotions': 'Adoration and devotions',
 
+    // --- Mass schedule (added by FIXES V1) -------------------------------
+    'schedule.mass': 'Mass',
+    'schedule.rosary': 'Rosary',
+    'schedule.location': 'Location',
+    'schedule.confessionNote': 'Confession 30 minutes before Mass.',
+    'schedule.feastNote': 'For feast day Masses, please refer to the bulletin.',
+    'day.saturday': 'Saturday',
+    'day.sunday': 'Sunday',
+
     // --- Parish ----------------------------------------------------------
     'parish.title': 'Our Parish',
     'parish.lead': 'The people, the history and the rhythm of Most Holy Redeemer Church.',
@@ -144,6 +155,9 @@ export const ui = {
     'cutes.ministries': 'Ministries',
     'cutes.noPhoto': 'No photo',
 
+    // --- CUTES (added by FIXES V1) ---------------------------------------
+    'cutes.tagline': 'The Catholic UPSI Student Community at Most Holy Redeemer Church',
+
     // --- Roles -----------------------------------------------------------
     'role.coordinator': 'Coordinator',
     'role.vice-coordinator-1': 'Vice Coordinator I',
@@ -155,6 +169,11 @@ export const ui = {
     'role.leader': 'Leader',
     'role.assistant': 'Assistant',
     'role.member': 'Member',
+
+    // --- Roles (added by FIXES V1) ---------------------------------------
+    'role.parish-priest': 'Parish Priest',
+    'role.parish-deacon': 'Parish Deacon',
+    'role.cutes-coordinator': 'CUTES Koordinator',
 
     // --- Ministries ------------------------------------------------------
     'ministry.leaders': 'Ministry of Leaders',
@@ -228,6 +247,9 @@ export const ui = {
       'Students looking for the campus community can write to the CUTES coordinator directly.',
     'contact.follow': 'Follow us',
 
+    // --- Contact (added by FIXES V1) -------------------------------------
+    'contact.social': 'Social media',
+
     // --- Shared ----------------------------------------------------------
     'common.readMore': 'Read more',
     'common.backTo': 'Back to',
@@ -282,19 +304,17 @@ export const ui = {
     'nav.bec': 'KKA',
 
     // --- Home ------------------------------------------------------------
-    'home.kicker': 'Keuskupan Agung Kuala Lumpur',
+    'home.kicker': 'Keuskupan Agung Pulau Pinang',
     'home.heroLead':
       'Paroki Katolik yang melayani Tanjung Malim dan pelajar UPSI. Semua dialu-alukan.',
     'home.ctaMass': 'Waktu Misa',
     'home.ctaBulletin': 'Buletin minggu ini',
-    'home.ctaPlanVisit': 'Rancang Kunjungan Anda',
-    'home.ctaLearnMore': 'Ketahui Lebih Lanjut',
-    'home.heroHeadline': 'DATANGLAH SEADANYA.',
+    'home.heroHeadline': 'SELAMAT DATANG KE GEREJA MOST HOLY REDEEMER',
     'home.heroStatement':
-      'Komuniti yang mesra di mana setiap orang dapat menemui iman, membina hubungan bermakna, dan bertumbuh bersama.',
-    'home.introHeadline': 'ANDA TIDAK PERLU MELALUI HIDUP INI SENDIRIAN.',
+      'Mengalu-alukan umat tempatan, pelajar UPSI dan pengunjung untuk bertumbuh bersama dalam Kristus',
+    'home.introHeadline': 'SERTAI KAMI SEBAGAI SATU KELUARGA',
     'home.introMission':
-      'Kami percaya bahawa gereja adalah mengenai insan, bukan kesempurnaan. Sama ada anda mencari jawapan, kembali kepada iman, atau mencari sebuah komuniti di Tanjung Malim, anda sentiasa dialu-alukan di sini.',
+      'Sertai kami untuk bertumbuh bersama dalam iman, persahabatan dan komuniti. Sama ada anda mahasiswa yang baru memulakan kehidupan pelajar di UPSI atau keluarga tempatan di Tanjung Malim, pintu dan hati kami sentiasa terbuka untuk anda.',
     'home.whoWeAre': 'SIAPA KAMI',
     'home.whoWeAreLead':
       'Kami adalah komuniti yang belajar mengikut Yesus, membina hubungan yang tulus, dan melayani bandar kami.',
@@ -309,30 +329,34 @@ export const ui = {
     'home.v3Desc': 'Kami hadir untuk membawa perubahan positif dalam komuniti dan melayani mereka yang memerlukan.',
     'home.v4Title': 'KEMURAHAN HATI',
     'home.v4Desc': 'Kami percaya setiap kurniaan yang kami miliki boleh digunakan untuk memberkati sesama dan memuliakan Tuhan.',
-    'home.sundayTitle': 'SERTAI KAMI HARI AHAD INI',
-    'home.sundayLead': 'Sertai kami beribadat pada hari Ahad ini di Gereja Most Holy Redeemer.',
-    'home.ministriesTitle': 'KEMENTERIAN & KUMPULAN',
-    'home.ministriesLead': 'Daripada koir kampus hingga khidmat komuniti, temui peranan anda untuk melayani.',
-    'home.latestMessageTitle': 'MESEJ TERKINI',
-    'home.latestMessageDesc': 'Renungan Injil hari Ahad, khutbah, dan dorongan rohani kampus.',
-    'home.storiesTitle': 'KISAH NYATA. INSAN SEBENAR.',
-    'home.storiesQuote': '“Saya datang mencari jawapan. Saya menemui sebuah komuniti.”',
-    'home.storiesAuthor': 'Grace Tan — Mahasiswa UPSI & Ahli CUTES',
-    'home.bottomCtaTitle': 'SENTIASA ADA TEMPAT UNTUK ANDA DI SINI.',
-    'home.bottomCtaDesc': 'Datanglah seadanya. Kenali rakan baharu. Temui apa yang kami hayati.',
+    'home.sundayTitle': 'SERTAI KAMI HUJUNG MINGGU INI',
+    'home.sundayLead': 'Sertai kami dalam Misa hujung minggu ini di Gereja Most Holy Redeemer.',
+    'home.ministriesTitle': 'KEMENTERIAN CUTES',
+    'home.ministriesLead':
+      'Daripada liturgi dan koir hingga pengangkutan dan khidmat komuniti, temui peranan anda untuk melayani.',
     'home.contactUs': 'Hubungi Kami',
     'home.visionTitle': 'Visi dan Misi Kami',
     'home.scheduleTitle': 'Jadual Misa',
     'home.scheduleLead': 'Perayaan tetap di Gereja Most Holy Redeemer.',
-    'home.scheduleAll': 'Jadual penuh dan hari raya',
     'home.eventsTitle': 'Acara Akan Datang',
     'home.eventsAll': 'Semua acara',
     'home.eventsEmpty':
       'Tiada acara buat masa ini. Sila rujuk buletin untuk pengumuman minggu ini.',
     'home.cutesTitle': 'CUTES',
     'home.cutesLead':
-      'Catholic UPSI Tertiary Education Students — komuniti kampus yang berkumpul, melayani dan bertumbuh dalam iman di Most Holy Redeemer.',
-    'home.cutesCta': 'Kenali komuniti kami',
+      'Catholic Undergraduate Teachers’ Society — komuniti kampus yang berkumpul, melayani dan bertumbuh dalam iman di Most Holy Redeemer.',
+
+    // --- Home (added by FIXES V1) ---------------------------------------
+    'home.ctaLocation': 'Lokasi Kami',
+    'home.meetCutesLabel': 'CUTES',
+    'home.meetCutesLead': 'Catholic Undergraduate Teachers’ Society',
+    'home.meetBecLabel': 'KKA',
+    'home.meetBecLead': 'Komuniti Kristian Asas',
+    'home.moreMinistries': 'Klik untuk meneroka kementerian CUTES yang lain',
+    'home.councilTitle': 'MAJLIS PASTORAL PAROKI',
+    'home.councilLead':
+      'Paderi, diakon dan koordinator yang berkhidmat untuk paroki dan komuniti pelajar. Hubungi sesiapa antara mereka secara terus.',
+    'home.councilCall': 'Hubungi',
 
     // --- Bulletin --------------------------------------------------------
     'bulletin.title': 'Buletin Paroki',
@@ -356,6 +380,15 @@ export const ui = {
     'schedule.confession': 'Pengakuan Dosa',
     'schedule.devotions': 'Adorasi dan devosi',
 
+    // --- Mass schedule (added by FIXES V1) -------------------------------
+    'schedule.mass': 'Misa',
+    'schedule.rosary': 'Rosari',
+    'schedule.location': 'Lokasi',
+    'schedule.confessionNote': 'Pengakuan dosa 30 minit sebelum Misa.',
+    'schedule.feastNote': 'Untuk Misa hari raya, sila rujuk buletin.',
+    'day.saturday': 'Sabtu',
+    'day.sunday': 'Ahad',
+
     // --- Parish ----------------------------------------------------------
     'parish.title': 'Paroki Kami',
     'parish.lead': 'Umat, sejarah dan irama Gereja Most Holy Redeemer.',
@@ -370,6 +403,9 @@ export const ui = {
     'cutes.ministries': 'Kementerian',
     'cutes.noPhoto': 'Tiada gambar',
 
+    // --- CUTES (added by FIXES V1) ---------------------------------------
+    'cutes.tagline': 'Komuniti Pelajar Katolik UPSI di Gereja Most Holy Redeemer',
+
     // --- Roles -----------------------------------------------------------
     'role.coordinator': 'Koordinator',
     'role.vice-coordinator-1': 'Naib Koordinator I',
@@ -381,6 +417,11 @@ export const ui = {
     'role.leader': 'Ketua',
     'role.assistant': 'Penolong Ketua',
     'role.member': 'Ahli',
+
+    // --- Roles (added by FIXES V1) ---------------------------------------
+    'role.parish-priest': 'Paderi Paroki',
+    'role.parish-deacon': 'Diakon Paroki',
+    'role.cutes-coordinator': 'Koordinator CUTES',
 
     // --- Ministries ------------------------------------------------------
     'ministry.leaders': 'Kementerian Pimpinan',
@@ -453,6 +494,9 @@ export const ui = {
     'contact.cutesLead':
       'Pelajar yang mencari komuniti kampus boleh menulis terus kepada koordinator CUTES.',
     'contact.follow': 'Ikuti kami',
+
+    // --- Contact (added by FIXES V1) -------------------------------------
+    'contact.social': 'Media sosial',
 
     // --- Shared ----------------------------------------------------------
     'common.readMore': 'Baca lanjut',
