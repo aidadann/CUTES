@@ -1,9 +1,8 @@
 ---
-title: Sambutan Gawai dan Kaamatan
-summary: Pesta menuai Dayak dan Kadazandusun, disambut oleh pelajar yang jauh dari kampung ketika itu.
+title: Sambutan Gawai dan Kaamatan CUTES
+summary: Pesta menuai Borneo, disambut oleh pelajar yang jauh dari kampung ketika itu
 order: 2
-startDate: 2027-05-29
-endDate: 2027-05-29
+startDate: 2026-06-13
 location: Dewan paroki, Gereja Most Holy Redeemer
 gallery: gawai-kaamatan
 annual: true
@@ -34,6 +33,3 @@ dan itulah maksudnya: pesta ini mengembara bersama orang yang menyambutnya.
 Memasak bermula dua hari sebelumnya. Kementerian rekreasi menyimpan senarainya.
 
 *Gayu guru gerai nyamai. Kotobian tadau tagazo do Kaamatan.*
-
-**TODO (jawatankuasa): sahkan tarikh setiap tahun berdasarkan cuti umum Gawai
-dan Kaamatan serta jadual peperiksaan.**

@@ -1,40 +1,30 @@
 ---
 title: Retret CUTES
-summary: Dua hari di luar kampus untuk berdoa, berdiam diri, mendengar ceramah dan mengaku dosa.
+summary: Retret CUTES ialah percutian rohani sehari untuk pelajar Katolik UPSI berhenti seketika daripada kesibukan kampus, mendalami iman melalui doa, adorasi dan refleksi yang tenang, serta mengeratkan persaudaraan sesama mereka
 order: 1
-startDate: 2027-03-12
-endDate: 2027-03-14
-location: TODO — pusat retret
+startDate: 2026-04-25
+location: Gereja Most Holy Redeemer, Tanjung Malim
 gallery: retreat
 annual: true
 ---
 
-Retret ialah titik perubahan tahun CUTES. Telefon dimasukkan ke dalam kotak pada
-petang Jumaat dan dikeluarkan semula pada petang Ahad. Di antaranya ada ceramah,
-adorasi, pengakuan dosa, perkongsian kumpulan kecil, dan banyak berjalan kaki.
+Sehari, jauh daripada kuliah dan tugasan, diserahkan kepada doa.
 
-## Apa yang dijangka
+## Susunan hari
 
-Petang Jumaat untuk ketibaan, makan malam dan doa pembukaan. Sabtu ialah hari
-yang panjang: ceramah pada waktu pagi, kumpulan kecil selepas makan tengah hari,
-adorasi dan pengakuan dosa pada waktu petang. Ahad ditutup dengan Misa dan
-perjalanan pulang.
+Ceramah pada waktu pagi. Masa hening dan kumpulan kecil selepas makan tengah
+hari. Adorasi dan pengakuan dosa pada lewat petang, dan Misa sebagai penutup.
 
-Tiada siapa dipaksa bercakap di hadapan orang lain. Perkongsian dalam kumpulan
-kecil adalah pelawaan, bukan kewajipan.
+Tiada sesiapa dipaksa bercakap di hadapan orang lain. Perkongsian dalam kumpulan
+kecil dipelawa, bukan diwajibkan.
 
 ## Apa yang perlu dibawa
 
-Bible, buku nota, pakaian untuk dua malam, tuala, sebarang ubat yang anda ambil,
-dan kasut yang selesa untuk berjalan. Selebihnya disediakan.
+Kitab Suci, buku nota, dan kasut yang selesa untuk berjalan.
 
 ## Kos dan pengangkutan
 
-Disubsidi banyak oleh kementerian keusahawanan. Jika baki kos menjadi masalah,
-berbincanglah dengan bendahari — secara peribadi, dan ia kekal peribadi.
-Pengangkutan diuruskan kementerian pengangkutan; daftarkan nama anda semasa
-mendaftar.
-
-**TODO (jawatankuasa): sahkan tarikh, tempat dan pautan pendaftaran sebelum
-menerbitkan. Tukar `registrationUrl` dalam frontmatter kepada borang Google
-anda.**
+Disubsidi sebahagian besarnya oleh kementerian keusahawanan. Jika baki kos
+menjadi masalah, berbincanglah dengan bendahari — secara peribadi, dan ia kekal
+peribadi. Pengangkutan diuruskan oleh kementerian pengangkutan; daftarkan nama
+anda semasa mendaftar.

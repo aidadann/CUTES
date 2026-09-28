@@ -1,38 +1,29 @@
 ---
 title: CUTES Retreat
-summary: Two days away from campus for prayer, silence, talks and confession.
+summary: The CUTES Retreat is a one-day spiritual getaway designed for UPSI Catholic students to pause from campus life, deepen their faith through prayer, adoration, and quiet reflection, and build strong fellowship with one another
 order: 1
-startDate: 2027-03-12
-endDate: 2027-03-14
-location: TODO — retreat centre
+startDate: 2026-04-25
+location: Most Holy Redeemer Church, Tanjung Malim
 gallery: retreat
 annual: true
 ---
 
-The retreat is the turning point of the CUTES year. Phones go in a box on Friday
-evening and come out on Sunday afternoon, and in between there are talks,
-adoration, confession, small groups, and a great deal of walking.
+One day, away from lectures and assignments, given over to prayer.
 
-## What to expect
+## The shape of the day
 
-Friday evening is arrival, supper and an opening prayer. Saturday is the long
-day: talks in the morning, small groups after lunch, adoration and confession in
-the evening. Sunday closes with Mass and the drive home.
+Talks in the morning. Quiet time and small groups after lunch. Adoration and
+confession in the late afternoon, and Mass to close.
 
 Nobody is made to speak in front of anyone. Sharing in the small groups is
 invited, never required.
 
 ## What to bring
 
-A Bible, a notebook, clothes for two nights, a towel, any medication you take,
-and shoes you can walk in. Everything else is provided.
+A Bible, a notebook, and shoes you can walk in.
 
 ## Cost and transport
 
 Heavily subsidised by the entrepreneurship ministry. If the remaining cost is a
 problem, speak to the treasurer — quietly, and it stays quiet. Transport is
 arranged by the transportation ministry; put your name down when you register.
-
-**TODO (committee): confirm the dates, the venue and the registration link
-before publishing. Change `registrationUrl` in the frontmatter to your Google
-Form.**

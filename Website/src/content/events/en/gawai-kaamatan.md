@@ -1,9 +1,8 @@
 ---
-title: Gawai and Kaamatan Celebration
-summary: The Dayak and Kadazandusun harvest festivals, celebrated by the students who are far from home for them.
+title: Gawai and Kaamatan Cutes Celebration
+summary: The Borneo harvest festivals, celebrated by the students who are far from home for them
 order: 2
-startDate: 2027-05-29
-endDate: 2027-05-29
+startDate: 2026-06-13
 location: Parish hall, Most Holy Redeemer Church
 gallery: gawai-kaamatan
 annual: true
@@ -33,6 +32,3 @@ the point — the festival travels with the people who keep it.
 Cooking starts two days before. The recreation ministry keeps the list.
 
 *Gayu guru gerai nyamai. Kotobian tadau tagazo do Kaamatan.*
-
-**TODO (committee): confirm the date each year against the Gawai and Kaamatan
-public holidays and the exam timetable.**
