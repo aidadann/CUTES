@@ -1,6 +1,6 @@
 ---
 title: Penang Diocesan Youth Day 6
-summary: 'CUTES Ministry Team members participated in PDYD6: "So I Send You" at the Church of the Sacred Heart, Kampar, joining young Catholics across the Diocese of Penang in building fellowship, leadership, and a deeper sense of mission.'
+summary: 'CUTES Ministry Team members participated in PDYD6: “So I Send You” at the Church of the Sacred Heart, Kampar, joining young Catholics across the Diocese of Penang in building fellowship, leadership, and a deeper sense of mission.'
 order: 4
 startDate: 2026-11-20
 endDate: 2026-11-22

@@ -1,6 +1,6 @@
 ---
 title: Hari Belia Keuskupan Pulau Pinang Ke-6
-summary: 'Ahli Pasukan Kementerian CUTES menyertai PDYD6: "So I Send You" di Gereja Hati Kudus, Kampar, bersama belia Katolik seluruh Keuskupan Pulau Pinang dalam membina persaudaraan, kepimpinan dan semangat perutusan yang lebih mendalam.'
+summary: 'Ahli Pasukan Kementerian CUTES menyertai PDYD6: “So I Send You” di Gereja Hati Kudus, Kampar, bersama belia Katolik seluruh Keuskupan Pulau Pinang dalam membina persaudaraan, kepimpinan dan semangat perutusan yang lebih mendalam.'
 order: 4
 startDate: 2026-11-20
 endDate: 2026-11-22
