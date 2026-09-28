@@ -4,8 +4,8 @@ import { render } from 'astro:content';
 
 import PageHeader from '../../../components/PageHeader.astro';
 import { languages, useTranslations, type Lang } from '../../../i18n/ui';
-import { formatDateRange, localePath } from '../../../i18n/utils';
-import { localizedPaths } from '../../../lib/content';
+import { localePath } from '../../../i18n/utils';
+import { eventWhen, localizedPaths } from '../../../lib/content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
@@ -18,7 +18,7 @@ const slug = Astro.params.slug as string;
 const t = useTranslations(lang);
 const { Content } = await render(entry);
 
-const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
+const when = eventWhen(entry.data, lang, t('events.dateTbd'));
 ---
 
 <BaseLayout
@@ -60,7 +60,13 @@ const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
           <div class="border-b border-rule pb-3">
             <dt class="text-ink-soft">{t('events.when')}</dt>
             <dd class="mt-0.5 font-semibold">
-              <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>{when}</time>
+              {
+                entry.data.dateTbd ? (
+                  when
+                ) : (
+                  <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>{when}</time>
+                )
+              }
             </dd>
           </div>
           <div class="border-b border-rule py-3">

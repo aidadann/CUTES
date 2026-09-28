@@ -3,8 +3,8 @@ import { getCollection } from 'astro:content';
 
 import { site } from '../../data/site';
 import { useTranslations, type Lang, type UiKey } from '../../i18n/ui';
-import { formatDateRange, localeParams, localePath, assetPath } from '../../i18n/utils';
-import { localized, slugOf, splitEvents } from '../../lib/content';
+import { localeParams, localePath, assetPath } from '../../i18n/utils';
+import { eventWhen, localized, slugOf, splitEvents } from '../../lib/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export const getStaticPaths = localeParams;
@@ -487,7 +487,7 @@ const initials = (name: string) =>
               class="group py-8 sm:py-10 grid gap-4 sm:grid-cols-[200px_1fr_auto] items-center transition-colors hover:bg-paper-shade/40 px-2 reveal-on-scroll"
             >
               <div class="text-sm font-bold uppercase tracking-wider text-accent">
-                {formatDateRange(event.data.startDate, event.data.endDate, lang)}
+                {eventWhen(event.data, lang, t('events.dateTbd'))}
               </div>
               <div>
                 <h3 class="font-heading text-xl sm:text-2xl font-bold text-ink group-hover:text-accent transition-colors">

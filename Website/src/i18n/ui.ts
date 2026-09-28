@@ -192,6 +192,7 @@ export const ui = {
     'events.empty': 'No events are listed yet.',
     'events.emptyUpcoming': 'Nothing scheduled at the moment.',
     'events.allDay': 'All day',
+    'events.dateTbd': 'Date to be confirmed',
 
     // --- Gallery ---------------------------------------------------------
     'gallery.title': 'Gallery',
@@ -432,6 +433,7 @@ export const ui = {
     'events.empty': 'Belum ada acara disenaraikan.',
     'events.emptyUpcoming': 'Tiada acara dijadualkan buat masa ini.',
     'events.allDay': 'Sepanjang hari',
+    'events.dateTbd': 'Tarikh akan disahkan',
 
     // --- Gallery ---------------------------------------------------------
     'gallery.title': 'Galeri',

@@ -65,6 +65,12 @@ const events = defineCollection({
       gallery: z.string().optional(),
       /** A Google Form or similar. No registration system is built in. */
       registrationUrl: z.string().url().optional(),
+      /**
+       * The committee has announced the event but not fixed the date.
+       * `startDate` is then only a sort anchor: every date on the page reads
+       * "Date to be confirmed" instead.
+       */
+      dateTbd: z.boolean().default(false),
       /** Recurs every year — keeps it listed after the date passes. */
       annual: z.boolean().default(false),
     }),

@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Lang } from '../i18n/ui';
 import { defaultLang } from '../i18n/ui';
+import { formatDateRange } from '../i18n/utils';
 
 /**
  * Language-aware access to the Markdown collections.
@@ -120,4 +121,21 @@ export function splitEvents(entries: CollectionEntry<'events'>[]) {
     .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime());
 
   return { upcoming, past };
+}
+
+/**
+ * The date line for an event.
+ *
+ * An event whose date the committee has not fixed yet still needs a
+ * `startDate` — it is what the schema requires and what `splitEvents` sorts
+ * on — so it carries a placeholder one and sets `dateTbd`. Every place that
+ * prints an event date goes through here, so the placeholder can never reach
+ * the page.
+ */
+export function eventWhen(
+  data: { startDate: Date; endDate?: Date; dateTbd?: boolean },
+  lang: Lang,
+  tbdLabel: string,
+): string {
+  return data.dateTbd ? tbdLabel : formatDateRange(data.startDate, data.endDate, lang);
 }

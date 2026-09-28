@@ -2,8 +2,8 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { useTranslations, type Lang } from '../i18n/ui';
-import { formatDateRange, localePath } from '../i18n/utils';
-import { slugOf } from '../lib/content';
+import { localePath } from '../i18n/utils';
+import { eventWhen, slugOf } from '../lib/content';
 
 interface Props {
   lang: Lang;
@@ -14,7 +14,7 @@ interface Props {
 const { lang, entry, past = false } = Astro.props;
 const t = useTranslations(lang);
 const href = localePath(lang, `events/${slugOf(entry.id)}`);
-const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
+const when = eventWhen(entry.data, lang, t('events.dateTbd'));
 ---
 
 <article class="church-card group flex flex-col justify-between overflow-hidden">
@@ -43,9 +43,13 @@ const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
-        <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>
-          {when}
-        </time>
+        {
+          entry.data.dateTbd ? (
+            <span>{when}</span>
+          ) : (
+            <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>{when}</time>
+          )
+        }
       </span>
     </div>
 
