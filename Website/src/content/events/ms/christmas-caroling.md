@@ -15,5 +15,5 @@ makanan jauh lebih banyak daripada yang termampu dimakan.
 Sesiapa sahaja boleh menyertainya, pandai menyanyi atau tidak. Kementerian koir
 mengadakan satu latihan sebelum itu, dan itu sahaja persediaannya.
 
-**TODO (jawatankuasa): sahkan tarikh dan laluan, kemudian buang `dateTbd`
-daripada frontmatter fail ini dan `en/christmas-caroling.md`.**
+**TODO (jawatankuasa): sahkan tarikh, laluan, dan tempat, kemudian buang
+`dateTbd` daripada frontmatter fail ini dan `en/christmas-caroling.md`.**

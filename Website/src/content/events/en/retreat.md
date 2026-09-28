@@ -3,7 +3,7 @@ title: CUTES Retreat
 summary: The CUTES Retreat is a one-day spiritual getaway designed for UPSI Catholic students to pause from campus life, deepen their faith through prayer, adoration, and quiet reflection, and build strong fellowship with one another
 order: 1
 startDate: 2026-04-25
-location: Most Holy Redeemer Church, Tanjung Malim
+location: TODO — retreat centre
 gallery: retreat
 annual: true
 ---
@@ -27,3 +27,5 @@ A Bible, a notebook, and shoes you can walk in.
 Heavily subsidised by the entrepreneurship ministry. If the remaining cost is a
 problem, speak to the treasurer — quietly, and it stays quiet. Transport is
 arranged by the transportation ministry; put your name down when you register.
+
+**TODO (committee): add the registration link (Google Form).**

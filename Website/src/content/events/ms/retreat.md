@@ -3,7 +3,7 @@ title: Retret CUTES
 summary: Retret CUTES ialah percutian rohani sehari untuk pelajar Katolik UPSI berhenti seketika daripada kesibukan kampus, mendalami iman melalui doa, adorasi dan refleksi yang tenang, serta mengeratkan persaudaraan sesama mereka
 order: 1
 startDate: 2026-04-25
-location: Gereja Most Holy Redeemer, Tanjung Malim
+location: TODO — pusat retret
 gallery: retreat
 annual: true
 ---
@@ -28,3 +28,5 @@ Disubsidi sebahagian besarnya oleh kementerian keusahawanan. Jika baki kos
 menjadi masalah, berbincanglah dengan bendahari — secara peribadi, dan ia kekal
 peribadi. Pengangkutan diuruskan oleh kementerian pengangkutan; daftarkan nama
 anda semasa mendaftar.
+
+**TODO (jawatankuasa): tambah pautan pendaftaran (Google Form).**

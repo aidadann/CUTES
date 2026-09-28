@@ -15,5 +15,5 @@ more than they can manage.
 Anyone can join, whether or not you sing well. The choir ministry runs one
 practice beforehand and that is the whole preparation.
 
-**TODO (committee): confirm the date and the route, then remove `dateTbd` from
-the frontmatter of this file and of `ms/christmas-caroling.md`.**
+**TODO (committee): confirm the date, the route, and the venue, then remove
+`dateTbd` from the frontmatter of this file and of `ms/christmas-caroling.md`.**

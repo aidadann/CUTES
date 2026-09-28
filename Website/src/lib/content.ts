@@ -107,6 +107,10 @@ export function splitEvents(entries: CollectionEntry<'events'>[]) {
   today.setUTCHours(0, 0, 0, 0);
 
   const isUpcoming = (entry: CollectionEntry<'events'>) => {
+    // An event the committee has not dated yet cannot be in the past. Its
+    // startDate is only a sort anchor, so letting it decide would file an
+    // unscheduled event under "Past events" the day the anchor passes.
+    if (entry.data.dateTbd) return true;
     const end = entry.data.endDate ?? entry.data.startDate;
     return end.getTime() >= today.getTime();
   };
