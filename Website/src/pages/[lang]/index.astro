@@ -3,8 +3,8 @@ import { getCollection } from 'astro:content';
 
 import { site } from '../../data/site';
 import { useTranslations, type Lang, type UiKey } from '../../i18n/ui';
-import { localeParams, localePath, assetPath } from '../../i18n/utils';
-import { eventWhen, localized, slugOf, splitEvents } from '../../lib/content';
+import { eventWhen, localeParams, localePath, assetPath } from '../../i18n/utils';
+import { localized, slugOf, splitEvents } from '../../lib/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export const getStaticPaths = localeParams;
