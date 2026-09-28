@@ -1,7 +1,16 @@
 # CUTES Committee roster
 # =============================================================================
-# TODO (committee): every name below is a PLACEHOLDER. Replace them with the
-# real committee before launch, then delete this notice.
+# Membership supplied by the committee in FIXES V2 (2026-09-28).
+#
+# TWO THINGS ARE STILL WAITING ON THE COMMITTEE:
+#
+#   1. The Ministry of Leaders offices below (Coordinator, Vice Coordinator I
+#      and II, Treasurer, Vice Treasurer, Secretary, Vice Secretary) were
+#      assigned in the order the committee listed the seven names. Confirm
+#      them.
+#   2. FIXES V2 named no leader or assistant for the other seven ministries,
+#      so everyone in them is published as `member`. Send the leaders and we
+#      will change their `role:` to `leader` / `assistant`.
 #
 # HOW TO EDIT THIS FILE
 #
@@ -10,8 +19,12 @@
 #   - `role` must be one of: coordinator, vice-coordinator-1,
 #     vice-coordinator-2, treasurer, vice-treasurer, secretary,
 #     vice-secretary, leader, assistant, member.
-#   - `detail` is optional — course, faculty or year of study.
+#   - `detail` is optional — course, faculty or year of study. Members who did
+#     not give a programme simply have no `detail:` line.
 #   - Add or remove `- name:` lines freely. There is no limit.
+#
+# A few people serve in two ministries. That is intentional: list them under
+# both.
 #
 # If you mistype something the site will refuse to build and the error message
 # will name this file and the line. That is on purpose: a broken build is
@@ -25,27 +38,27 @@
     en: The executive committee elected each academic year to lead CUTES.
     ms: Jawatankuasa eksekutif yang dipilih setiap sesi akademik untuk memimpin CUTES.
   members:
-    - name: Bernard Anak Jelani
+    - name: Ryon Joshua Harry
       role: coordinator
-      detail: Bachelor of Education (TESL)
-    - name: Maria Dayang Sulaiman
+      detail: ISMP Pendidikan Jasmani
+    - name: Avioletha Anne Anak Jackpira
       role: vice-coordinator-1
-      detail: Bachelor of Science (Biology)
-    - name: Jerome Lim Wei Xiang
+      detail: ISM Komunikasi Sosial
+    - name: Heidi Ajik Anak Baring
       role: vice-coordinator-2
-      detail: Bachelor of Music Education
-    - name: Angeline Sipin
+      detail: Diploma Bahasa Inggeris
+    - name: Melanie Dee Theodosius
       role: treasurer
-      detail: Bachelor of Accounting
-    - name: Clarence Joseph
+      detail: ISMP Moral
+    - name: Christina Arabella Anak Sirim
       role: vice-treasurer
-      detail: Bachelor of Business Management
-    - name: Priscilla Anak Nyaring
+      detail: ISMP Biologi
+    - name: Josepha Jonis
       role: secretary
-      detail: Bachelor of Education (Primary)
-    - name: Ignatius Raj Kumar
+      detail: ISMP Moral
+    - name: Santi Canneysia Louris
       role: vice-secretary
-      detail: Bachelor of Sports Science
+      detail: ISM Matematik
 
 - id: liturgy
   order: 2
@@ -53,20 +66,72 @@
     en: Prepares the altar, readings and servers for every Mass the community celebrates.
     ms: Menyediakan altar, bacaan dan pelayan untuk setiap Misa yang dirayakan komuniti.
   members:
-    - name: Francis Xavier Anak Nyipa
-      role: leader
-    - name: Theresa Anak Mawar
-      role: assistant
-    - name: Dominic Anak Empaling
+    - name: Arthur Peter
       role: member
-    - name: Cecilia Wong Mei Ling
+      detail: Ijazah Sarjana Muda Pendidikan Moral
+    - name: Fredycha Salba Anak Valentine
       role: member
-    - name: Alphonsus Gan
+      detail: ISMP Sains Kejurulatihan
+    - name: Lenley Gary Ambross
       role: member
-    - name: Regina Anak Belulok
+      detail: ISM Pentadbiran Perniagaan (Pengurusan Sumber Manusia)
+    - name: Gracie Ebyca Bong
       role: member
-    - name: Michael Anak Undau
+      detail: ISMP TESL
+    - name: Carlleesa Christin
       role: member
+      detail: ISMP Matematik
+    - name: Clara Anak Aric Steven
+      role: member
+      detail: ISMP Pengajaran Bahasa Inggeris Sebagai Bahasa Kedua
+    - name: Rechel Elvira Lawrence
+      role: member
+      detail: ISMP Biologi
+    - name: Michelle Andrea Anak Peter
+      role: member
+      detail: ISMP Biologi
+    - name: Joceline Michael
+      role: member
+      detail: ISMP Fizik
+    - name: Joeyvenley Mascel bin St Kesmas
+      role: member
+      detail: Diploma Muzik
+    - name: Arni Bella Kindoron @ Maim
+      role: member
+      detail: ISMP Fizik
+    - name: Delna Idora Didacius
+      role: member
+      detail: ISMP Biologi
+    - name: Althon Dana Anak Muda
+      role: member
+      detail: ISM Reka Bentuk (Pengiklanan)
+    - name: Dunston Elton Anak Dula
+      role: member
+      detail: Diploma in English
+    - name: Mark Emmanuel Anak Mintel
+      role: member
+      detail: Diploma Pendidikan Awal Kanak-Kanak
+    - name: Camelivia Johnny
+      role: member
+      detail: ISMP Reka Cipta
+    - name: Ivy Shirley Lawrence
+      role: member
+      detail: ISMP Sains
+    - name: Violetta Valentia Vincent
+      role: member
+      detail: ISMP TESL
+    - name: Clave Glenniever Suani
+      role: member
+      detail: ISMP Bahasa Etnik
+    - name: Alinda Anastasia A/P Leo
+      role: member
+      detail: Diploma Sains Sukan dan Kejurulatihan
+    - name: Alista Alphonsus
+      role: member
+      detail: ISMP Kimia
+    - name: Esther Uring Lua Jose
+      role: member
+      detail: ISM Seni Persembahan Teater
 
 - id: choir
   order: 3
@@ -74,22 +139,48 @@
     en: Leads the assembly in song at the sunset Mass and at community celebrations.
     ms: Memimpin umat dalam nyanyian pada Misa sunset dan perayaan komuniti.
   members:
-    - name: Agnes Anak Rentap
-      role: leader
-    - name: Peter Anak Chundang
-      role: assistant
-    - name: Veronica Tan Sze Ying
+    - name: Myra Marcellina Anak Garlin
       role: member
-    - name: Sylvester Anak Jugah
+      detail: ISMP TESL
+    - name: Farah Jacqlyn Joseph
       role: member
-    - name: Elizabeth Anak Sumbang
+      detail: ISMP Biologi
+    - name: Tracy Binti Francis Swee Inuman
       role: member
-    - name: Gerard Anthony
+      detail: ISMP Biologi
+    - name: Calvina Fiona Claudius Koyou
       role: member
-    - name: Monica Anak Ngalambai
+      detail: ISMP Sains Sukan
+    - name: Issandra Noordin
       role: member
-    - name: Stephanie Chin Yee Wen
+      detail: ISMP Matematik
+    - name: Amy Vanessa Rozer
       role: member
+      detail: ISMP P. Moral
+    - name: Tasyaronna Mathew
+      role: member
+      detail: ISMP TESL
+    - name: Daniella Rozer
+      role: member
+      detail: ISMP TESL
+    - name: Avie Shellie Anak Aziz
+      role: member
+      detail: ISMP Biologi
+    - name: Arceelia Anne A/P Davit Hadizen
+      role: member
+      detail: Diploma Bahasa Inggeris
+    - name: Brooke Ariel Dunul Yong
+      role: member
+      detail: Diploma Tari
+    - name: Alinda Anastasia A/P Leo
+      role: member
+      detail: Diploma Sains Sukan dan Kejurulatihan
+    - name: Russel
+      role: member
+      detail: ISMP SAINS
+    - name: Shen
+      role: member
+      detail: ISMP SAINS
 
 - id: music
   order: 4
@@ -97,16 +188,29 @@
     en: Plays for the liturgy and looks after the community's instruments and sound.
     ms: Bermain untuk liturgi dan menjaga alat muzik serta sistem bunyi komuniti.
   members:
-    - name: Benedict Anak Ampan
-      role: leader
-    - name: Josephine Anak Bujang
-      role: assistant
-    - name: Aloysius Toh Kok Wei
+    - name: Charlie Chee Phaie Zheng
       role: member
-    - name: Rita Anak Manggah
+      detail: Bachelor in Music Education with Honors
+    - name: Bernard Anak Lives
       role: member
-    - name: Emmanuel Sagang
+      detail: Diploma in Music
+    - name: Jeremy Aecko Junaidie
       role: member
+      detail: Teaching English as Second Language with Honors
+    - name: Samson Paul Freddie
+      role: member
+      detail: Bachelor in Music Education with Honors
+    - name: Andrew Stanley
+      role: member
+      detail: Muzik
+    - name: Cheong Wai Hinn Ivan
+      role: member
+      detail: Muzik
+    - name: Ezer Edon
+      role: member
+    - name: Marshall Mathius
+      role: member
+      detail: Diploma Muzik
 
 - id: multimedia
   order: 5
@@ -114,16 +218,27 @@
     en: Runs the projection at Mass, the social media pages and this website.
     ms: Mengendalikan paparan semasa Misa, media sosial dan laman web ini.
   members:
-    - name: Gabriel Anak Sengalang
-      role: leader
-    - name: Anastasia Lau Hui Xin
-      role: assistant
-    - name: Raphael Anak Tuah
+    - name: Advencius Hillbert Johnney
       role: member
-    - name: Jacinta Anak Gerinang
+      detail: ISMP Matematik Dengan Kepujian
+    - name: Marinee Sue Anak Palrick
       role: member
-    - name: Norbert Anak Balang
+      detail: ISM Sains Matematik Dengan Pendidikan
+    - name: Merrill Bin Anai
       role: member
+      detail: Diploma Dalam Bahasa Inggeris
+    - name: Distin Dilgat Anak Tabor
+      role: member
+      detail: ISMP Sains
+    - name: Clarence Anak Joseph
+      role: member
+      detail: ISMP Multimedia
+    - name: Ashley Yvonne James Bating
+      role: member
+      detail: ISMP TESL
+    - name: Chelsea Raymond Elling
+      role: member
+      detail: ISMP TESL
 
 - id: transportation
   order: 6
@@ -131,16 +246,20 @@
     en: Arranges lifts to Mass and to events for students without transport.
     ms: Menguruskan tumpangan ke Misa dan acara untuk pelajar tanpa pengangkutan.
   members:
-    - name: Anthony Anak Lasung
-      role: leader
-    - name: Bernadette Anak Sawing
-      role: assistant
-    - name: Lawrence Anak Gani
+    - name: Gillfero
       role: member
-    - name: Felicia Anak Ranggau
+    - name: Andrew Stanley
       role: member
-    - name: Christopher Anak Meringai
+      detail: ISMP Muzik
+    - name: Carl Christin
       role: member
+      detail: ISMP Fizik
+    - name: Cornellius Anak Rabes
+      role: member
+      detail: ISMP Matematik
+    - name: Adrian Christopher Lajangang
+      role: member
+      detail: ISMP Reka Bentuk Teknologi
 
 - id: recreation
   order: 7
@@ -148,17 +267,30 @@
     en: Plans the retreats, Taize evenings, sport and the fellowship after Mass.
     ms: Merancang retret, malam Taize, sukan dan perhimpunan selepas Misa.
   members:
-    - name: Lucia Anak Sengayan
-      role: leader
-    - name: Martin Anak Rumpang
-      role: assistant
-    - name: Genevieve Anak Ngumbang
+    - name: Chelsea Pearl Willson
       role: member
-    - name: Sebastian Anak Jampong
+      detail: ISMP Pengurusan Perniagaan
+    - name: Fardina A/P Julian
       role: member
-    - name: Patricia Anak Ligong
+      detail: ISMP Sains Kejurulatihan
+    - name: Evanie Tinggulis
       role: member
-    - name: Vincent Anak Sagan
+      detail: ISMP Geografi
+    - name: Ryan Nuneh
+      role: member
+      detail: ISMP Biologi
+    - name: Costicca Richie Piul
+      role: member
+      detail: ISMP Bahasa Etnik
+    - name: Joneson Takius
+      role: member
+      detail: ISM Sains Sukan (Rehabilitasi Sukan)
+    - name: Franoleyan Erwin Joseph
+      role: member
+      detail: ISM Sains Sukan (Sains Kejurulatihan)
+    - name: Anjelica Robert
+      role: member
+    - name: Lala
       role: member
 
 - id: entrepreneurship
@@ -167,13 +299,35 @@
     en: Raises the funds that pay for retreats, transport and community events.
     ms: Mengumpul dana untuk membiayai retret, pengangkutan dan acara komuniti.
   members:
-    - name: Helena Anak Bayang
-      role: leader
-    - name: Simon Anak Ranggong
-      role: assistant
-    - name: Carmen Yap Li Ping
+    - name: Fay
       role: member
-    - name: Augustine Anak Empeni
+    - name: Gabrielle George
       role: member
-    - name: Rosalind Anak Nyulang
+      detail: Diploma Bahasa Inggeris
+    - name: Lenley Gary Ambross
       role: member
+      detail: ISM Pentadbiran Perniagaan (Pengurusan Sumber Manusia)
+    - name: Dawn Jeanice Choo
+      role: member
+      detail: ISMP Matematik
+    - name: Wildik Linus
+      role: member
+      detail: ISMP Biologi
+    - name: Dannishdew Wong Anak Menis
+      role: member
+      detail: ISMP Biologi
+    - name: Chrisavell Natalie Henry
+      role: member
+      detail: ISMP Sejarah
+    - name: Vivianne Valerina Lapatan Anak Donny
+      role: member
+      detail: ISMP BM
+    - name: Elvy Wenisa Walter
+      role: member
+      detail: ISMP Matematik
+    - name: Mazlyn Dinoh
+      role: member
+      detail: ISMP Fizik
+    - name: Annemarie Alphonsus
+      role: member
+      detail: ISMP Kimia
