@@ -170,3 +170,28 @@ Deployment runs automatically via **GitHub Actions** upon any commit to `main`:
 1. **Repository Ownership**: Keep this repository under an organization account managed by the parish rather than personal student accounts.
 2. **Maintain Admin Access**: Ensure at least two individuals (e.g., parish administrator and multimedia head) retain admin privileges.
 3. For general editorial workflows, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+## FIXES Log
+
+The committee sends requirement updates in waves after the site is live. Each wave is recorded here so the next person — and the committee — can see what changed and what is still open.
+
+### FIXES V2 — received 2026-09-28
+
+- **Source:** `Requirement/Fixes V2.pdf`, received 2026-09-28.
+- **Spec:** `docs/superpowers/specs/2026-09-28-fixes-v2.md`
+- **Plan:** `docs/superpowers/plans/2026-09-28-fixes-v2.md`
+
+**What changed:**
+- Replaced the 48 placeholder committee names with the real 83-member roster across the eight ministries.
+- Added four events: the CUTES Music and Choir Workshop, Penang Diocesan Youth Day 6, CUTES Christmas Caroling, and Gawai Kaamatan St Anne Penang.
+- Re-dated the CUTES Retreat and the Gawai and Kaamatan Cutes Celebration to the dates the committee gave, which moves both into the past.
+- Removed the "Read more →" link from event cards.
+
+**Still outstanding — questions for the committee:**
+1. Confirm the seven Ministry of Leaders offices. They were assigned in the order the committee listed the names, and that order may not be the intended office for each person.
+2. Name the leader and assistant leader for each of the other seven ministries. FIXES V2 did not name any, so those ministry pages currently show a plain list of members with no one singled out as leader.
+3. Fix the CUTES Christmas Caroling date. No date has been confirmed yet, so the site currently shows "Date to be confirmed" for this event.
+4. Give the venues for the CUTES Retreat, the CUTES Music and Choir Workshop, and the Christmas Caroling — none of the three was included in FIXES V2.
+5. Say whether the parish is under the "Diocese of Penang" or the "Archdiocese of Penang." FIXES V2 refers to it as the Diocese of Penang, but the website currently says Archdiocese of Penang, per the committee's own FIXES V1 instruction. We have changed neither until the committee tells us which is correct.

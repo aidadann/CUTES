@@ -127,3 +127,20 @@ export function formatDateRange(start: Date, end: Date | undefined, lang: Lang):
   }
   return `${formatDate(start, lang)} – ${formatDate(end, lang)}`;
 }
+
+/**
+ * The date line for an event.
+ *
+ * An event whose date the committee has not fixed yet still needs a
+ * `startDate` — it is what the schema requires and what `splitEvents` sorts
+ * on — so it carries a placeholder one and sets `dateTbd`. Every place that
+ * prints an event date goes through here, so the placeholder can never reach
+ * the page.
+ */
+export function eventWhen(
+  data: { startDate: Date; endDate?: Date; dateTbd?: boolean },
+  lang: Lang,
+  tbdLabel: string,
+): string {
+  return data.dateTbd ? tbdLabel : formatDateRange(data.startDate, data.endDate, lang);
+}

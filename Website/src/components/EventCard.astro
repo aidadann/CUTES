@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { useTranslations, type Lang } from '../i18n/ui';
-import { formatDateRange, localePath } from '../i18n/utils';
+import { eventWhen, localePath } from '../i18n/utils';
 import { slugOf } from '../lib/content';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 const { lang, entry, past = false } = Astro.props;
 const t = useTranslations(lang);
 const href = localePath(lang, `events/${slugOf(entry.id)}`);
-const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
+const when = eventWhen(entry.data, lang, t('events.dateTbd'));
 ---
 
 <article class="church-card group flex flex-col justify-between overflow-hidden">
@@ -43,9 +43,13 @@ const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
-        <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>
-          {when}
-        </time>
+        {
+          entry.data.dateTbd ? (
+            <span>{when}</span>
+          ) : (
+            <time datetime={entry.data.startDate.toISOString().slice(0, 10)}>{when}</time>
+          )
+        }
       </span>
     </div>
 
@@ -60,18 +64,13 @@ const when = formatDateRange(entry.data.startDate, entry.data.endDate, lang);
     </p>
   </div>
 
-  <div class="mt-6 pt-4 border-t border-rule flex items-center justify-between text-xs text-ink-muted">
-    <span class="flex items-center gap-1.5">
+  <div class="mt-6 pt-4 border-t border-rule flex items-center text-xs text-ink-muted">
+    <span class="flex items-center gap-1.5 min-w-0">
       <svg class="w-3.5 h-3.5 text-purple shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
-      <span class="truncate max-w-[20ch]">{entry.data.location}</span>
+      <span class="truncate">{entry.data.location}</span>
     </span>
-
-    <a href={href} class="font-bold text-purple group-hover:text-magenta transition-colors inline-flex items-center gap-1">
-      <span>{t('common.readMore')}</span>
-      <span>&rarr;</span>
-    </a>
   </div>
 </article>
