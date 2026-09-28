@@ -244,7 +244,6 @@ export const ui = {
     'contact.social': 'Social media',
 
     // --- Shared ----------------------------------------------------------
-    'common.readMore': 'Read more',
     'common.backTo': 'Back to',
     'common.updated': 'Updated',
     'common.on': 'on',
@@ -485,7 +484,6 @@ export const ui = {
     'contact.social': 'Media sosial',
 
     // --- Shared ----------------------------------------------------------
-    'common.readMore': 'Baca lanjut',
     'common.backTo': 'Kembali ke',
     'common.updated': 'Dikemas kini',
     'common.on': 'pada',
